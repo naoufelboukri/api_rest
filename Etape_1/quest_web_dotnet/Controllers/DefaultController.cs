@@ -20,6 +20,6 @@ public class DefaultController : ControllerBase
     [HttpGet("testError")]
     public IActionResult testError()
     {
-        return this.Problem("error");
+        return StatusCode(500, "error");
     }
 }
