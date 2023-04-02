@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace quest_web.Controllers;
+namespace Controllers;
 
 [ApiController]
 public class DefaultController : ControllerBase
