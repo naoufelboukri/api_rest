@@ -5,7 +5,6 @@ using quest_web.Models;
 
 namespace quest_web.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class AuthentificationController : ControllerBase
     {
@@ -17,16 +16,23 @@ namespace quest_web.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> register(string username, string password)
         {
-            if (await _context.Users.AnyAsync(u => u.Username == username)) {
-                return BadRequest("Le nom d'utilisateur est déjà utilisé");
+            try
+            {
+                if (await _context.Users.AnyAsync(u => u.Username == username))
+                {
+                    return Conflict(new { message = "Le nom d'utilisateur est déjà utilisé" });
+                }
+
+                var user = new User(username, password);
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(register), user);
             }
-            var user = new User(username, password);
-            _context.Add(user);
-
-            await _context.SaveChangesAsync();
-
-
-            return user;
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
     }
 }
