@@ -11,16 +11,16 @@ public enum UserRole
 public class User
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid id { get; set; }
 
     [Required]
     [MaxLength(255)]
-    public string Username { get; set; }
+    public string username { get; set; }
 
     [Required]
     [MaxLength(255)]
-    public string Password { get; set; }
-    public string Role { get; set; }
+    public string password { get; set; }
+    public string role { get; set; }
 
     [DataType(DataType.DateTime)]
     public DateTime creation_date { get; set; }
@@ -30,10 +30,10 @@ public class User
 
     public User(string username, string password)
     {
-        this.Id = Guid.NewGuid();
-        this.Username = username;
-        this.Password = password.GetHashCode().ToString();
-        this.Role = UserRole.ROLE_USER.ToString();
+        this.id = Guid.NewGuid();
+        this.username = username;
+        this.password = password.GetHashCode().ToString();
+        this.role = UserRole.ROLE_USER.ToString();
         this.creation_date = DateTime.Now;
         this.updated_date = DateTime.Now;
     }

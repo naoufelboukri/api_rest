@@ -19,7 +19,7 @@ namespace quest_web.Controllers
         {
             try
             {
-                if (await _context.Users.AnyAsync(u => u.Username == username))
+                if (await _context.User.AnyAsync(u => u.username == username))
                 {
                     return Conflict(new { message = "Le nom d'utilisateur est déjà utilisé" });
                 }
