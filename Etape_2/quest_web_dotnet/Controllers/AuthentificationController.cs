@@ -9,8 +9,9 @@ namespace quest_web.Controllers
     public class AuthentificationController : ControllerBase
     {
         private readonly APIDbContext _context;
-        public AuthentificationController (APIDbContext context) {
-            _context = context;    
+        public AuthentificationController(APIDbContext context)
+        {
+            _context = context;
         }
 
         [HttpPost("register")]

@@ -9,10 +9,11 @@ public enum UserRole
     ROLE_ADMIN
 }
 
-public class User {
+public class User
+{
     [Key]
     public Guid Id { get; set; }
-    
+
     [Required]
     [MaxLength(255)]
     public string Username { get; set; }
@@ -28,7 +29,8 @@ public class User {
     [DataType(DataType.DateTime)]
     public DateTime updated_date { get; set; }
 
-    public User(string username, string password) {
+    public User(string username, string password)
+    {
         this.Id = Guid.NewGuid();
         this.Username = username;
         this.Password = password.GetHashCode().ToString();

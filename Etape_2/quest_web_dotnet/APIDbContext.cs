@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using quest_web.Models;
 
-namespace quest_web; 
+namespace quest_web;
 
 public class APIDbContext : DbContext
 {
