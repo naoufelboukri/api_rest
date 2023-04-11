@@ -21,31 +21,37 @@ namespace quest_web.Migrations
 
             modelBuilder.Entity("quest_web.Models.User", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
-                    b.Property<DateTime>("creation_date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime?>("CreationDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("creation_date");
 
-                    b.Property<string>("password")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("password");
 
-                    b.Property<string>("role")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<string>("Role")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("role");
 
-                    b.Property<DateTime>("updated_date")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_date");
 
-                    b.Property<string>("username")
+                    b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("username");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });

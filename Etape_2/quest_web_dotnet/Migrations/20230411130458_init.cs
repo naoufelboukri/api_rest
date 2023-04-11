@@ -25,10 +25,10 @@ namespace quest_web.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    role = table.Column<string>(type: "longtext", nullable: false)
+                    role = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    creation_date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_date = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    creation_date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    updated_date = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
