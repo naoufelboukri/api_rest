@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace quest_web.Models;
 
@@ -11,29 +13,40 @@ public enum UserRole
 public class User
 {
     [Key]
-    public int id { get; set; }
+    [Column("id")]
+    public int Id { get; set; }
 
     [Required]
     [MaxLength(255)]
+    [Column("username")]
     public string Username { get; set; }
 
     [Required]
     [MaxLength(255)]
+    [Column("password")]
     public string Password { get; set; }
-    public string Role { get; set; }
+
+    [AllowNull]
+    [MaxLength(255)]
+    [Column("role")]
+    public string? Role { get; set; }
 
     [DataType(DataType.DateTime)]
-    public DateTime Creation_date { get; set; }
+    [AllowNull]
+    [Column("creation_date")]
+    public DateTime? CreationDate { get; set; }
 
+    [AllowNull]
     [DataType(DataType.DateTime)]
-    public DateTime Updated_date { get; set; }
+    [Column("updated_date")]
+    public DateTime? UpdatedDate { get; set; }
 
     public User(string username, string password)
     {
         this.Username = username;
         this.Password = password.GetHashCode().ToString();
         this.Role = UserRole.ROLE_USER.ToString();
-        this.Creation_date = DateTime.Now;
-        this.Updated_date = DateTime.Now;
+        this.CreationDate = DateTime.Now;
+        this.UpdatedDate = DateTime.Now;
     }
 }
