@@ -11,7 +11,7 @@ public enum UserRole
 public class User
 {
     [Key]
-    public Guid id { get; set; }
+    public int id { get; set; }
 
     [Required]
     [MaxLength(255)]
@@ -30,7 +30,6 @@ public class User
 
     public User(string username, string password)
     {
-        this.id = Guid.NewGuid();
         this.username = username;
         this.password = password.GetHashCode().ToString();
         this.role = UserRole.ROLE_USER.ToString();

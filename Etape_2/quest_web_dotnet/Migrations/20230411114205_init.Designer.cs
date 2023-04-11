@@ -11,7 +11,7 @@ using quest_web;
 namespace quest_web.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230407132110_init")]
+    [Migration("20230411114205_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,9 +24,9 @@ namespace quest_web.Migrations
 
             modelBuilder.Entity("quest_web.Models.User", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("creation_date")
                         .HasColumnType("datetime(6)");

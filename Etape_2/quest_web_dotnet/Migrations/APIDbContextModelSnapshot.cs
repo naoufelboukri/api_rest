@@ -21,9 +21,9 @@ namespace quest_web.Migrations
 
             modelBuilder.Entity("quest_web.Models.User", b =>
                 {
-                    b.Property<Guid>("id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("creation_date")
                         .HasColumnType("datetime(6)");
