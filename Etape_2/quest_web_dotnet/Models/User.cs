@@ -49,4 +49,19 @@ public class User
         this.CreationDate = DateTime.Now;
         this.UpdatedDate = DateTime.Now;
     }
+
+    public string toString()
+    {
+        return "toString";
+    }
+
+    public string getHashCode()
+    {
+        return "Code hashé";
+    }
+
+    public string Equals()
+    {
+        return "Equals";
+    }
 }
