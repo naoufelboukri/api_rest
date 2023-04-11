@@ -6,10 +6,10 @@ using quest_web.Models;
 namespace quest_web.Controllers
 {
     [ApiController]
-    public class AuthentificationController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly APIDbContext _context;
-        public AuthentificationController(APIDbContext context)
+        public AuthenticationController(APIDbContext context)
         {
             _context = context;
         }
