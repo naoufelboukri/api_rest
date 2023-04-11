@@ -25,21 +25,21 @@ public class User
     [MaxLength(255)]
     [Column("password")]
     public string Password { get; set; }
-    
+
     [AllowNull]
     [MaxLength(255)]
     [Column("role")]
-    public string ? Role { get; set; }
+    public string? Role { get; set; }
 
     [DataType(DataType.DateTime)]
     [AllowNull]
     [Column("creation_date")]
-    public DateTime ? CreationDate { get; set; }
-    
+    public DateTime? CreationDate { get; set; }
+
     [AllowNull]
     [DataType(DataType.DateTime)]
     [Column("updated_date")]
-    public DateTime ? UpdatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
 
     public User(string username, string password)
     {
