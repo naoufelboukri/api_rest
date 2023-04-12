@@ -53,7 +53,7 @@ namespace quest_web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("user");
                 });
 #pragma warning restore 612, 618
         }

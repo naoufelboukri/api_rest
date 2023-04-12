@@ -16,7 +16,7 @@ namespace quest_web.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "user",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -32,7 +32,7 @@ namespace quest_web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.id);
+                    table.PrimaryKey("PK_user", x => x.id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
         }
@@ -41,7 +41,7 @@ namespace quest_web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "User");
+                name: "user");
         }
     }
 }

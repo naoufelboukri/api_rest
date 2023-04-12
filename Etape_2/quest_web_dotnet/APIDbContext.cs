@@ -5,7 +5,7 @@ namespace quest_web;
 
 public class APIDbContext : DbContext
 {
-    public DbSet<User> User { get; set; }
+    public DbSet<User> user { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connection = "server=127.0.0.1;database=quest_web;user=application;password=password";

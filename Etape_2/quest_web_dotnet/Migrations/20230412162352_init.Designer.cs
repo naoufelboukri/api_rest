@@ -11,7 +11,7 @@ using quest_web;
 namespace quest_web.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230411130458_init")]
+    [Migration("20230412162352_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace quest_web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("user");
                 });
 #pragma warning restore 612, 618
         }
