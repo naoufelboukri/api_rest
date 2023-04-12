@@ -27,8 +27,8 @@ namespace quest_web.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     role = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    creation_date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    updated_date = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    creation_date = table.Column<DateTime>(type: "DateTime", nullable: true),
+                    updated_date = table.Column<DateTime>(type: "DateTime", nullable: true)
                 },
                 constraints: table =>
                 {

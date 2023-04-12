@@ -27,7 +27,7 @@ namespace quest_web.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime?>("CreationDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("DateTime")
                         .HasColumnName("creation_date");
 
                     b.Property<string>("Password")
@@ -42,7 +42,7 @@ namespace quest_web.Migrations
                         .HasColumnName("role");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("DateTime")
                         .HasColumnName("updated_date");
 
                     b.Property<string>("Username")

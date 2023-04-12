@@ -33,12 +33,11 @@ public class User
 
     [DataType(DataType.DateTime)]
     [AllowNull]
-    [Column("creation_date")]
+    [Column("creation_date", TypeName = "DateTime")]
     public DateTime? CreationDate { get; set; }
 
     [AllowNull]
-    [DataType(DataType.DateTime)]
-    [Column("updated_date")]
+    [Column("updated_date", TypeName = "DateTime")]
     public DateTime? UpdatedDate { get; set; }
 
     public User(string username, string password)

@@ -11,7 +11,7 @@ using quest_web;
 namespace quest_web.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230412162352_init")]
+    [Migration("20230412181358_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -30,7 +30,7 @@ namespace quest_web.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateTime?>("CreationDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("DateTime")
                         .HasColumnName("creation_date");
 
                     b.Property<string>("Password")
@@ -45,7 +45,7 @@ namespace quest_web.Migrations
                         .HasColumnName("role");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("DateTime")
                         .HasColumnName("updated_date");
 
                     b.Property<string>("Username")
