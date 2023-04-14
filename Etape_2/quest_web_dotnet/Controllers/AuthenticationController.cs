@@ -33,7 +33,7 @@ namespace quest_web.Controllers
                 await _context.SaveChangesAsync();
 
 
-                return CreatedAtAction(nameof(register), new UserDetail(username, user.Role));
+                return CreatedAtAction(nameof(register), new UserDetails(username, user.Role));
             }
             catch (Exception ex)
             {

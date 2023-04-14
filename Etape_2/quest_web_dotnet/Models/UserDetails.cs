@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace quest_web.Models
 {
-    public class UserDetail
+    public class UserDetails
     {
         [Required]
         [MaxLength(255)]
@@ -16,7 +16,7 @@ namespace quest_web.Models
         [Column("role")]
         public string? Role { get; set; }
 
-        public UserDetail(string username, string role)
+        public UserDetails(string username, string role)
         {
             this.Username = username;
             this.Role = role;
