@@ -19,6 +19,10 @@ namespace quest_web.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                {
+                    return BadRequest(new { message = "username and password mandatory" });
+                }
                 if (await _context.user.AnyAsync(u => u.Username == username))
                 {
                     return Conflict(new { message = "Le nom d'utilisateur est déjà utilisé" });
@@ -28,7 +32,8 @@ namespace quest_web.Controllers
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(register), user);
+
+                return CreatedAtAction(nameof(register), new UserDetail(username, user.Role));
             }
             catch (Exception ex)
             {
