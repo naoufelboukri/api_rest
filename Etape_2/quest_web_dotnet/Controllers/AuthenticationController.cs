@@ -15,10 +15,8 @@ namespace quest_web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(string username, string password)
+        public async Task<IActionResult> Register(string username, string password)
         {
-            try
-            {
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 {
                     return BadRequest(new { message = "username and password mandatory" });
@@ -34,10 +32,6 @@ namespace quest_web.Controllers
 
 
                 return CreatedAtAction(nameof(Register), new UserDetails(username, user.Role));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
             }
         }
     }
