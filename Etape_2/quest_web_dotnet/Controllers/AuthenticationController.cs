@@ -15,7 +15,7 @@ namespace quest_web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> register(string username, string password)
+        public async Task<ActionResult<UserDetails>> register(string username, string password)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace quest_web.Controllers
                 await _context.SaveChangesAsync();
 
 
-                return CreatedAtAction(nameof(register), new UserDetails(username, user.Role));
+                return new UserDetails(username, user.Role);
             }
             catch (Exception ex)
             {

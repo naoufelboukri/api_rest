@@ -11,8 +11,8 @@ using quest_web;
 namespace quest_web.Migrations
 {
     [DbContext(typeof(APIDbContext))]
-    [Migration("20230414071752_Init")]
-    partial class Init
+    [Migration("20230416153512_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
