@@ -15,25 +15,25 @@ namespace quest_web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> register(string username, string password)
+        public async Task<IActionResult> register([FromBody] RegisterBody request)
         {
             try
             {
-                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                if (string.IsNullOrEmpty(request.username) || string.IsNullOrEmpty(request.password))
                 {
                     return BadRequest(new { message = "username and password mandatory" });
                 }
-                if (await _context.user.AnyAsync(u => u.Username == username))
+                if (await _context.user.AnyAsync(u => u.Username == request.username))
                 {
                     return Conflict(new { message = "Le nom d'utilisateur est déjà utilisé" });
                 }
 
-                var user = new User(username, password);
+                var user = new User(request.username, request.password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 
 
-                return CreatedAtAction(nameof(register), new UserDetails(username, user.Role));
+                return CreatedAtAction(nameof(register), new UserDetails(user.Username, user.Role));
             }
             catch (Exception ex)
             {
