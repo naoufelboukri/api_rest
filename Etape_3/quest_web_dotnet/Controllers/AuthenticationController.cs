@@ -2,33 +2,39 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using quest_web.Models;
+using quest_web.Models.Form;
 
 namespace quest_web.Controllers
 {
     [ApiController]
-    public class AuthentificationController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly APIDbContext _context;
-        public AuthentificationController(APIDbContext context)
+        public AuthenticationController(APIDbContext context)
         {
             _context = context;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> register(string username, string password)
+        public async Task<IActionResult> register([FromBody] RegisterBody request)
         {
             try
             {
-                if (await _context.User.AnyAsync(u => u.Username == username))
+                if (string.IsNullOrEmpty(request.username) || string.IsNullOrEmpty(request.password))
+                {
+                    return BadRequest(new { message = "username and password mandatory" });
+                }
+                if (await _context.user.AnyAsync(u => u.Username == request.username))
                 {
                     return Conflict(new { message = "Le nom d'utilisateur est déjà utilisé" });
                 }
 
-                var user = new User(username, password);
+                var user = new User(request.username, request.password);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(register), user);
+
+                return CreatedAtAction(nameof(register), new UserDetails(user.Username, user.Role));
             }
             catch (Exception ex)
             {
