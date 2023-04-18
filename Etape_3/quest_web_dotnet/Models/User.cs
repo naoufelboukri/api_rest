@@ -43,7 +43,7 @@ public class User
     public User(string username, string password)
     {
         this.Username = username;
-        this.Password = password.GetHashCode().ToString();
+        this.Password = password;
         this.Role = UserRole.ROLE_USER.ToString();
         this.CreationDate = DateTime.Now;
         this.UpdatedDate = DateTime.Now;
@@ -56,7 +56,7 @@ public class User
 
     public string getHashCode()
     {
-        return "Code hashé";
+        return BCrypt.Net.BCrypt.HashPassword(this.Password);
     }
 
     public string Equals()
