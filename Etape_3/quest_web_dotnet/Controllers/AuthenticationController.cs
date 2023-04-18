@@ -72,6 +72,7 @@ namespace quest_web.Controllers
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
                 var token = headerValue.Parameter;
+
                 var username = _jwt.GetUsernameFromToken(token);
                 var user = _context.user.ToList().FirstOrDefault(user => user.Username == username);
                 if (user == null)

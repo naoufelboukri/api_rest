@@ -1,6 +1,9 @@
 using quest_web;
 using Microsoft.EntityFrameworkCore;
 using quest_web.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,17 +34,21 @@ builder.Services.AddDbContext<APIDbContext>(options =>
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(option =>
 {
     option.TokenValidationParameters = JwtTokenUtil.TokenValidationParameters;
-    //option.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents
-    //{
-    //   OnAuthenticationFailed = context =>
-    //   {
-    //       context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-    //       context.Response.ContentType = "application/json";
-    //       var message = "Unaa";
-    //       //var result = JsonSerializer.Serialize(new { error = message });
-    //       return context.Response.WriteAsJsonAsync(message);
-    //   }
-    //};
+/*    option.Events = new JwtBearerEvents
+    {
+
+        OnChallenge = async (context) =>
+        {
+            context.HandleResponse();
+            if (context.AuthenticateFailure != null)
+            {
+                context.Response.StatusCode = 401;
+
+                await context.HttpContext.Response.WriteAsJsonAsync("Token non valide");
+            }
+        }
+    };*/
+
 });
 
 var app = builder.Build();
@@ -76,6 +83,16 @@ app.UseRouting();
 //    }
 
 //});
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
+    {
+        await context.Response.WriteAsJsonAsync("Token vide ou invalide");
+    }
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
