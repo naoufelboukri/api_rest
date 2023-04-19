@@ -74,7 +74,7 @@ namespace quest_web.Controllers
                 var token = headerValue.Parameter;
 
                 var username = _jwt.GetUsernameFromToken(token);
-                var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username) && (user.Password == password);
+                var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
                 if (user == null)
                 {
                     return BadRequest(new { message = "L'utilisateur n'existe pas" });
