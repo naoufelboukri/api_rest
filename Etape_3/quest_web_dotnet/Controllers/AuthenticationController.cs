@@ -53,12 +53,12 @@ namespace quest_web.Controllers
             var user = _context.user.ToList().FirstOrDefault(user => user.Username == request.username);
             if (user == null)
             {
-                return BadRequest(new { message = "Identifiant ou mot de passe incorrect" });
+                return Unauthorized(new { message = "Identifiant ou mot de passe incorrect" });
             }
 
             if (!BCrypt.Net.BCrypt.Verify(request.password, user.Password))
             {
-                return BadRequest(new { message = "Identifiant ou mot de passe incorrect" });
+                return Unauthorized(new { message = "Identifiant ou mot de passe incorrect" });
             }
 
             var token = this._jwt.GenerateToken(new UserDetails(user.Username, user.Role));
@@ -74,7 +74,7 @@ namespace quest_web.Controllers
                 var token = headerValue.Parameter;
 
                 var username = _jwt.GetUsernameFromToken(token);
-                var user = _context.user.ToList().FirstOrDefault(user => user.Username == username);
+                var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username) && (user.Password == password);
                 if (user == null)
                 {
                     return BadRequest(new { message = "L'utilisateur n'existe pas" });
