@@ -50,7 +50,7 @@ namespace quest_web.Controllers
         [HttpPost("authenticate")]
         public async Task<IActionResult> authenticate([FromBody] UserBody request)
         {
-            var user = _context.user.ToList().FirstOrDefault(user => user.Username == request.username);
+            var user = _context.user.ToList().FirstOrDefault(user => user.Username.Equals(request.username, StringComparison.OrdinalIgnoreCase));
             if (user == null)
             {
                 return StatusCode(401,(new { message = "Identifiant ou mot de passe incorrect" }));
