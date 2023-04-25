@@ -1,8 +1,6 @@
 using quest_web;
 using Microsoft.EntityFrameworkCore;
 using quest_web.Utils;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,33 +64,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRouting();
-// app.Use(async (context, next) =>
-// {
-//    await next();
-//    if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
-//    {
-//        await context.Response.WriteAsync(JsonSerializer.Serialize(new {message = "ça marche pas"}));
-//        await context.Response.WriteAsync(new ErrorDetails(
-//        {
-//            StatusCode = context.Response.StatusCode,
-//            Message = "Internal Server Error."
-//        });
-//        //context.Response.StatusCode = (int)HttpStatusCode.OK;
-
-//    }
-
-//});
 app.Use(async (context, next) =>
 {
     await next();
-
-    if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
-    {
-        await context.Response.WriteAsJsonAsync("Token vide ou invalide");
-    }
+    Console.WriteLine(context.Response.StatusCode);
+    Console.WriteLine(context.Response.Body);
+    //if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized && context.Response.Body.Length == 0)
+    //{
+    //    await context.Response.WriteAsJsonAsync("Token vide ou invalide");
+    //}
 });
 
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
