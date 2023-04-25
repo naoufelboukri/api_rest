@@ -29,23 +29,9 @@ builder.Services.AddDbContext<APIDbContext>(options =>
     .EnableDetailedErrors()
 );
 
-builder.Services.AddAuthentication("Bearer").AddJwtBearer(option =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {
     option.TokenValidationParameters = JwtTokenUtil.TokenValidationParameters;
-/*    option.Events = new JwtBearerEvents
-    {
-
-        OnChallenge = async (context) =>
-        {
-            context.HandleResponse();
-            if (context.AuthenticateFailure != null)
-            {
-                context.Response.StatusCode = 401;
-
-                await context.HttpContext.Response.WriteAsJsonAsync("Token non valide");
-            }
-        }
-    };*/
 
 });
 
@@ -67,15 +53,15 @@ if (app.Environment.IsDevelopment())
 app.Use(async (context, next) =>
 {
     await next();
-    Console.WriteLine(context.Response.StatusCode);
-    Console.WriteLine(context.Response.Body);
-    //if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized && context.Response.Body.Length == 0)
-    //{
-    //    await context.Response.WriteAsJsonAsync("Token vide ou invalide");
-    //}
+
+    if (context.Response.StatusCode == (int)HttpStatusCode.Unauthorized && context.Response.Headers.ContainsKey("WWW-Authenticate"))
+    {
+        await context.Response.WriteAsJsonAsync("Token vide ou invalide");
+    }
 });
 
 app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
