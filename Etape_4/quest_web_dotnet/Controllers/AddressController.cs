@@ -5,6 +5,7 @@ using quest_web.Models;
 using quest_web.Models.Form;
 using quest_web.Utils;
 using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
 
 namespace quest_web.Controllers
 {
@@ -32,8 +33,7 @@ namespace quest_web.Controllers
                 if (user.Role == "ROLE_USER") {
                     var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
                     return Ok(addresses);
-                } else if (user.Role == "ROLE_ADMIN")
-                {
+                } else if (user.Role == "ROLE_ADMIN") {
                     var addresses = _context.address.ToList();
                     return Ok(addresses);
                 }
@@ -61,8 +61,7 @@ namespace quest_web.Controllers
                         return StatusCode(400, new { message = "Cette adresse n'existe pas" });
                     }
                     return Ok(address);
-                } else if (user.Role == "ROLE_ADMIN")
-                {
+                } else if (user.Role == "ROLE_ADMIN") {
                     var address = _context.address.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
                     if (address == null)
                     {
@@ -104,13 +103,87 @@ namespace quest_web.Controllers
             }
             return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
+
         [HttpPut("address/{id}")]
         [Authorize]
-        public async Task<IActionResult> putAddress([FromBody] AddressBody request, [FromHeader] string Authorization, string id)
+        public async Task<IActionResult> putAddress([FromHeader] string Authorization, [FromBody] AddressBody request, string id)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
+               var token = headerValue.Parameter;
+               var username = _jwt.GetUsernameFromToken(token);
+               var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
+
+               if (user.Role == "ROLE_USER")
+               {
+                    var address = _context.address.FirstOrDefault(address => (address.UserId == user.Id && address.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                    }
+                    address.Road = request.street != null  ? request.street : address.Road;
+                    address.City = request.postalCode != null ? request.postalCode : address.City ;
+                    address.PostalCode = request.postalCode != null ? request.postalCode : address.PostalCode;
+                    address.Country = request.country != null ? request.country : address.Country;
+                    address.UpdatedDate = DateTime.Now;
+                    _context.SaveChanges();
+
+                    return Ok(address);
+                    
+               } else if (user.Role == "ROLE_ADMIN") {
+                    var address = _context.address.FirstOrDefault(address => (address.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                    }
+                    address.Road = request.street != null ? request.street : address.Road;
+                    address.City = request.postalCode != null ? request.postalCode : address.City;
+                    address.PostalCode = request.postalCode != null ? request.postalCode : address.PostalCode;
+                    address.Country = request.country != null ? request.country : address.Country;
+                    address.UpdatedDate = DateTime.Now;
+                    _context.SaveChanges();
+
+                    return Ok(address);
+               }
+
             }
             return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
+
+        [HttpDelete("address/{id}")]
+        [Authorize]
+        public async Task<IActionResult> deleteAddress([FromHeader] string Authorization, string id)
+        {
+            if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
+            {
+                var token = headerValue.Parameter;
+                var username = _jwt.GetUsernameFromToken(token);
+                var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
+
+                if (user.Role == "ROLE_USER")
+                {
+                    var address = _context.address.FirstOrDefault(address => (address.UserId == user.Id && address.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { success = "false" });
+                    }
+                    _context.Remove(address);
+                    _context.SaveChanges();
+                    return Ok(new { success = "true" });
+                }
+                else if (user.Role == "ROLE_ADMIN")
+                {
+                    var address = _context.address.FirstOrDefault(address => (address.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { success = "false" });
+                    }
+                    _context.Remove(address);
+                    _context.SaveChanges();
+                    return Ok(new { success = "true" });
+                }
+            }
+            return BadRequest(new { message = "Vous n'avez pas les droits" });
+        }
+    }
 }
