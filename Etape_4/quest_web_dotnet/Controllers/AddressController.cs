@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using quest_web.Models;
 using quest_web.Models.Form;
 using quest_web.Utils;
 using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
 
 namespace quest_web.Controllers
 {
@@ -165,7 +163,7 @@ namespace quest_web.Controllers
                     var address = _context.address.FirstOrDefault(address => (address.UserId == user.Id && address.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { success = "false" });
+                        return StatusCode(403, new { success = "false" });
                     }
                     _context.Remove(address);
                     _context.SaveChanges();
@@ -176,7 +174,7 @@ namespace quest_web.Controllers
                     var address = _context.address.FirstOrDefault(address => (address.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { success = "false" });
+                        return StatusCode(403, new { success = "false" });
                     }
                     _context.Remove(address);
                     _context.SaveChanges();

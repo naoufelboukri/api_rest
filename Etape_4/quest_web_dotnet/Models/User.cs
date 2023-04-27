@@ -42,7 +42,7 @@ public class User
 
 
 
-    public ICollection<Address> Addresses { get; set; } = new List<Address>();
+    public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
 
     //public User(string username, string password)
     //{
