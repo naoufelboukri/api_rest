@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using quest_web.Models;
 using quest_web.Models.Form;
@@ -19,23 +20,30 @@ namespace quest_web.Controllers
         }
 
         [HttpGet("address")]
-        public ActionResult addresses([FromHeader] string Authorization)
+        [Authorize]
+        public IActionResult addresses([FromHeader] string Authorization)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
                 var token = headerValue.Parameter;
                 var username = _jwt.GetUsernameFromToken(token);
-
                 var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
-                var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
 
-                return Ok(addresses);
+                if (user.Role == "ROLE_USER") {
+                    var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
+                    return Ok(addresses);
+                } else if (user.Role == "ROLE_ADMIN")
+                {
+                    var addresses = _context.address.ToList();
+                    return Ok(addresses);
+                }
             }
             return StatusCode(403, new { message = "Accès non autorisé" });
         }
 
         [HttpGet("address/{id}")]
-        public ActionResult address([FromHeader] string Authorization, string id)
+        [Authorize]
+        public IActionResult address([FromHeader] string Authorization, string id)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
@@ -43,20 +51,33 @@ namespace quest_web.Controllers
                 var username = _jwt.GetUsernameFromToken(token);
 
                 var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
-                var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
 
-                var address = addresses.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
-                if (address == null)
+                if (user.Role == "ROLE_USER")
                 {
-                    return StatusCode(400, new { message = "Cette adresse n'existe pas" });
+                    var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
+                    var address = addresses.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas" });
+                    }
+                    return Ok(address);
+                } else if (user.Role == "ROLE_ADMIN")
+                {
+                    var address = _context.address.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
+                    if (address == null)
+                    {
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                    }
+                    return Ok(address);
                 }
-                return Ok(address);
+
             }
             return StatusCode(403, new { message = "Accès non autorisé" });
         }
 
 
         [HttpPost("address")]
+        [Authorize]
         public async Task<IActionResult> newAddress([FromBody] AddressBody request, [FromHeader] string Authorization)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
@@ -83,5 +104,13 @@ namespace quest_web.Controllers
             }
             return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
-    }
+        [HttpPut("address/{id}")]
+        [Authorize]
+        public async Task<IActionResult> putAddress([FromBody] AddressBody request, [FromHeader] string Authorization, string id)
+        {
+            if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
+            {
+            }
+            return BadRequest(new { message = "Vous n'avez pas les droits" });
+        }
 }
