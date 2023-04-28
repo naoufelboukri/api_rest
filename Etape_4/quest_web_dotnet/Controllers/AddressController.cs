@@ -4,6 +4,7 @@ using quest_web.Models;
 using quest_web.Models.Form;
 using quest_web.Utils;
 using System.Net.Http.Headers;
+using System.Text.Json.Nodes;
 
 namespace quest_web.Controllers
 {
@@ -104,7 +105,7 @@ namespace quest_web.Controllers
 
         [HttpPut("address/{id}")]
         [Authorize]
-        public async Task<IActionResult> putAddress([FromHeader] string Authorization, [FromBody] AddressBody request, string id)
+        public async Task<IActionResult> putAddress([FromHeader] string Authorization, [FromBody] JsonObject request, string id)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
@@ -119,10 +120,10 @@ namespace quest_web.Controllers
                     {
                         return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
                     }
-                    address.Road = request.street != null  ? request.street : address.Road;
-                    address.City = request.postalCode != null ? request.postalCode : address.City ;
-                    address.PostalCode = request.postalCode != null ? request.postalCode : address.PostalCode;
-                    address.Country = request.country != null ? request.country : address.Country;
+                    address.Road = (string)(request.ContainsKey("street") ? request["street"] : address.Road);
+                    address.City = (string)(request.ContainsKey("city") ? request["city"] : address.City);
+                    address.PostalCode = (string)(request.ContainsKey("postalCode") ? request["postalCode"] : address.PostalCode);
+                    address.Country = (string)(request.ContainsKey("country") ? request["country"] : address.Country);
                     address.UpdatedDate = DateTime.Now;
                     _context.SaveChanges();
 
@@ -134,10 +135,10 @@ namespace quest_web.Controllers
                     {
                         return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
                     }
-                    address.Road = request.street != null ? request.street : address.Road;
-                    address.City = request.postalCode != null ? request.postalCode : address.City;
-                    address.PostalCode = request.postalCode != null ? request.postalCode : address.PostalCode;
-                    address.Country = request.country != null ? request.country : address.Country;
+                    address.Road = (string)(request.ContainsKey("street") ? request["street"] : address.Road);
+                    address.City = (string)(request.ContainsKey("city") ? request["city"] : address.City);
+                    address.PostalCode = (string)(request.ContainsKey("postalCode") ? request["postalCode"] : address.PostalCode);
+                    address.Country = (string)(request.ContainsKey("country") ? request["country"] : address.Country);
                     address.UpdatedDate = DateTime.Now;
                     _context.SaveChanges();
 

@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
+using quest_web.Models;
 using quest_web.Models.Form;
 using quest_web.Utils;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text.Json.Nodes;
 
 namespace quest_web.Controllers
 {
@@ -21,16 +24,14 @@ namespace quest_web.Controllers
         }
 
         [HttpGet("user")]
-        [Authorize]
-        public IActionResult allUsers([FromHeader] string Authorization)
+        public IActionResult allUsers()
         {
             var userList = _context.user.Select(u => new { username = u.Username, role = u.Role }).ToList();
             return Ok(userList);
         }
 
         [HttpGet("user/{id}")]
-        [Authorize]
-        public IActionResult user([FromHeader] string Authorization, string id)
+        public IActionResult user(string id)
         {
             var user = _context.user.FirstOrDefault(user => user.Id == int.Parse(id));
             if (user == null)
@@ -46,14 +47,17 @@ namespace quest_web.Controllers
 
         [HttpPut("user/{id}")]
         [Authorize]
-        public IActionResult putUser([FromHeader] string Authorization, [FromBody] PutUserBody request, string id)
+        public IActionResult putUser([FromHeader] string Authorization, JsonObject request, string id)
         {
             if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
                 var token = headerValue.Parameter;
                 var username = _jwt.GetUsernameFromToken(token);
                 var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
-
+                if (user == null )
+                {
+                    return Unauthorized(new { message = $"L'utilisateur {id} n'existe pas " });
+                }
                 if (user.Role == "ROLE_USER")
                 {
                     var userDetails = _context.user.FirstOrDefault(u => (u.Id == int.Parse(id)));
@@ -61,12 +65,12 @@ namespace quest_web.Controllers
                     {
                         return StatusCode(403, new { message = "Cette utilisateur n'existe pas ou ne vous n'êtes pas le propriétaire" });
                     }
-                    userDetails.Username = request.username != null ? request.username : userDetails.Username;
-                    userDetails.Role = request.role != null ? request.role : userDetails.Role;
+                    userDetails.Username = (string)(request.ContainsKey("username") ? request["username"] : userDetails.Username);
+                    userDetails.Role = (string)(request.ContainsKey("role") ? request["role"] : userDetails.Role);
                     userDetails.UpdatedDate = DateTime.Now;
                     _context.SaveChanges();
 
-                    return Ok(userDetails);
+                    return Ok(new UserDetails(userDetails.Username, userDetails.Role));
                 }
                 else if (user.Role == "ROLE_ADMIN")
                 {
@@ -75,8 +79,8 @@ namespace quest_web.Controllers
                     {
                         return StatusCode(403, new { message = "Cette utilisateur n'existe pas ou ^vous n'êtes pas le propriétaire" });
                     }
-                    userDetails.Username = request.username != null ? request.username : userDetails.Username;
-                    userDetails.Role = request.role != null ? request.role : userDetails.Role;
+                    userDetails.Username = (string)(request.ContainsKey("username") ? request["username"] : userDetails.Username);
+                    userDetails.Role = (string)(request.ContainsKey("role") ? request["role"] : userDetails.Role);
                     userDetails.UpdatedDate = DateTime.Now;
                     _context.SaveChanges();
 
