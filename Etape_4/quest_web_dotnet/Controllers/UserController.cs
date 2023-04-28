@@ -84,7 +84,7 @@ namespace quest_web.Controllers
                     userDetails.UpdatedDate = DateTime.Now;
                     _context.SaveChanges();
 
-                    return Ok(userDetails);
+                    return Ok(new UserDetails(userDetails.Username, userDetails.Role));
                 }
             }
             return BadRequest(new { message = "Vous n'avez pas les droits" });
