@@ -57,14 +57,14 @@ namespace quest_web.Controllers
                     var address = addresses.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { message = "Cette adresse n'existe pas" });
+                        return StatusCode(403, new { message = "Cette adresse n'existe pas" });
                     }
                     return Ok(address);
                 } else if (user.Role == "ROLE_ADMIN") {
                     var address = _context.address.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas" });
                     }
                     return Ok(address);
                 }
@@ -98,7 +98,7 @@ namespace quest_web.Controllers
                 _context.address.Add(address);
                 user.Addresses.Add(address);
                 _context.SaveChanges();
-                return Ok(address);
+                return CreatedAtAction(nameof(newAddress), address);
             }
             return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
@@ -118,7 +118,7 @@ namespace quest_web.Controllers
                     var address = _context.address.FirstOrDefault(address => (address.UserId == user.Id && address.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                        return StatusCode(403, new { message = "Cette adresse n'existe pas" });
                     }
                     address.Road = (string)(request.ContainsKey("street") ? request["street"] : address.Road);
                     address.City = (string)(request.ContainsKey("city") ? request["city"] : address.City);
@@ -133,7 +133,7 @@ namespace quest_web.Controllers
                     var address = _context.address.FirstOrDefault(address => (address.Id == int.Parse(id)));
                     if (address == null)
                     {
-                        return StatusCode(400, new { message = "Cette adresse n'existe pas ou ne vous appartient pas" });
+                        return StatusCode(400, new { message = "Cette adresse n'existe pas" });
                     }
                     address.Road = (string)(request.ContainsKey("street") ? request["street"] : address.Road);
                     address.City = (string)(request.ContainsKey("city") ? request["city"] : address.City);
