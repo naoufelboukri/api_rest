@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using quest_web.Utils;
 using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -36,6 +37,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200").WithHeaders(HeaderNames.ContentType, "x-custom-header"); ;
+                      });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -62,7 +72,7 @@ app.Use(async (context, next) =>
 });
 
 app.UseRouting();
-
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 
