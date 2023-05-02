@@ -1,9 +1,9 @@
 <div class="login">
     <h2>Connexion</h2>
-    <form #loginForm="ngForm" class="mb-3" (ngSubmit)="login(email, password)">
+    <form #loginForm="ngForm" class="mb-3" (ngSubmit)="login(username, password)">
         <div>
-            <label class="form-label" for="email">Adresse email</label>
-            <input class="form-control" type="email" name="email" id="email" placeholder="username@example.com" [(ngModel)]="email">
+            <label class="form-label" for="username">Nom d'utilisateur</label>
+            <input class="form-control" type="text" name="username" id="username" placeholder="username123" [(ngModel)]="username">
         </div>
         <div class="mt-3">
             <label class="form-label" for="password">Mot de passe</label>

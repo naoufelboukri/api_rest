@@ -23,8 +23,8 @@ export class AuthService {
     this.user = this.userSubject.asObservable();
   }
 
-  login(email: string, password: string) {
-    return this._http.post<string>(`${this.API_URL}/authenticate`, {email: email, password: password}).pipe(
+  login(username: string, password: string) {
+    return this._http.post<string>(`${this.API_URL}/authenticate`, {username: username, password: password}).pipe(
       tap((user: string) => {
         if (user) {
           this.userSubject.next(user);

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/Services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email: string = '';
+  username: string = '';
   password: string = '';
   isValid: boolean = true;
 
@@ -17,8 +17,8 @@ export class LoginComponent {
     private _authService: AuthService
   ) { }
 
-  login(email: string, password: string) {
-    this._authService.login(email, password).subscribe(
+  login(username: string, password: string) {
+    this._authService.login(username, password).subscribe(
       (data) => {
         this.isValid = true;
         localStorage.setItem('UserToken', data.toString());
