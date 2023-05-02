@@ -1,0 +1,38 @@
+@import '../../../Styles/colors';
+
+table {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+    tr{
+        transition: 500ms;
+        &:nth-child(even) {
+            background-color: $tableEven;
+            &:hover{
+                background-color: $tableEvenHover;
+            }
+        }
+        &:nth-child(odd) {
+            background-color: $tableOdd;
+            &:hover{
+                background-color: $tableOddHover;
+            }
+        }
+        &:first-child {   
+            font-weight: 700;
+            background-color: $tableHeader;
+            &:hover{
+                background-color: $tableHeader;
+            }
+        }
+        td {
+            padding: 0.5rem 1rem;
+            border: 1px solid #000;
+            text-align: center;
+            &:first-child{
+                font-weight: 700;
+            }
+        }
+    }
+
+}

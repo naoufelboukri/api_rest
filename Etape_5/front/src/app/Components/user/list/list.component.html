@@ -1,1 +1,14 @@
-<p>list works!</p>
+<div class="users">
+    <h2>Liste des utilisateurs</h2>
+    <hr>
+    <table>
+        <tr>
+            <td>Nom d'utilisateur</td>
+            <td>Role</td>
+        </tr>
+        <tr *ngFor="let user of users">
+            <td (click)="goToUser(user)">{{ user.username }}</td>
+            <td>{{ user.role }}</td>
+        </tr>
+    </table>
+</div>
