@@ -1,1 +1,6 @@
-<p>register works!</p>
+<h2 style="color:red;"> {{error_message}}</h2>
+<form #form="ngForm" (ngSubmit) = "onSubmit(form)">
+    <input type="text" name="username" ngModel required>
+    <input type="password" name="password" ngModel required>
+    <button>Submit</button>
+</form>
