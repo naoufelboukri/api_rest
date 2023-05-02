@@ -32,4 +32,13 @@ export class AuthService {
       })
     )
   }
+
+  logout() {
+    localStorage.removeItem('UserToken');
+    window.location.reload();
+  }
+
+  register(username: string, password: string) {
+    return this._http.post(`${this.API_URL}/register`, {username: username, password: password});
+  }
 }

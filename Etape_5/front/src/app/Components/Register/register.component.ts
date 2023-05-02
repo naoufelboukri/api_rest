@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-register',
@@ -10,13 +13,26 @@ export class RegisterComponent {
  
   error_message: string = "";
 
-  constructor() {}
+  constructor(
+    private _auth: AuthService,
+    private _router: Router
+  ) {}
   
   onSubmit(form: NgForm) {
     if (form.valid != true) {
-      this.error_message = "nom d'utilisateur et mot de passe requis"
+      this.error_message = "nom d'utilisateur et mot de passe requis";
     } else {
-      //appel HTTP
+      this._auth.register(form.value.username, form.value.password)
+      .subscribe((data) => {
+        this._router.navigate(['']);
+      },
+      (err) => {
+        this.error_message = "nom d'utilisateur et mot de passe requis";
+      });
     }
+  }
+
+  goToLogin() {
+    this._router.navigate(['login']);
   }
 }

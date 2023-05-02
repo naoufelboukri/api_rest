@@ -1,6 +1,18 @@
-<h2 style="color:red;"> {{error_message}}</h2>
-<form #form="ngForm" (ngSubmit) = "onSubmit(form)">
-    <input type="text" name="username" ngModel required>
-    <input type="password" name="password" ngModel required>
-    <button>Submit</button>
-</form>
+<div class="register">
+    <h2>Inscription</h2>
+    <form #form="ngForm" class="mb-3" (ngSubmit)="onSubmit(form)">
+        <div>
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" name="username" id="username" placeholder="username123" ngModel required>
+        </div>
+        <div class="mt-3">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" placeholder="Mot de passe.." ngModel required>
+        </div>
+        <div class="mt-3">
+            <button type="submit" class="btn btn-warning form-control">Inscription</button>
+        </div>
+    </form>
+    <span class="text-center text-black onClick" data-bs-dismiss="modal" (click)="goToLogin()">Déjà de compte ?</span>
+</div>
+    
