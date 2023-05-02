@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ListComponent } from './list/list.component';
 import { AuthGuard } from 'src/app/Guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
+import { DetailComponent } from './detail/detail.component';
 
 const userRoutes: Routes = [
 { path: 'users', component: ListComponent, canActivate: [AuthGuard] },
@@ -17,7 +18,8 @@ const userRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    ListComponent
+    ListComponent,
+    DetailComponent
   ],
   imports: [
     CommonModule,
