@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/Login/login.component';
 import { RegisterComponent } from './Components/Register/register.component';
+import { ErrorComponent } from './Components/error/error.component';
+import { HomeComponent } from './Components/home/home.component';
+import { CustomerGuard } from './Guards/customer.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  // { path: 'error', component: ErrorComponent, canActivate: [CustomerGuard]},
-  // { path: '', redirectTo: '/products', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [CustomerGuard]},
+  { path: 'register', component: RegisterComponent, canActivate: [CustomerGuard]},
+  { path: 'error', component: ErrorComponent},
+  { path: '', component: HomeComponent },
   // { path: '**', component: PageNotFoundComponent}
 ];
 

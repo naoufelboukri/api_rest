@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './Services/auth.service';
 
 
 @Component({
@@ -11,7 +12,8 @@ export class AppComponent {
   title = 'front';
 
   constructor(
-    private _router: Router
+    private _router: Router,
+    protected _authService: AuthService
   ) {
 
   }
@@ -21,5 +23,11 @@ export class AppComponent {
   }
   goToLogin() {
     this._router.navigate(['login']);
+  }
+  goToHome() {
+    this._router.navigate(['']);
+  }
+  Logout() {
+    this._authService.logout();
   }
 }

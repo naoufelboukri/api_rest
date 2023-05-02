@@ -1,0 +1,25 @@
+@import '../../Styles/colors';
+
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+        color: $error;
+        font-weight: 700;
+        font-size: 3rem;
+    }
+    button {
+        margin: 2rem 0 ;
+        border: 0px;
+        padding: 1rem;
+        background-color: $error;
+        cursor: pointer;
+        color: #fff;
+        transition: 500ms;
+        &:hover {
+            background-color: $darkError;
+        }
+    }
+}
