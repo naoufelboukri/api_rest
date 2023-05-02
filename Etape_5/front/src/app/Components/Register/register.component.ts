@@ -26,8 +26,8 @@ export class RegisterComponent {
       .subscribe((data) => {
         this._router.navigate(['']);
       },
-      (err) => {
-        this.error_message = "nom d'utilisateur et mot de passe requis";
+      (exception) => {
+        this.error_message = exception.error.message;
       });
     }
   }
