@@ -1,5 +1,6 @@
 <div class="register">
     <h2>Inscription</h2>
+    <h4 style="color:red"> {{error_message}}</h4>
     <form #form="ngForm" class="mb-3" (ngSubmit)="onSubmit(form)">
         <div>
             <label for="username">Nom d'utilisateur</label>
