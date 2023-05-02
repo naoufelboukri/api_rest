@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 namespace quest_web.Controllers
 {
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : ControllerBase, IDisposable
     {
         private readonly APIDbContext _context;
         private readonly JwtTokenUtil _jwt;
@@ -17,6 +17,11 @@ namespace quest_web.Controllers
         {
             _context = context;
             _jwt = JWT;
+        }
+
+        public void Dispose()
+        {
+            // ... clean up test data from the database ...
         }
 
         [HttpPost("register")]
