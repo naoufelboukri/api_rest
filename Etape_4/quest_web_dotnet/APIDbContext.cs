@@ -13,7 +13,10 @@ public class APIDbContext : DbContext
         var connection = "server=127.0.0.1;database=quest_web;user=application;password=password";
         var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 
-        optionsBuilder.UseMySql(connection, serverVersion);
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseMySql(connection, serverVersion);
+        }
     }
     public APIDbContext(DbContextOptions<APIDbContext> options) : base(options)
     { }
