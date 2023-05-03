@@ -29,13 +29,11 @@ namespace quest_web.Controllers
                 var username = _jwt.GetUsernameFromToken(token);
                 var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
 
-                if (user.Role == "ROLE_USER") {
-                    var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
-                    return Ok(addresses);
-                } else if (user.Role == "ROLE_ADMIN") {
+                if (user != null)
+                {
                     var addresses = _context.address.ToList();
                     return Ok(addresses);
-                }
+                } 
             }
             return StatusCode(403, new { message = "Accès non autorisé" });
         }
