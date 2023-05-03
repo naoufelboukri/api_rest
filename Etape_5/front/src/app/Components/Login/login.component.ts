@@ -19,9 +19,9 @@ export class LoginComponent {
 
   login(username: string, password: string) {
     this._authService.login(username, password).subscribe(
-      (data) => {
+      (data: any) => {
         this.isValid = true;
-        localStorage.setItem('UserToken', data.toString());
+        localStorage.setItem('UserToken', data.token.toString());
         this._router.navigate(['users']);
       },
       (err) => {

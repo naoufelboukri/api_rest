@@ -17,20 +17,19 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    private _router: Router
   ) { 
     this.userSubject = new BehaviorSubject<string>(localStorage.getItem('UserToken') || '');
     this.user = this.userSubject.asObservable();
   }
 
   login(username: string, password: string) {
-    return this._http.post<string>(`${this.API_URL}/authenticate`, {username: username, password: password}).pipe(
-      tap((user: string) => {
+    return this._http.post(`${this.API_URL}/authenticate`, {username: username, password: password}).pipe(
+      tap((user: any) => {
         if (user) {
           this.userSubject.next(user);
         }
       })
-    )
+    );
   }
 
   logout() {

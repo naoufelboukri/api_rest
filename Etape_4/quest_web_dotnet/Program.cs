@@ -42,7 +42,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:4200").WithHeaders(HeaderNames.ContentType, "x-custom-header"); ;
+                          policy.WithOrigins("http://localhost:4200").AllowAnyHeader();
                       });
 });
 
