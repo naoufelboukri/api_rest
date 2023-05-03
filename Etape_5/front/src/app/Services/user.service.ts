@@ -21,4 +21,8 @@ export class UserService {
   getUsers() {
     return this._http.get<User[]>(`${this.API_URL}/user`);
   }
+
+  getUser(id: number) {
+    return this._http.get<User>(`${this.API_URL}/user/${id}`);
+  }
 }

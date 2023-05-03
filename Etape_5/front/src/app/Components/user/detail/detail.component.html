@@ -1,1 +1,16 @@
-<p>detail works!</p>
+<div class="user">
+    <div *ngIf="user">
+        <h2>Utilisateur</h2>
+        <div>
+            <label for="username">Nom d'utilisateur : </label>
+            <span id="username">{{user.username}}</span>
+        </div>
+        <div>
+            <label for="role">Rôle : </label>
+            <span id="role">{{user.role}}</span>
+        </div>
+        <hr>
+        <h2>Adresse(s)</h2>
+        
+    </div>
+</div>

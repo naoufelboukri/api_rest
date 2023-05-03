@@ -41,7 +41,6 @@ export class ListComponent implements OnInit {
   }
 
   goToUser(user: User) {
-    console.log(user);
-    // this._router.navigate(['user', user.id]);
+    this._router.navigate(['user', user.id]);
   }
 }
