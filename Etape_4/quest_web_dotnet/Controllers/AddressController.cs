@@ -49,24 +49,15 @@ namespace quest_web.Controllers
 
                 var user = _context.user.ToList().FirstOrDefault(user => (user.Username == username));
 
-                if (user.Role == "ROLE_USER")
+                if (user != null)
                 {
-                    var addresses = _context.address.Where(a => a.UserId == user.Id).ToList();
-                    var address = addresses.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
-                    if (address == null)
-                    {
-                        return StatusCode(403, new { message = "Cette adresse n'existe pas" });
-                    }
-                    return Ok(address);
-                } else if (user.Role == "ROLE_ADMIN") {
-                    var address = _context.address.FirstOrDefault(adr => (adr.Id == int.Parse(id)));
+                    var address = _context.address.FirstOrDefault(a => a.Id == int.Parse(id));
                     if (address == null)
                     {
                         return StatusCode(400, new { message = "Cette adresse n'existe pas" });
                     }
                     return Ok(address);
                 }
-
             }
             return StatusCode(403, new { message = "Accès non autorisé" });
         }
