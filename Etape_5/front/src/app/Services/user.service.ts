@@ -25,4 +25,12 @@ export class UserService {
   getUser(id: number) {
     return this._http.get<User>(`${this.API_URL}/user/${id}`);
   }
+
+  editUser(id: number, object: any) {
+    return this._http.put(`${this.API_URL}/user/${id}`, object);
+  }
+
+  deleteUser(id: number) {
+    return this._http.delete(`${this.API_URL}/user/${id}`);
+  }
 }

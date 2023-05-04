@@ -29,8 +29,6 @@ export class DetailComponent implements OnInit {
           this.user = data;
         }
       )
-
-      // this._addressService.getAddress()
     }
   }
 

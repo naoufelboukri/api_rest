@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DetailComponent } from './detail/detail.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import { EditComponent } from './edit/edit.component';
+import { FormsModule } from '@angular/forms';
 
 const userRoutes: Routes = [
   { path: 'users', component: ListComponent, canActivate: [AuthGuard] },
@@ -23,6 +24,7 @@ const userRoutes: Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(userRoutes)
   ]
 })

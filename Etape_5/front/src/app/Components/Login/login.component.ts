@@ -22,7 +22,7 @@ export class LoginComponent {
       (data: any) => {
         this.isValid = true;
         localStorage.setItem('UserToken', data.token.toString());
-        this._router.navigate(['users']);
+        window.location.reload();
       },
       (err) => {
         this.isValid = false;

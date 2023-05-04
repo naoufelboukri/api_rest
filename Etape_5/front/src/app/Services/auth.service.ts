@@ -17,6 +17,7 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
+    private _router: Router
   ) { 
     this.userSubject = new BehaviorSubject<string>(localStorage.getItem('UserToken') || '');
     this.user = this.userSubject.asObservable();
@@ -33,6 +34,7 @@ export class AuthService {
   }
 
   logout() {
+    this._router.navigate(['']);
     localStorage.removeItem('UserToken');
     window.location.reload();
   }
