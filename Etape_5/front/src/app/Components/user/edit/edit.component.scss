@@ -1,0 +1,41 @@
+.editAccount {
+ .container {
+    width: 100%;
+    form {
+        padding: 1rem;
+        hr {
+            margin: 2rem 0;
+        }
+        div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 0 0 1rem;
+            label {
+                width: 20%;
+            }
+            input, select {
+                width: 80%;
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+ }   
+}
+
+/*
+table {
+        width: 100%;
+        td:nth-child(2) {
+            text-align: right;
+        }
+    }
+    button {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        border-radius: 0px;
+        border: 1px solid #000;
+        margin: 2rem 0 0;
+        cursor: pointer;
+    }
+*/

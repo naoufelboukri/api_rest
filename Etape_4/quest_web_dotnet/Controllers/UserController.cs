@@ -26,7 +26,7 @@ namespace quest_web.Controllers
         [HttpGet("user")]
         public IActionResult allUsers()
         {
-            var userList = _context.user.Select(u => new { id= u.Id, username = u.Username, role = u.Role }).ToList();
+            var userList = _context.user.Select(u => new { id= u.Id, username = u.Username, role = u.Role, addresses = u.Addresses }).ToList();
             return Ok(userList);
         }
 
@@ -41,7 +41,8 @@ namespace quest_web.Controllers
             return Ok(new 
             {
                 username = user.Username,
-                role = user.Role
+                role = user.Role,
+                addresses = user.Addresses
             });
         }
 

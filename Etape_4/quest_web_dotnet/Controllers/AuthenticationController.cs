@@ -93,7 +93,13 @@ namespace quest_web.Controllers
                 {
                     return BadRequest(new { message = "L'utilisateur n'existe pas" });
                 }
-                return Ok(new UserDetails(user.Username, user.Role));
+                _context.user.Include(x => x.Addresses).ToList();
+                return Ok(new {
+		    id = user.Id,
+                    username = user.Username, 
+                    role = user.Role,
+                    addresses = user.Addresses
+                });
             }
             return Unauthorized(new { message = "ddede" });
         }

@@ -27,6 +27,9 @@ export class AppComponent {
   goToHome() {
     this._router.navigate(['']);
   }
+  goToProfile() {
+    this._router.navigate(['mon-compte']);
+  }
   Logout() {
     this._authService.logout();
   }

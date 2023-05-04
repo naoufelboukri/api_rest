@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Address } from 'src/app/Models/Address';
 import { User } from 'src/app/Models/User';
+import { AddressService } from 'src/app/Services/address.service';
 import { UserService } from 'src/app/Services/user.service';
 
 @Component({
@@ -13,10 +14,11 @@ export class DetailComponent implements OnInit {
 
   user: User | null = null;
   addresses: Address[] = [];
-  
+
   constructor (
     private _route: ActivatedRoute,
     private _userService: UserService,
+    private _addressService: AddressService,
   ) { }
 
   ngOnInit(): void {
@@ -24,10 +26,11 @@ export class DetailComponent implements OnInit {
     if (userId) {
       this._userService.getUser(+userId).subscribe(
         (data: User) => {
-          console.log(data);
           this.user = data;
         }
       )
+
+      // this._addressService.getAddress()
     }
   }
 

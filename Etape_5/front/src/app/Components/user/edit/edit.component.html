@@ -1,0 +1,73 @@
+<div class="editAccount">
+    <h2>Mon profile</h2>
+    <hr>
+    <div class="container" *ngIf="user">
+        <form>
+            <div class="row">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" [value]="user.username" [placeholder]="user.username" id="username" name="username">
+            </div>
+            <div class="row">
+                <label for="username">Rôle</label>
+                <select>
+                    <option value="ROLE_ADMIN">Utilisateur</option>
+                    <option value="ROLE_USER">Administrateur</option>
+                </select>
+            </div>
+            <hr>
+            <div *ngFor="let address of addresses">
+                <div class="row">
+                    <label for="road">Rue</label>
+                    <input type="text" [value]="address.road" [placeholder]="address.road" id="road" name="road">
+                </div>
+                <div class="row">
+                    <label for="city">Ville</label>
+                    <input type="text" [value]="address.city" [placeholder]="address.city" id="city" name="city">
+                </div>
+                <div class="row">
+                    <label for="postalCode">Code postal</label>
+                    <input type="text" [value]="address.postalCode" [placeholder]="address.postalCode" id="postalCode" name="postalCode">
+                </div>
+                <div class="row">
+                    <label for="country">Pays</label>
+                    <input type="text" [value]="address.country" [placeholder]="address.country" id="country" name="country">
+                </div>
+            </div>
+        </form>
+        <!-- <table>
+            <tr>
+                <td>ID</td>
+                <td>{{ user.id }}<td>
+            </tr>
+            <tr>
+                <td>Nom d'utilisateur</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>Role</td>
+                <td>{{user.role}}</td>
+            </tr>
+        </table>
+        <hr>
+        <table *ngFor="let address of addresses">
+            <tr>
+                <td>Rue</td>
+                <td>{{ address.road }}</td>
+            </tr>
+            <tr>
+                <td>Code Postal</td>
+                <td>{{ address.postalCode }}</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>{{ address.city }}</td>
+            </tr>
+            <tr>
+                <td>Pays</td>
+                <td>{{ address.country }}</td>
+            </tr>
+            <hr>
+        </table> -->
+        <button (click)="editUser()">Modifier l'utilisateur</button>
+    </div>
+</div>
