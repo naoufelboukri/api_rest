@@ -46,6 +46,7 @@ namespace quest_web.Controllers
                 {
                     return BadRequest(new { message = "L'utilisateur n'existe pas" });
                 }
+                _context.user.Include(x => x.Addresses).ToList();
                 return Ok(new
                 {
                     username = user.Username,

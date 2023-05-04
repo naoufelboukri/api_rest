@@ -34,7 +34,7 @@ export class MonCompteComponent implements OnInit{
 
   editUser(): void {
     if (this.user) {
-      this._router.navigate(["user/edit", this.user.id])
+      this._router.navigate(["user/edit", this.user.id]);
     }
   }
 

@@ -1,5 +1,4 @@
-<div class="user">
-    <div *ngIf="user">
+<div class="user" *ngIf="user">
         <h2>Utilisateur</h2>
         <div>
             <label for="username">Nom d'utilisateur : </label>
@@ -30,5 +29,5 @@
             </tr>
             <hr>
         </table>
-    </div>
+        <button (click)="editUser()" *ngIf="isAdmin">Modifier cet utilisateur</button>
 </div>

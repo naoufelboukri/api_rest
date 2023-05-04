@@ -42,6 +42,6 @@
             </form>
             <span *ngIf="size !== addresses.length && error.length > 0">{{error}}</span>
         </div>
-        <button class="addAddress" (click)="addAddress()" *ngIf="size === addresses.length">Ajouter</button>
+        <button class="addAddress" (click)="addAddress()">Ajouter</button>
     </div>
 </div>

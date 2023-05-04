@@ -7,11 +7,12 @@ import { DetailComponent } from './detail/detail.component';
 import { MonCompteComponent } from './mon-compte/mon-compte.component';
 import { EditComponent } from './edit/edit.component';
 import { FormsModule } from '@angular/forms';
+import { PersonalGuard } from 'src/app/Guards/personal.guard';
 
 const userRoutes: Routes = [
   { path: 'users', component: ListComponent, canActivate: [AuthGuard] },
   { path: 'user/:id', component: DetailComponent, canActivate: [AuthGuard] },
-  { path: 'user/edit/:id', component: EditComponent, canActivate: [AuthGuard] },
+  { path: 'user/edit/:id', component: EditComponent, canActivate: [PersonalGuard] },
   { path: 'mon-compte', component: MonCompteComponent, canActivate: [AuthGuard] },
 ]
 

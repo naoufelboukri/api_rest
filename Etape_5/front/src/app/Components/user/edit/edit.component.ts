@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Address } from 'src/app/Models/Address';
 import { User } from 'src/app/Models/User';
 import { AddressService } from 'src/app/Services/address.service';
@@ -27,31 +27,35 @@ export class EditComponent implements OnInit{
     protected _userService: UserService,
     private _addressService: AddressService,
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this._userService.me()
-      .subscribe(
-        (data: User) => {
+    const id = this._route.snapshot.paramMap.get('id');
+    if (id) {
+      this._userService.getUser(+id).subscribe(
+        data => {
           this.user = data;
           for (const address of data.addresses) {
             this.addresses.push(address);
           }
-          this.size = this.addresses.length;          
         }
       )
+    }
   }
 
   onSubmit(form: NgForm) {
     const input = removeEmptyProperty(form.value);
-
     if (this.user) {
-      this._userService.editUser(this.user.id, input).subscribe(
-        (data: any) => {
-          this._authService.logout();
+      const id = this._route.snapshot.paramMap.get('id');
+      if (id) {
+        this._userService.editUser(+id, input).subscribe(
+          (data: any) => {
+            this._authService.logout();
+          }
+          );
         }
-      );
     }
   }
 
