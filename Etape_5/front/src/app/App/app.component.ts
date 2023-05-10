@@ -30,7 +30,11 @@ export class AppComponent {
   goToProfile() {
     this._router.navigate(['mon-compte']);
   }
+  goToUsers() {
+    this._router.navigate(['users']);
+  }
   Logout() {
     this._authService.logout();
+    this._router.navigate(['']);
   }
 }

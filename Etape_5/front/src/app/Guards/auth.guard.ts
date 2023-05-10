@@ -11,9 +11,7 @@ export class AuthGuard implements CanActivate {
     private _router: Router
   ) { }
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
       if (localStorage.getItem('UserToken')) 
         return true;
       else 

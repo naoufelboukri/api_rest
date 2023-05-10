@@ -24,26 +24,37 @@ namespace quest_web.Controllers
         }
 
         [HttpGet("user")]
-        public IActionResult allUsers()
+        [Authorize]
+        public IActionResult allUsers([FromHeader] string Authorization)
         {
-            var userList = _context.user.Select(u => new { id= u.Id, username = u.Username, role = u.Role, addresses = u.Addresses }).ToList();
-            return Ok(userList);
+            if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
+            {
+                var userList = _context.user.Select(u => new { id = u.Id, username = u.Username, role = u.Role, addresses = u.Addresses }).ToList();
+                return Ok(userList);
+            }
+            return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
 
         [HttpGet("user/{id}")]
-        public IActionResult user(string id)
+        [Authorize]
+        public IActionResult user(string id, [FromHeader] string Authorization)
         {
-            var user = _context.user.FirstOrDefault(user => user.Id == int.Parse(id));
-            if (user == null)
+            if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
             {
-              return BadRequest(new { message = "L'utilisateur n'existe pas" });
+                var user = _context.user.FirstOrDefault(user => user.Id == int.Parse(id));
+                if (user == null)
+                {
+                    return BadRequest(new { message = "L'utilisateur n'existe pas" });
+                }
+                _context.user.Include(x => x.Addresses).ToList();
+                return Ok(new
+                {
+                    username = user.Username,
+                    role = user.Role,
+                    addresses = user.Addresses
+                });
             }
-            return Ok(new 
-            {
-                username = user.Username,
-                role = user.Role,
-                addresses = user.Addresses
-            });
+            return BadRequest(new { message = "Vous n'avez pas les droits" });
         }
 
         [HttpPut("user/{id}")]

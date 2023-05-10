@@ -1,5 +1,4 @@
-<div class="user">
-    <div *ngIf="user">
+<div class="user" *ngIf="user">
         <h2>Utilisateur</h2>
         <div>
             <label for="username">Nom d'utilisateur : </label>
@@ -11,6 +10,24 @@
         </div>
         <hr>
         <h2>Adresse(s)</h2>
-        
-    </div>
+        <table *ngFor="let address of addresses">
+            <tr>
+                <td>Rue</td>
+                <td>{{ address.road }}</td>
+            </tr>
+            <tr>
+                <td>Code Postal</td>
+                <td>{{ address.postalCode }}</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>{{ address.city }}</td>
+            </tr>
+            <tr>
+                <td>Pays</td>
+                <td>{{ address.country }}</td>
+            </tr>
+            <hr>
+        </table>
+        <button (click)="editUser()" *ngIf="isAdmin">Modifier cet utilisateur</button>
 </div>
