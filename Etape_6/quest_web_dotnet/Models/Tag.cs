@@ -15,7 +15,7 @@ namespace quest_web_dotnet.Models
         [Column("name")]
         public string Name { get; set; }
 
-        public List<PostTag> PostTags { get; } = new();
-        public List<Post> Posts { get; } = new();
+        public ICollection<PostTag> PostTags { get; set; }
+
     }
 }
