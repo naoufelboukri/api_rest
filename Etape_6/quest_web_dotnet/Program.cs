@@ -18,6 +18,7 @@ builder.Services.AddDbContext<APIDbContext>(options =>
     .EnableSensitiveDataLogging()
     .EnableDetailedErrors()
 );
+builder.Services.AddSingleton<JwtTokenUtil>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
 {
     option.TokenValidationParameters = JwtTokenUtil.TokenValidationParameters;

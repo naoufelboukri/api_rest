@@ -24,9 +24,9 @@ namespace quest_web_dotnet.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime? CreationDate { get; set; }
 
-        [Column("rating")]
+        [Column("value")]
         [Required]
-        public int Rating { get; set; }
+        public int Value { get; set; }
 
 
         [Column("user_id")]
