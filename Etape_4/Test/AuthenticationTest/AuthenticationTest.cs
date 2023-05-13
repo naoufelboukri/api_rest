@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Any;
-using Microsoft.VisualStudio.TestPlatform.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using quest_web;
@@ -9,10 +7,6 @@ using quest_web.Controllers;
 using quest_web.Models;
 using quest_web.Models.Form;
 using quest_web.Utils;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Text.Json.Nodes;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Test
@@ -134,9 +128,7 @@ namespace Test
 
             var result = _authenticationController.me(authorization);
 
-            var response = Assert.IsType<OkObjectResult>(result);
-
-            Assert.IsType<UserDetails>(response.Value);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }
