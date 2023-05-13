@@ -4,12 +4,6 @@ using Newtonsoft.Json;
 using quest_web;
 using quest_web_dotnet.Controllers;
 using quest_web_dotnet.Models.Forms;
-using quest_web_dotnet.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -97,8 +91,6 @@ namespace Test
             var obj = JsonConvert.SerializeObject(authenticate);
 
             JObject jsonToken = JObject.Parse(obj);
-
-            string authorization = "Bearer " + (string)jsonToken["Result"]["Value"]["token"];
 
             var result = _userController.getUsers();
 
