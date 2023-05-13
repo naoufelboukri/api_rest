@@ -190,5 +190,54 @@ namespace Test
 
             Assert.IsType<OkObjectResult>(result);
         }
+
+
+        [Fact]
+        public void deleteTagTest()
+        {
+            var _jwt = new JwtTokenUtil();
+            var database = new DbContextOptionsBuilder<APIDbContext>()
+                .UseInMemoryDatabase(databaseName: "quest_web")
+                .Options;
+            var _context = new APIDbContext(database);
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
+
+            var _authenticationController = new AuthenticationController(_context, _jwt);
+            var _userController = new UserController(_context, _jwt);
+            var _tagController = new TagController(_context, _jwt);
+
+            var user = new UserBody
+            {
+                Username = "test",
+                Password = "test"
+            };
+
+            _authenticationController.register(user);
+            var authenticate = _authenticationController.authenticate(user);
+
+            var obj = JsonConvert.SerializeObject(authenticate);
+            JObject jsonToken = JObject.Parse(obj);
+            string authorization = "Bearer " + (string)jsonToken["Result"]["Value"]["token"];
+
+            JsonObject request = new JsonObject();
+            request["role"] = "ROLE_ADMIN";
+            _userController.editUser(authorization, request, 1);
+            authenticate = _authenticationController.authenticate(user);
+
+            obj = JsonConvert.SerializeObject(authenticate);
+            jsonToken = JObject.Parse(obj);
+            authorization = "Bearer " + (string)jsonToken["Result"]["Value"]["token"];
+
+            var tag = new TagBody
+            {
+                Name = "Stratégie"
+            };
+
+            _tagController.createTask(tag, authorization);
+            var result = _tagController.deleteTag(authorization, 1);
+
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }
