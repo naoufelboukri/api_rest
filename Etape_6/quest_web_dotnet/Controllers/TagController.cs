@@ -43,7 +43,7 @@ namespace quest_web_dotnet.Controllers
         [Authorize]
         public async Task<IActionResult> createTask([FromBody] TagBody request, [FromHeader] string Authorization)
         {
-            var username = new JwtService(_jwt).getUsername(Authorization);
+            var username = new JwtService(_jwt, _context).getUsername(Authorization);
             if (username != null)
             {
                 var user = _context.users.FirstOrDefault(user => user.Username == username);
@@ -70,7 +70,7 @@ namespace quest_web_dotnet.Controllers
         [Authorize]
         public IActionResult editTag([FromHeader] string Authorization, JsonObject request, int id)
         {
-            var username = new JwtService(_jwt).getUsername(Authorization);
+            var username = new JwtService(_jwt, _context).getUsername(Authorization);
             if (username != null)
             {
                 var user = _context.users.FirstOrDefault(u => u.Username == username);
@@ -85,6 +85,26 @@ namespace quest_web_dotnet.Controllers
                     _context.SaveChanges();
                     return Ok(tag);
                 }
+            }
+            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize]
+        public IActionResult deleteTag([FromHeader] string Authorization, int id)
+        {
+            var user = new JwtService(_jwt, _context).getUser(Authorization);
+            if (user != null && user.Role == "ROLE_ADMIN")
+            {
+                var tag = _context.tags.FirstOrDefault(t => t.Id == id);
+                if (tag != null)
+                {
+                    var name = tag.Name;
+                    _context.tags.Remove(tag);
+                    _context.SaveChanges();
+                    return Ok(new { message = "Le tag " + name + " a bien été supprimé" });
+                }
+                return BadRequest(new { message = "Ce tag n'existe pas" });
             }
             return StatusCode(403, new { message = "Vous n'avez pas les droits" });
         }

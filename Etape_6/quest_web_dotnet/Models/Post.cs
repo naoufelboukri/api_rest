@@ -42,6 +42,7 @@ namespace quest_web_dotnet.Models
         public DateTime? UpdatedDate { get; set; }
         public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
+        [AllowNull]
         public ICollection<PostTag> PostTags { get; set; }
     }
 }
