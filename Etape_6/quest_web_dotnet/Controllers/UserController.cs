@@ -60,7 +60,7 @@ namespace quest_web_dotnet.Controllers
                     var userDetails = _context.users.FirstOrDefault(u => (u.Id == id));
                     if (userDetails == null)
                     {
-                        return StatusCode(403, new { message = "Cette utilisateur n'existe pas ou ne vous n'êtes pas le propriétaire" });
+                        return StatusCode(403, new { message = "Cette utilisateur n'existe pas ou ne vous n'avez pas les droits" });
                     }
                     userDetails.Username = (string)(request.ContainsKey("username") ? request["username"] : userDetails.Username);
                     userDetails.Role = (string)(request.ContainsKey("role") ? request["role"] : userDetails.Role);
@@ -74,7 +74,7 @@ namespace quest_web_dotnet.Controllers
                     var userDetails = _context.users.FirstOrDefault(user => (user.Id == id));
                     if (userDetails == null)
                     {
-                        return StatusCode(403, new { message = "Cette utilisateur n'existe pas ou ^vous n'êtes pas le propriétaire" });
+                        return StatusCode(403, new { message = "Cette utilisateur n'existe pas" });
                     }
                     userDetails.Username = (string)(request.ContainsKey("username") ? request["username"] : userDetails.Username);
                     userDetails.Role = (string)(request.ContainsKey("role") ? request["role"] : userDetails.Role);
@@ -84,11 +84,11 @@ namespace quest_web_dotnet.Controllers
                     return Ok(new UserDetails(userDetails.Username, userDetails.Role));
                 }
             }
-            return BadRequest(new { message = "Vous n'avez pas les droits" });
+            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
         }
 
 
-        [HttpDelete("user/{id}")]
+        [HttpDelete("{id}")]
         [Authorize]
         public IActionResult deleteUser([FromHeader] string Authorization, string id)
         {
@@ -98,30 +98,35 @@ namespace quest_web_dotnet.Controllers
                 var username = _jwt.GetUsernameFromToken(token);
                 var user = _context.users.FirstOrDefault(user => (user.Username == username));
 
+                if (user == null)
+                {
+                    return Unauthorized(new { success = "false", message = $"L'utilisateur {id} n'existe pas " });
+                }
+
                 if (user.Role == "ROLE_USER")
                 {
                     var userDetails = _context.users.FirstOrDefault(u => (u.Id == int.Parse(id) && u.Id == user.Id));
                     if (userDetails == null)
                     {
-                        return StatusCode(403, new { success = "false" });
-                    }
+                        return StatusCode(403, new { success = "false", message = "L'utilisateur n'existe pas" });
+                     }
                     _context.Remove(userDetails);
                     _context.SaveChanges();
-                    return Ok(new { success = "true" });
+                    return Ok(new { success = "true", message = "L'utilisateur a bien été supprimé" });
                 }
                 else if (user.Role == "ROLE_ADMIN")
                 {
                     var userDetails = _context.users.FirstOrDefault(user => (user.Id == int.Parse(id)));
                     if (userDetails == null)
                     {
-                        return StatusCode(403, new { success = "false" });
+                        return StatusCode(403, new { success = "false", message = "L'utilisateur n'existe pas" });
                     }
                     _context.Remove(userDetails);
                     _context.SaveChanges();
-                    return Ok(new { success = "true" });
+                    return Ok(new { success = "true", message = "L'utilisateur a bien été supprimé" });
                 }
             }
-            return BadRequest(new { message = "Vous n'avez pas les droits" });
+            return BadRequest(new { success = "false", message = "Vous n'avez pas les droits" });
         }
     }
 }
