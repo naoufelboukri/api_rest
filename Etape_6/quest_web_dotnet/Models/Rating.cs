@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace quest_web_dotnet.Models
 {
-    public class Rating
+    public class Rating 
     {
         [Key]
         [Column(("id"))]
@@ -26,6 +26,7 @@ namespace quest_web_dotnet.Models
 
         [Column("value")]
         [Required]
+        [Range(0, 5)]
         public int Value { get; set; }
 
 
