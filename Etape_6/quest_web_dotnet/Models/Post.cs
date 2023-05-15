@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace quest_web_dotnet.Models
 {
-    public class Post
+    public class Post : IEntity
     {
         [Key]
         [Column(("id"))]

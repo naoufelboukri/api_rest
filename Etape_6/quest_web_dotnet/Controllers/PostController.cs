@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using quest_web;
+using quest_web.Models;
 using quest_web_dotnet.Models;
 using quest_web_dotnet.Models.Forms;
 using quest_web_dotnet.Services;
@@ -10,71 +12,41 @@ namespace quest_web_dotnet.Controllers
 {
     [ApiController]
     [Route("posts")]
-    public class PostController : Controller
+    public class PostController : BaseController<Post>
     {
-        private readonly APIDbContext _context;
-        private readonly JwtTokenUtil _jwt;
-
-        public PostController(APIDbContext context, JwtTokenUtil jwt)
-        {
-            _context = context;
-            _jwt = jwt;
-        }
-
-        [HttpGet]
-        public IActionResult getPosts()
-        {
-            var posts = _context.posts.ToArray();
-            return Ok(posts);
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult post(int id)
-        {
-            var post = _context.posts.FirstOrDefault(post => post.Id == id);
-            if (post == null)
-            {
-                return BadRequest(new { message = "Ce post n'existe pas" });
-            }
-            return Ok(post);
-        }
+        public PostController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.posts) { }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> newPost([FromBody] PostBody request, [FromHeader] string Authorization)
+        public async Task<IActionResult> Create([FromHeader] string Authorization, [FromBody] PostBody request)
         {
-            var username = new JwtService(_jwt, _context).getUsername(Authorization);
-            if (username != null) 
+            User? user = getUser(Authorization);
+            if (user != null)
             {
-                var user = _context.users.FirstOrDefault(user => user.Username == username);
-                if ( user != null )
+                Post post = new Post
                 {
-                    var post = new Post
-                    {
-                        Title = request.Title,
-                        Content = request.Content,
-                        UserId = user.Id,
-                    };
-                    _context.posts.Add(post);
-                    await _context.SaveChangesAsync();
-                    return CreatedAtAction(nameof(newPost), post);
-                }
+                    Title = request.Title,
+                    Content = request.Content,
+                    UserId = user.Id
+                };
+                _contextName.Add(post);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(Create), post);
             }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+            return StatusCode(403, unauthorizeMessage);
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public IActionResult editPost([FromHeader] string Authorization, JsonObject request, int id)
+        public IActionResult Edit([FromHeader] string Authorization, JsonObject request, int id)
         {
-            var username = new JwtService(_jwt, _context).getUsername(Authorization);
-            if (username != null)
+            User? user = getUser(Authorization);
+            if (user != null)
             {
-                var user = _context.users.FirstOrDefault(u => u.Username == username);
-                if ( user != null )
+                Post? post = _contextName.Find(id);
+                if (post != null)
                 {
-                    var post = _context.posts.FirstOrDefault(post => post.Id == id);
-                    if ( post != null && (post.UserId == user.Id || user.Role == "ROLE_ADMIN"))
+                    if (post.UserId == user.Id || user.Role == "ROLE_ADMIN")
                     {
                         post.Title = (string)(request.ContainsKey("title") ? request["title"] : post.Title);
                         post.Content = (string)(request.ContainsKey("content") ? request["content"] : post.Content);
@@ -82,27 +54,12 @@ namespace quest_web_dotnet.Controllers
                         _context.SaveChanges();
                         return Ok(post);
                     }
+                    return StatusCode(403, unauthorizeMessage);
                 }
+                return BadRequest(errorMessageExist(id));
             }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+            return StatusCode(403, unauthorizeMessage);
         }
 
-        [HttpDelete("{id}")]
-        [Authorize]
-        public IActionResult deletePost([FromHeader] string Authorization, int id)
-        {
-            var user = new JwtService(_jwt, _context).getUser(Authorization);
-            if (user != null)
-            {
-                var post = _context.posts.FirstOrDefault(p => p.Id == id);
-                if (post.UserId == user.Id || user.Role == "ROLE_ADMIN")
-                {
-                    _context.posts.Remove(post);
-                    _context.SaveChanges();
-                    return Ok(new { message = "Le post as bien été supprimé " });
-                }
-            }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
-        }
     }
 }

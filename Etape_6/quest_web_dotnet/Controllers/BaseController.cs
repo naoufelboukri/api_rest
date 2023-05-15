@@ -2,27 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using quest_web;
+using quest_web.Models;
 using quest_web_dotnet.Models;
 using quest_web_dotnet.Services;
+using System.Net.Http.Headers;
 
 namespace quest_web_dotnet.Controllers
 {
-    public class BaseController<T, F> : Controller where T : class where F : class
+    public class BaseController<T> : Controller where T : class
     {
         protected DbSet<T> _contextName;
-        protected F _form;
-
         protected readonly APIDbContext _context;
         protected readonly JwtTokenUtil _jwt;
 
+        protected dynamic badRequestMessage = new { message = "Une erreur s'est produite" };
+        protected dynamic unauthorizeMessage = new { message = "Vous n'avez pas les droits" };
+        protected dynamic deleteMessage = new { message = "L'objet a bien été supprimé" };
 
-        public BaseController (APIDbContext context, JwtTokenUtil jwt, DbSet<T> contextName, F form)
+        public BaseController (APIDbContext context, JwtTokenUtil jwt, DbSet<T> contextName)
         {            
             _context = context;
             _jwt = jwt;
 
             _contextName = contextName;
-            _form = form;
         }
 
         public IActionResult getAll()
@@ -36,23 +38,54 @@ namespace quest_web_dotnet.Controllers
             var entity = _contextName.Find(id);
             if (entity == null)
             {
-                return BadRequest(new { message = "[" + _contextName + "] L'enregistrement " + id + "n'existe pas." });
+                return BadRequest(errorMessageExist(id));
             }
             return Ok(entity);
         }
 
-        [HttpPost]
+        [HttpDelete("{id}")]
         [Authorize]
-        public virtual async Task<IActionResult> Create([FromHeader] string Authorization, [FromBody] F request)
+        public IActionResult delete([FromHeader] string Authorization, int id)
         {
-            var user = new JwtService(_jwt, _context).getUser(Authorization);
-            if (user != null)
+            User? user = getUser(Authorization);
+            T? entity = _contextName.Find(id);
+            if (entity != null && user != null)
             {
-                var entity = _contextName.Add(request);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(Create), entity);
+                IEntity iEntity = null;
+                if (entity is IEntity)
+                {
+                    iEntity = (IEntity)entity;
+                }
+                if (user.Role == "ROLE_ADMIN" || (iEntity != null && iEntity.UserId == user.Id))
+                {
+                    _contextName.Remove(entity);
+                    _context.SaveChanges();
+                    return Ok(deleteMessage);
+                }
+                return StatusCode(403, unauthorizeMessage);
             }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+            return BadRequest(badRequestMessage);
+        }
+
+        protected User? getUser(string Authorization)
+        {
+            if (AuthenticationHeaderValue.TryParse(Authorization, out var headerValue))
+            {
+                var username = _jwt.GetUsernameFromToken(headerValue.Parameter);
+                if (username != null)
+                {
+                    User? user = _context.users.FirstOrDefault(u => u.Username == username);
+                    if (user != null)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
+        protected dynamic errorMessageExist(int id)
+        {
+            return new { message = "L'entité " + id + " n'existe pas" };
         }
     }
 }

@@ -1,112 +1,59 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using quest_web;
+using quest_web.Models;
+using quest_web_dotnet.Models;
 using quest_web_dotnet.Models.Forms;
 using quest_web_dotnet.Services;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 
 namespace quest_web_dotnet.Controllers
 {
     [ApiController]
     [Route("tags")]
-    public class TagController : Controller
+    public class TagController : BaseController<Tag>
     {
-        private readonly APIDbContext _context;
-        private readonly JwtTokenUtil _jwt;
-
-        public TagController(APIDbContext context, JwtTokenUtil jwt)
-        {
-            _context = context;
-            _jwt = jwt;
-        }
-
-        [HttpGet]
-        public IActionResult getTags()
-        {
-            return Ok(_context.tags.ToArray());
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult getTag(int id)
-        {
-            var tag = _context.tags.FirstOrDefault(tag => tag.Id == id);
-            if (tag == null)
-            {
-                return BadRequest(new { message = "Ce tag n'existe pas" });
-            }
-            return Ok(new { id = tag.Id, name = tag.Name });
-        }
+        public TagController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.tags) { }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> createTask([FromBody] TagBody request, [FromHeader] string Authorization)
+        public async Task<IActionResult> Create([FromBody] TagBody request, [FromHeader] string Authorization)
         {
-            var username = new JwtService(_jwt, _context).getUsername(Authorization);
-            if (username != null)
+            User? user = getUser(Authorization);
+            if (user != null && user.Role == "ROLE_ADMIN")
             {
-                var user = _context.users.FirstOrDefault(user => user.Username == username);
-                if (user != null && user.Role == "ROLE_ADMIN")
+                if (_contextName.FirstOrDefault(tag => tag.Name == request.Name) == null)
                 {
-                    if (_context.tags.FirstOrDefault(tag => tag.Name == request.Name) == null)
-                    {
-                        var task = new Models.Tag
-                        {
-                            Name = request.Name,
-                        };
-                        _context.tags.Add(task);
-                        await _context.SaveChangesAsync();
-                        return CreatedAtAction(nameof(createTask), task);
-                    }
-                    return BadRequest(new { message = "Ce tag existe déjà " });
+                    Tag tag = new Tag { Name = request.Name };
+                    _contextName.Add(tag);
+                    await _context.SaveChangesAsync();
+                    return CreatedAtAction(nameof(Create), tag);
                 }
-                
+                return BadRequest(new { message = "Cette catégorie existe déjà" });
             }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+            return StatusCode(403, unauthorizeMessage);
         }
 
         [HttpPut("{id}")]
         [Authorize]
         public IActionResult editTag([FromHeader] string Authorization, JsonObject request, int id)
         {
-            var username = new JwtService(_jwt, _context).getUsername(Authorization);
-            if (username != null)
+            User? user = getUser(Authorization);
+            Tag? tag = _contextName.Find(id);
+            if (user != null && user.Role == "ROLE_ADMIN")
             {
-                var user = _context.users.FirstOrDefault(u => u.Username == username);
-                if (user != null && user.Role == "ROLE_ADMIN")
+                if (tag != null)
                 {
-                    var tag = _context.tags.FirstOrDefault(tag => tag.Id == id);
-                    if (tag == null)
-                    {
-                        return BadRequest(new { message = "Ce tag n'existe pas " });
-                    }
                     tag.Name = (string)(request.ContainsKey("name") ? request["name"] : tag.Name);
                     _context.SaveChanges();
                     return Ok(tag);
                 }
+                return BadRequest(errorMessageExist(id));
             }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
-        }
-
-        [HttpDelete("{id}")]
-        [Authorize]
-        public IActionResult deleteTag([FromHeader] string Authorization, int id)
-        {
-            var user = new JwtService(_jwt, _context).getUser(Authorization);
-            if (user != null && user.Role == "ROLE_ADMIN")
-            {
-                var tag = _context.tags.FirstOrDefault(t => t.Id == id);
-                if (tag != null)
-                {
-                    var name = tag.Name;
-                    _context.tags.Remove(tag);
-                    _context.SaveChanges();
-                    return Ok(new { message = "Le tag " + name + " a bien été supprimé" });
-                }
-                return BadRequest(new { message = "Ce tag n'existe pas" });
-            }
-            return StatusCode(403, new { message = "Vous n'avez pas les droits" });
+            return StatusCode(403, unauthorizeMessage);
         }
     }
 }

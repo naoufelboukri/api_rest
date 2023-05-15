@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace quest_web_dotnet.Models
 {
-    public class Rating 
+    public class Rating : IEntity
     {
         [Key]
         [Column(("id"))]
