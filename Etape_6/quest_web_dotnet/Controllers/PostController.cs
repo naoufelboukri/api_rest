@@ -19,21 +19,20 @@ namespace quest_web_dotnet.Controllers
         public override IActionResult getAll()
         {
             _contextName.Include(p => p.Ratings).ToList();
-            _contextName.Include(p => p.PostTags).ToList();
+            //  _contextName.Include(p => p.PostTags).ToList();
             return Ok(_contextName.ToArray());
         }
 
         [HttpGet("{id}")]
         public override IActionResult get(int id)
         {
-            var entity = _contextName.Find(id);
-            if (entity == null)
+            Post? post = _contextName.Find(id);
+            if (post == null)
             {
                 return BadRequest(errorMessageExist(id));
             }
             _contextName.Include(p => p.Ratings).ToList();
-            _contextName.Include(p => p.PostTags).ToList();
-            return Ok(entity);
+            return Ok(post);
         }
 
         [HttpPost]
@@ -47,7 +46,8 @@ namespace quest_web_dotnet.Controllers
                 {
                     Title = request.Title,
                     Content = request.Content,
-                    UserId = user.Id
+                    UserId = user.Id,
+                    Updated_At = DateTime.Now
                 };
 
                 List<PostTag> tags = new List<PostTag>();
@@ -82,7 +82,7 @@ namespace quest_web_dotnet.Controllers
                     {
                         post.Title = (string)(request.ContainsKey("title") ? request["title"] : post.Title);
                         post.Content = (string)(request.ContainsKey("content") ? request["content"] : post.Content);
-                        post.UpdatedDate = DateTime.Now;
+                        post.Updated_At = DateTime.Now;
                         _context.SaveChanges();
                         return Ok(post);
                     }

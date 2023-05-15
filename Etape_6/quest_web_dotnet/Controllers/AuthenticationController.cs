@@ -39,8 +39,7 @@ namespace quest_web_dotnet.Controllers
                     Username = request.Username,
                     Role = UserRole.ROLE_USER.ToString(),
                     Password = request.Password,
-                    CreationDate = DateTime.Now,
-                    UpdatedDate = DateTime.Now,
+                    Updated_At = DateTime.Now,
                 };
                 user.Password = user.getHashCode();
                 _context.users.Add(user);

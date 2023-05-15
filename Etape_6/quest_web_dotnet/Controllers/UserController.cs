@@ -26,7 +26,7 @@ namespace quest_web_dotnet.Controllers
                 {
                     targetUser.Username = (string)(request.ContainsKey("username") ? request["username"] : targetUser.Username);
                     targetUser.Role = (string)(request.ContainsKey("role") ? request["role"] : targetUser.Role);
-                    targetUser.UpdatedDate = DateTime.Now;
+                    targetUser.Updated_At = DateTime.Now;
                     _context.SaveChanges();
                     return Ok(new UserDetails(targetUser.Username, targetUser.Role));
                 }

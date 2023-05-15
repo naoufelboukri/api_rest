@@ -33,12 +33,13 @@ public class User
 
     [DataType(DataType.DateTime)]
     [AllowNull]
-    [Column("creation_date", TypeName = "DateTime")]
-    public DateTime? CreationDate { get; set; }
+    [Column("created_at", TypeName = "DateTime")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public DateTime? Created_At { get; set; }
 
     [AllowNull]
-    [Column("updated_date", TypeName = "DateTime")]
-    public DateTime? UpdatedDate { get; set; }
+    [Column("updated_at", TypeName = "DateTime")]
+    public DateTime? Updated_At { get; set; }
 
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();

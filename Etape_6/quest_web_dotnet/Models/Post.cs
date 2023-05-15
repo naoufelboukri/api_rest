@@ -31,15 +31,14 @@ namespace quest_web_dotnet.Models
 
         [AllowNull]
         [DataType(DataType.DateTime)]
-        [Column("creation_date", TypeName = "DateTime")]
+        [Column("created_at", TypeName = "DateTime")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime? CreationDate { get; set; }
+        public DateTime? Created_At { get; set; }
 
         [AllowNull]
         [DataType(DataType.DateTime)]
-        [Column("updated_date", TypeName = "DateTime")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedDate { get; set; }
+        [Column("updated_at", TypeName = "DateTime")]
+        public DateTime? Updated_At { get; set; }
         public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
         [AllowNull]
