@@ -27,13 +27,13 @@ namespace quest_web_dotnet.Controllers
             _contextName = contextName;
         }
 
-        public IActionResult getAll()
+        public virtual IActionResult getAll()
         {
             return Ok(_contextName.ToArray());
         }
 
         [HttpGet("{id}")]
-        public IActionResult get(int id)
+        public virtual IActionResult get(int id)
         {
             var entity = _contextName.Find(id);
             if (entity == null)

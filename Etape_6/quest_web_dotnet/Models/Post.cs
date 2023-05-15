@@ -40,7 +40,7 @@ namespace quest_web_dotnet.Models
         [Column("updated_date", TypeName = "DateTime")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? UpdatedDate { get; set; }
-        public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
+        public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
         [AllowNull]
         public ICollection<PostTag> PostTags { get; set; }

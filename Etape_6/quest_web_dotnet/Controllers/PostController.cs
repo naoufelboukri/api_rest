@@ -16,6 +16,26 @@ namespace quest_web_dotnet.Controllers
     {
         public PostController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.posts) { }
 
+        public override IActionResult getAll()
+        {
+            _contextName.Include(p => p.Ratings).ToList();
+            _contextName.Include(p => p.PostTags).ToList();
+            return Ok(_contextName.ToArray());
+        }
+
+        [HttpGet("{id}")]
+        public override IActionResult get(int id)
+        {
+            var entity = _contextName.Find(id);
+            if (entity == null)
+            {
+                return BadRequest(errorMessageExist(id));
+            }
+            _contextName.Include(p => p.Ratings).ToList();
+            _contextName.Include(p => p.PostTags).ToList();
+            return Ok(entity);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Create([FromHeader] string Authorization, [FromBody] PostBody request)
@@ -29,6 +49,18 @@ namespace quest_web_dotnet.Controllers
                     Content = request.Content,
                     UserId = user.Id
                 };
+
+                List<PostTag> tags = new List<PostTag>();
+                string[] tagsId = request.Tags.Split(',');
+                foreach (string id in tagsId)
+                {
+                    Tag? tag = _context.tags.Find(int.Parse(id));
+                    if (tag != null)
+                    {
+                        tags.Add(new PostTag { Post = post, Tag = tag });
+                    }
+                }
+                post.PostTags = tags;
                 _contextName.Add(post);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction(nameof(Create), post);
