@@ -15,6 +15,7 @@ namespace quest_web_dotnet.Models
         [Column("name")]
         public string Name { get; set; }
 
+        [JsonIgnore]
         public ICollection<PostTag> PostTags { get; set; }
 
     }
