@@ -60,7 +60,7 @@ namespace Test
             context.Features.Set<IExceptionHandlerFeature>(feature);
 
             _userController.ControllerContext.HttpContext.Response.CompleteAsync();
-            var result = _userController.getUsers();
+            var result = _userController.getAll();
 
             output.WriteLine(result.ToString());
         }
@@ -92,7 +92,7 @@ namespace Test
 
             JObject jsonToken = JObject.Parse(obj);
 
-            var result = _userController.getUsers();
+            var result = _userController.getAll();
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -126,7 +126,7 @@ namespace Test
 
             string authorization = "Bearer " + (string)jsonToken["Result"]["Value"]["token"];
 
-            var result = _userController.deleteUser(authorization, "2");
+            var result = _userController.delete(authorization, 2);
 
             var response = Assert.IsType<ObjectResult>(result);
 
@@ -165,7 +165,7 @@ namespace Test
             JsonObject request = new JsonObject();
             request["role"] = "ROLE_ADMIN";
 
-            var resultPut = _userController.editUser(authorization, request, 1);
+            var resultPut = _userController.Edit(authorization, request, 1);
 
             authenticate = _authenticationController.authenticate(user);
 
@@ -176,7 +176,7 @@ namespace Test
 
             authorization = "Bearer " + (string)jsonToken["Result"]["Value"]["token"];
 
-            var resultDelete = _userController.deleteUser(authorization, "1");
+            var resultDelete = _userController.delete(authorization, 1);
 
             var response = Assert.IsType<OkObjectResult>(resultDelete);
 

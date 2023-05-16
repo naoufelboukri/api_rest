@@ -3,14 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using quest_web;
-using quest_web.Models;
 using quest_web_dotnet.Controllers;
 using quest_web_dotnet.Models.Forms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit.Abstractions;
 using System.Text.Json.Nodes;
 
@@ -38,7 +32,7 @@ namespace Test
 
             var _tagController = new TagController(_context, _jwt);
 
-            var result = _tagController.getTags();
+            var result = _tagController.getAll();
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -73,7 +67,7 @@ namespace Test
 
             JsonObject request = new JsonObject();
             request["role"] = "ROLE_ADMIN";
-            _userController.editUser(authorization, request, 1);
+            _userController.Edit(authorization, request, 1);
             authenticate = _authenticationController.authenticate(user);
 
             obj = JsonConvert.SerializeObject(authenticate);
@@ -85,9 +79,9 @@ namespace Test
                 Name = "Stratégie"
             };
 
-            _tagController.createTask(tag, authorization);
+            _tagController.Create(tag, authorization);
 
-            var result = _tagController.getTag(1);
+            var result = _tagController.get(1);
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -122,7 +116,7 @@ namespace Test
 
             JsonObject request = new JsonObject();
             request["role"] = "ROLE_ADMIN";
-            _userController.editUser(authorization, request, 1);
+            _userController.Edit(authorization, request, 1);
             authenticate = _authenticationController.authenticate(user);
 
             obj = JsonConvert.SerializeObject(authenticate);
@@ -134,7 +128,7 @@ namespace Test
                 Name = "Stratégie"
             };
 
-            var result = _tagController.createTask(tag, authorization);
+            var result = _tagController.Create(tag, authorization);
 
             Assert.IsType<CreatedAtActionResult>(result.Result);
         }
@@ -169,7 +163,7 @@ namespace Test
 
             JsonObject request = new JsonObject();
             request["role"] = "ROLE_ADMIN";
-            _userController.editUser(authorization, request, 1);
+            _userController.Edit(authorization, request, 1);
             authenticate = _authenticationController.authenticate(user);
 
             obj = JsonConvert.SerializeObject(authenticate);
@@ -181,7 +175,7 @@ namespace Test
                 Name = "Stratégie"
             };
 
-            _tagController.createTask(tag, authorization);
+            _tagController.Create(tag, authorization);
 
             request = new JsonObject();
             request["name"] = "Sport";
@@ -222,7 +216,7 @@ namespace Test
 
             JsonObject request = new JsonObject();
             request["role"] = "ROLE_ADMIN";
-            _userController.editUser(authorization, request, 1);
+            _userController.Edit(authorization, request, 1);
             authenticate = _authenticationController.authenticate(user);
 
             obj = JsonConvert.SerializeObject(authenticate);
@@ -234,8 +228,8 @@ namespace Test
                 Name = "Stratégie"
             };
 
-            _tagController.createTask(tag, authorization);
-            var result = _tagController.deleteTag(authorization, 1);
+            _tagController.Create(tag, authorization);
+            var result = _tagController.delete(authorization, 1);
 
             Assert.IsType<OkObjectResult>(result);
         }
