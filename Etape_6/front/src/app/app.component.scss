@@ -1,0 +1,32 @@
+@import '../Styles/utils';
+
+header {
+    width: 100%;
+    font-size: calc(0.25vw + 0.4vh + 1vmin);
+    nav {
+        @include flex(row, space-between);
+        padding: 2em;
+        color: #fff;
+        span {
+            cursor: pointer;
+            transition: 500ms ease-in-out;
+            &:hover {
+                color: purple;
+            }
+        }
+    }
+}
+
+main {
+    margin: 0 0 4em;
+}
+
+footer {
+    position: absolute;
+    font-size: calc(0.25vw + 0.4vh + 1vmin);
+    bottom: 0;
+    padding: 2em;
+    @include flex(row, space-between);
+    color: #fff;
+    width: 100%;
+}
