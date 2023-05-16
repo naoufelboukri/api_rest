@@ -1,0 +1,17 @@
+<div class="d">
+  <div class="presentation_container">
+    <img src="../../../assets/gamepad.png" >
+    <p>Bienvenue sur GAMING BLOG</p>
+  </div>
+  <div class="log_container">
+    <form #f="ngForm" (ngSubmit)="login(f)">
+      <p class="title"> CONNEXION </p>
+      <label>nom d'utilisateur</label>
+      <input name="username" type="text" placeholder="username" required>
+      <label>mot de passe</label>
+      <input name="password" type="password" placeholder="password" required>
+      <button type="submit">Connexion</button>
+      <p class="register"> Pas encore de compte ? </p>
+    </form>
+  </div>
+</div>
