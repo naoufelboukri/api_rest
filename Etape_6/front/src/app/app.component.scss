@@ -1,4 +1,5 @@
 @import '../Styles/utils';
+@import '../Styles/colors';
 
 header {
     width: 100%;
@@ -12,22 +13,19 @@ header {
         }
         span {
             cursor: pointer;
-            transition: 500ms ease-in-out;
+            transition: 300ms ease-in-out;
+            border-radius: 50px;
+            padding: 1rem;
             &:hover {
-                color: purple;
+                background-color: #fff;
+                color: $primary;
             }
         }
     }
 }
 
-main {
-    margin: 0 0 4em;
-}
-
 footer {
-    position: absolute;
     font-size: calc(0.25vw + 0.4vh + 1vmin);
-    bottom: 0;
     padding: 2em;
     @include flex(row, space-between);
     color: #fff;

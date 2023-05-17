@@ -17,7 +17,7 @@ import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.compo
     HomeComponent,
     AuthenticationComponent,
     PageNotFoundComponent,
-    UnauthorizeComponent
+    UnauthorizeComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@ export class AppComponent {
     private _router: Router
   ) { }
 
-  goToHome() {
-    this._router.navigate(['']);
+  goTo(page: string) {
+    this._router.navigate([page]);
   }
 }
