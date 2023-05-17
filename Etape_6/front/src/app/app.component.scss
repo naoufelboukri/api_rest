@@ -7,6 +7,9 @@ header {
         @include flex(row, space-between);
         padding: 2em;
         color: #fff;
+        h1 {
+            cursor: pointer;
+        }
         span {
             cursor: pointer;
             transition: 500ms ease-in-out;

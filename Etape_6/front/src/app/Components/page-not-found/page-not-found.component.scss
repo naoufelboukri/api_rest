@@ -1,0 +1,8 @@
+@import '../../../Styles/colors';
+@import '../../../Styles/utils';
+
+div {
+    width: 100%;
+    height: 50vh;
+    @include flex(column, flex-end);
+}

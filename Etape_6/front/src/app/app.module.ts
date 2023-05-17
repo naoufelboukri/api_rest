@@ -8,12 +8,16 @@ import { AuthenticationComponent } from './Components/authentication/authenticat
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
+import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
+import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    PageNotFoundComponent,
+    UnauthorizeComponent
   ],
   imports: [
     BrowserModule,
