@@ -27,6 +27,7 @@ header {
 footer {
     font-size: calc(0.25vw + 0.4vh + 1vmin);
     padding: 2em;
+    position: sticky;
     @include flex(row, space-between);
     color: #fff;
     width: 100%;

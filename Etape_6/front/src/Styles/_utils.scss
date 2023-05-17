@@ -1,3 +1,5 @@
+@import './colors';
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@400;500;600;700&display=swap');
 
 @mixin flex($direction, $justify, $align: center) {
@@ -11,4 +13,12 @@
     color: $color;
     font-size: $size;
     letter-spacing: $letterSpacing;
+}
+
+%tag {
+    padding: 0.5rem 1.5rem;
+    background-color: $info;
+    display: inline;
+    margin: 0 2rem 0 0;
+    color: #fff;
 }
