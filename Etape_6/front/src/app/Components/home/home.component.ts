@@ -21,11 +21,27 @@ export class HomeComponent implements OnInit{
       data => {
         for (const post of data) {
           this.posts.push(post);
+          console.log(post);
+          
         }
       },
       err => {
         console.log("erreur");
       }
     )
+  }
+
+  goTo(route: string, id: number | null = null) {
+    if (id) {
+      this._router.navigate([route, id]);
+    } else {
+      this._router.navigate([route]);
+    }
+  }
+
+  getDate(date: Date) {
+    const DATE: Date = new Date(date);
+    const month = DATE.getMonth() + 1;
+    return DATE.getDate() + '/' + (month < 10 ? "0" + month : month) + '/' + DATE.getFullYear();
   }
 }
