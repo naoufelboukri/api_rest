@@ -31,7 +31,7 @@ namespace quest_web_dotnet.Controllers
             {
                 return BadRequest(errorMessageExist(id));
             }
-            _contextName.Include(p => p.Ratings).ToList();
+            _contextName.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).ToList();
             return Ok(post);
         }
 
