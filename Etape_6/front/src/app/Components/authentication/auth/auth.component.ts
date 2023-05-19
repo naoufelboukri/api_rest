@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 @Component({
   selector: 'app-authentication',
-  templateUrl: './authentication.component.html',
-  styleUrls: ['./authentication.component.scss']
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
 })
-export class AuthenticationComponent {
+export class AuthComponent {
 
   isValid: boolean = true;
 

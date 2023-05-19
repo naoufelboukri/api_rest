@@ -2,7 +2,7 @@
   <nav>
     <h1 (click)="goTo('')">GAMING BLOG</h1>
     <div *ngIf="!_authService.isLogged; else connected">
-      <span (click)="goTo('auth')">Connexion</span>
+      <span (click)="goTo('authentication')">Connexion</span>
     </div>
     <ng-template #connected>
       <div>
