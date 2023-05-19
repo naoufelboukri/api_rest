@@ -11,6 +11,7 @@ import { JwtInterceptor } from './jwt.interceptor';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.component';
 import { PostsModule } from './Components/posts/posts.module';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PostsModule } from './Components/posts/posts.module';
     AuthenticationComponent,
     PageNotFoundComponent,
     UnauthorizeComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

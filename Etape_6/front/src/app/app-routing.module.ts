@@ -4,10 +4,12 @@ import { HomeComponent } from './Components/home/home.component';
 import { AuthenticationComponent } from './Components/authentication/authentication.component';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'auth', component: AuthenticationComponent},
+  { path: 'register', component: RegisterComponent},
   { path: 'unauthorize', component: UnauthorizeComponent},
   { path: '**', component: PageNotFoundComponent},
 ];
