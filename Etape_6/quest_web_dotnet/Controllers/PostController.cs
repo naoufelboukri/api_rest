@@ -18,8 +18,7 @@ namespace quest_web_dotnet.Controllers
 
         public override IActionResult getAll()
         {
-            _contextName.Include(p => p.Ratings).ToList();
-            //  _contextName.Include(p => p.PostTags).ToList();
+            _contextName.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).ToList();
             return Ok(_contextName.ToArray());
         }
 

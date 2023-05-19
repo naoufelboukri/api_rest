@@ -5,22 +5,27 @@ import { DetailComponent } from './detail/detail.component';
 import { ListComponent } from './list/list.component';
 import { NewComponent } from './new/new.component';
 import { AuthGuard } from 'src/app/Guards/auth.guard';
+import { PostsComponent } from 'src/app/Partials/posts/posts.component';
 
 const routesPost: Routes = [
+  { path: 'posts', component: ListComponent },
   { path: 'post/new', component: NewComponent, canActivate: [AuthGuard] },
   { path: 'post/:id', component: DetailComponent },
-  { path: 'posts', component: ListComponent },
 ]
 
 @NgModule({
   declarations: [
     DetailComponent,
     ListComponent,
-    NewComponent
+    NewComponent,
+    PostsComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routesPost)
+  ],
+  exports: [
+    PostsComponent
   ]
 })
 export class PostsModule { }

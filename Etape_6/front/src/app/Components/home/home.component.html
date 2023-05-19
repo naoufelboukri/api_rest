@@ -6,46 +6,5 @@
     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum dolore ea veritatis Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
 </div>
 
-<div class="actu">
-    <form>
-        <select name="" id="">
-            <option value="" selected disabled>Catégorie</option>
-            <option value="">Aventure</option>
-            <option value="">Action</option>
-        </select>
-
-        <div class="search">
-            <input type="text" name="" id="" placeholder="Rechercher un jeu">
-            <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Rechercher
-            </button>
-        </div>
-    </form>
-
-    <div class="posts">
-        <div class="post" *ngFor="let post of posts">
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.content }}</p>
-            <button (click)="goTo('post', post.id)">
-                Voir la suite
-                <i class="fa-solid fa-arrow-down"></i>
-            </button>
-
-            <span class="created_at">Publié le : {{ getDate(post.created_At) }}</span>
-            <div class="stars">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-            </div>
-
-            <div class="tags">
-                <div class="tag">Aventure</div>
-                <div class="tag">Action</div>
-            </div>
-        </div>
-    </div>
-</div>
+<app-posts></app-posts>
 

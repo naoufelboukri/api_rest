@@ -7,7 +7,7 @@ export class Post {
     content: Text;
     user_id: number;
     ratings: Rating[];
-    PostTags: PostTag[];
+    postTags: PostTag[];
     created_At: Date;
     updated_at: Date;
 }

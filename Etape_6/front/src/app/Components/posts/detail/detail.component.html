@@ -5,8 +5,7 @@
             <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
             <p>{{ post.content }}</p>
             <div class="tags">
-                <span>Aventure</span>
-                <span>Action</span>
+                <span class="tag" *ngFor="let posttag of post.postTags">{{ posttag.tag.name }}</span>
             </div>
         </div>
         <aside>
@@ -33,7 +32,7 @@
 
         <div class="comment" *ngFor="let comment of comments">
             <div class="name">
-                <span>{{ comment.userId }} : </span>
+                <span>Utilisateur{{ comment.userId }} : </span>
                 <div class="rating">
                     <span [innerHTML]="scored(comment.value)"></span>
                 </div>

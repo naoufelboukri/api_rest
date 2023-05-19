@@ -8,10 +8,11 @@ import { AuthenticationComponent } from './Components/authentication/authenticat
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './jwt.interceptor';
-import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
-import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.component';
+import { PageNotFoundComponent } from './Components/Others/page-not-found/page-not-found.component';
+import { UnauthorizeComponent } from './Components/Others/unauthorize/unauthorize.component';
 import { PostsModule } from './Components/posts/posts.module';
 import { RegisterComponent } from './Components/register/register.component';
+import { PostsComponent } from './Partials/posts/posts.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,6 @@ import { RegisterComponent } from './Components/register/register.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-
   ],
   providers: [
     HttpClient,
