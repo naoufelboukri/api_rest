@@ -9,7 +9,7 @@ export class AuthenticationComponent {
 
   _constructor(){}
 
-  login(f: NgForm){
+  login(f: NgForm) {
 
   }
 }

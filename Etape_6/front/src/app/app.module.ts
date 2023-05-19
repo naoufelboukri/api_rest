@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { JwtInterceptor } from './jwt.interceptor';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { UnauthorizeComponent } from './Components/unauthorize/unauthorize.compo
     AuthenticationComponent,
     PageNotFoundComponent,
     UnauthorizeComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,27 +1,12 @@
 @import '../../../Styles/colors';
 @import '../../../Styles/utils';
 
-.d {
-    @include flex(row, space-around);
-}
-.presentation_container{
-    @include flex(column, space-between);
-    font-family: 'Poppins';
-    //margin-left: 0.2rem;
-    //width: 40rem;
-    p{
-        @include text-style(white, 1rem);
-        font-family: 'Poppins';
-    }
-    img{
-        width: 12rem;
-    }
-}
-
 .log_container{
     background-color: $primary;
     padding:1.5rem;
     border-radius: 0.2rem;
+    width: 18rem;
+    margin: auto;
 }
 
 form{
@@ -60,6 +45,6 @@ label{
 .register{
     cursor: pointer;
     font-family: 'Poppins';
-    margin: 1rem 3.5rem;
+    margin: 1rem 5.3rem;
     @include text-style(rgba(188, 161, 20, 100), 0.6rem)
 }
