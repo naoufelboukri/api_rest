@@ -1,0 +1,74 @@
+@import '../../../../Styles/utils';
+@import '../../../../Styles/colors';
+
+.container {
+    color: #fff;
+    .post {
+        @include flex(row, space-between);
+        gap: 50px;
+        .content {
+            padding: 6em 3em;
+            position: relative;
+            font-family: 'Poppins';
+            h2 {
+                font-weight: 700;
+                font-size: 32px;
+                margin: 0 0 1em;
+            }
+            img {
+                width: 800px;
+                margin: 0 0 2em;
+            }
+            p {
+                font-size: 14px;
+                font-weight: 500;
+            }
+            
+            .tags {
+                position: absolute;
+                top: 30px;
+                left: 50px;
+                span {
+                    @extend %tag;
+                }
+            }
+        }
+    
+        aside {
+            margin: 2em;
+            border-left: 1px solid #fff;
+            padding: 0 0 0 2em;
+            h3 {
+                color: #fff;
+                margin: 0 0 2em;
+            }
+            .postAside {
+                margin: 0 0 1em;
+                img {
+                    width: 300px;
+                    margin: 0.5em 0;
+                }
+            }
+        }
+    }
+
+    .comments {
+        margin: 1rem 3rem;
+        h3 {
+            font-size: 28px;
+            margin: 0 0 2em;
+        }
+        .comment {
+            margin: 0 0 5em 2em;
+            .name {
+                @include flex(row, flex-start);
+                gap: 1em;
+                margin: 0 0 1em;
+                span {
+                    font-weight: 700;
+                    letter-spacing: 1.5px;
+                }
+            }
+        }
+    }
+}

@@ -27,12 +27,12 @@
         <div class="post" *ngFor="let post of posts">
             <h2>{{ post.title }}</h2>
             <p>{{ post.content }}</p>
-            <button>
+            <button (click)="goTo('post', post.id)">
                 Voir la suite
                 <i class="fa-solid fa-arrow-down"></i>
             </button>
 
-            <span class="created_at">Publié le : {{ post.created_at }}</span>
+            <span class="created_at">Publié le : {{ getDate(post.created_At) }}</span>
             <div class="stars">
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>

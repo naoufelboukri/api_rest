@@ -8,6 +8,6 @@ export class Post {
     user_id: number;
     ratings: Rating[];
     PostTags: PostTag[];
-    created_at: Date;
+    created_At: Date;
     updated_at: Date;
 }

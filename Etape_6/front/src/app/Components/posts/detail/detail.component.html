@@ -1,0 +1,49 @@
+<div class="container" *ngIf="post;else notFound"> 
+    <div class="post">
+        <div class="content">
+            <h2>{{ post.title }}</h2>
+            <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
+            <p>{{ post.content }}</p>
+            <div class="tags">
+                <span>Aventure</span>
+                <span>Action</span>
+            </div>
+        </div>
+        <aside>
+            <h3>A voir aussi :</h3>
+
+            <div class="postAside">
+                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
+                <h4>Comment faire des bébés ?</h4>
+            </div>
+    
+            <div class="postAside">
+                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
+                <h4>On prank nos petits frères ! ça tourne mal</h4>
+            </div>
+    
+            <div class="postAside">
+                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
+                <h4>Il saute du 1er étage pour sauver un lapin</h4>
+            </div>
+        </aside>
+    </div>
+    <div class="comments">
+        <h3>Commentaires :</h3>
+
+        <div class="comment" *ngFor="let comment of comments">
+            <div class="name">
+                <span>{{ comment.userId }} : </span>
+                <div class="rating">
+                    <span [innerHTML]="scored(comment.value)"></span>
+                </div>
+            </div>
+    
+            <p *ngIf="comment.content !== null">{{ comment.content }}</p>
+        </div>
+    </div>
+</div>
+
+<ng-template #notFound>
+    Le post n'existe pas
+</ng-template>
