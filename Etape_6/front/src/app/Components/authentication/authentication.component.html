@@ -7,9 +7,9 @@
     <form #f="ngForm" (ngSubmit)="login(f)">
       <p class="title"> CONNEXION </p>
       <label>nom d'utilisateur</label>
-      <input name="username" type="text" placeholder="username" required>
+      <input name="username" type="text" placeholder="username" required ngModel>
       <label>mot de passe</label>
-      <input name="password" type="password" placeholder="password" required>
+      <input name="password" type="password" placeholder="password" required ngModel>
       <button type="submit">Connexion</button>
       <p class="register" routerLink="/register"> Pas encore de compte ? </p>
     </form>

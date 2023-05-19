@@ -3,6 +3,7 @@ import { env } from '../env';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { User } from '../Models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,9 @@ export class AuthenticationService {
 
   register(username: string, password: string) {
     return this._http.post(`${this.API_URL}/register`, {username: username, password: password});
+  }
+
+  me() {
+    return this._http.get<User>(`${this.API_URL}/me`);
   }
 }

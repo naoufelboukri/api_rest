@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './Services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent {
   title = 'front';
 
   constructor (
-    private _router: Router
+    private _router: Router,
+    protected _authService: AuthenticationService
   ) { }
 
   goTo(page: string) {

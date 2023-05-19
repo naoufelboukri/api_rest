@@ -1,7 +1,16 @@
 <header>
   <nav>
     <h1 (click)="goTo('')">GAMING BLOG</h1>
-    <span (click)="goTo('auth')">Connexion</span>
+    <div *ngIf="!_authService.isLogged; else connected">
+      <span (click)="goTo('auth')">Connexion</span>
+    </div>
+    <ng-template #connected>
+      <div>
+        <i (click)="goTo('posts')" class="fa-solid fa-newspaper"></i>
+        <i class="fa-solid fa-user"></i>
+        <i (click)="_authService.logout()" class="fa-solid fa-arrow-right-from-bracket"></i>
+      </div>
+    </ng-template>
   </nav>
 </header>
 <main>

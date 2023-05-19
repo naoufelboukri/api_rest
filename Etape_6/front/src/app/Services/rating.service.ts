@@ -6,7 +6,7 @@ import { Rating } from '../Models/Rating';
 @Injectable({
   providedIn: 'root'
 })
-export class PostService extends BaseService<Rating>{
+export class RatingService extends BaseService<Rating>{
   constructor(_http: HttpClient) {
     super(_http, 'rating')
   }

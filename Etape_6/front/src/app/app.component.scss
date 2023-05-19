@@ -21,6 +21,11 @@ header {
                 color: $primary;
             }
         }
+        i {
+            margin: 0 1em;
+            font-size: calc(0.25vw + 0.4vh + 1vmin);
+            cursor: pointer;
+        }
     }
 }
 
