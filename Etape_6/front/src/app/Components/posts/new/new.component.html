@@ -1,1 +1,36 @@
-<p>new works!</p>
+<div class="container">
+    <div class="content">
+        <h2>Créer un article</h2>
+        <hr>
+        <form #form="ngForm" (ngSubmit)="create(form)">
+            <div>
+                <label for="title">Titre</label>
+                <input type="text" name="title" id="title" required ngModel>
+            </div>
+
+            <div>
+                <label for="tag">Catégorie</label>
+                <select name="tag" id="tag" multiple ngModel>
+                    <option value="0">none</option>
+                    <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.name }}</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="content">Contenu</label>
+                <textarea name="content" id="content" cols="30" rows="10" required ngModel>
+
+                </textarea>
+            </div>
+
+            <button>Enregistrer</button>
+        </form>
+    </div>
+
+    <div class="insight">
+        <h2>Aperçu</h2>
+        <div class="display_content">
+            
+        </div>
+    </div>
+</div>

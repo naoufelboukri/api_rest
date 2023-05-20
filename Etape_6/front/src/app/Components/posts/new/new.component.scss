@@ -1,0 +1,55 @@
+@import '../../../../Styles/utils'; 
+
+.container {
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include flex(row, space-around, flex-start);
+    gap: 3em;
+    .content {        
+        flex: 1;
+        font-family: 'Poppins';
+        background-color: #fff;
+        border-radius: 0px;
+        padding: 2em;
+        box-shadow: 10px 10px 10px #4743bb;
+        hr {
+            margin: 1em 0;
+        }
+        form {
+            div {
+                display: flex;
+                flex-direction: column;
+                margin: 0 0 1em;
+                label {
+                    font-weight: 600;
+                    margin: 0 0 0.5em;
+                }
+                input {
+                    padding: 0.5em 1em;
+                    outline: none;
+                }
+            }
+            button {
+                @extend %button;
+                width: 100%;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+    .insight {
+        flex: 1;
+        color: #fff;
+        h2 {
+            margin: 0 0 1em;
+        }
+        .display_content {
+            background-color: rgba($color: #fff, $alpha: 0.15);
+            padding: 1em;
+        }
+    }
+}

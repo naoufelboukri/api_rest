@@ -6,6 +6,7 @@ import { ListComponent } from './list/list.component';
 import { NewComponent } from './new/new.component';
 import { AuthGuard } from 'src/app/Guards/auth.guard';
 import { PostsComponent } from 'src/app/Partials/posts/posts.component';
+import { FormsModule } from '@angular/forms';
 
 const routesPost: Routes = [
   { path: 'posts', component: ListComponent },
@@ -22,6 +23,7 @@ const routesPost: Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routesPost)
   ],
   exports: [
