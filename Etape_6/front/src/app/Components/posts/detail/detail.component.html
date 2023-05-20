@@ -3,7 +3,7 @@
         <div class="content">
             <h2>{{ post.title }}</h2>
             <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
-            <p>{{ post.content }}</p>
+            <app-post-content [data]="post.content"></app-post-content>
             <div class="tags">
                 <span class="tag" *ngFor="let posttag of post.postTags">{{ posttag.tag.name }}</span>
             </div>

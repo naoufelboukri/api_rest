@@ -44,12 +44,7 @@
     .insight {
         flex: 1;
         color: #fff;
-        h2 {
-            margin: 0 0 1em;
-        }
-        .display_content {
-            background-color: rgba($color: #fff, $alpha: 0.15);
-            padding: 1em;
-        }
+        background-color: rgba($color: #fff, $alpha: 0.15);
+        padding: 1em;
     }
 }

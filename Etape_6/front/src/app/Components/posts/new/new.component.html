@@ -11,14 +11,14 @@
             <div>
                 <label for="tag">Catégorie</label>
                 <select name="tag" id="tag" multiple ngModel>
-                    <option value="0">none</option>
+                    <option [value]="0">none</option>
                     <option *ngFor="let tag of tags" [value]="tag.id">{{ tag.name }}</option>
                 </select>
             </div>
 
             <div>
                 <label for="content">Contenu</label>
-                <textarea name="content" id="content" cols="30" rows="10" required ngModel>
+                <textarea name="content" id="content" cols="30" rows="10" on required [(ngModel)]="content">
 
                 </textarea>
             </div>
@@ -28,9 +28,6 @@
     </div>
 
     <div class="insight">
-        <h2>Aperçu</h2>
-        <div class="display_content">
-            
-        </div>
+        <app-post-content [data]="content"></app-post-content>
     </div>
 </div>

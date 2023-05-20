@@ -50,16 +50,19 @@ namespace quest_web_dotnet.Controllers
                 };
 
                 List<PostTag> tags = new List<PostTag>();
-                string[] tagsId = request.Tags.Split(',');
-                foreach (string id in tagsId)
+                if (request.Tags != "")
                 {
-                    Tag? tag = _context.tags.Find(int.Parse(id));
-                    if (tag != null)
+                    string[] tagsId = request.Tags.Split(',');
+                    foreach (string id in tagsId)
                     {
-                        tags.Add(new PostTag { Post = post, Tag = tag });
+                        Tag? tag = _context.tags.Find(int.Parse(id));
+                        if (tag != null)
+                        {
+                            tags.Add(new PostTag { Post = post, Tag = tag });
+                        }
                     }
+                    post.PostTags = tags;
                 }
-                post.PostTags = tags;
                 _contextName.Add(post);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction(nameof(Create), post);
