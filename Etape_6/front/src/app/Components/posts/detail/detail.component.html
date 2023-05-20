@@ -2,7 +2,7 @@
     <div class="post">
         <div class="content">
             <h2>{{ post.title }}</h2>
-            <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
+            <img src="https://static.fnac-static.com/multimedia/Images/FD/Comete/135576/CCP_IMG_1200x800/1778074.jpg" alt="">
             <app-post-content [data]="post.content"></app-post-content>
             <div class="tags">
                 <span class="tag" *ngFor="let posttag of post.postTags">{{ posttag.tag.name }}</span>
@@ -11,25 +11,37 @@
         <aside>
             <h3>A voir aussi :</h3>
 
-            <div class="postAside">
-                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
-                <h4>Comment faire des bébés ?</h4>
-            </div>
-    
-            <div class="postAside">
-                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
-                <h4>On prank nos petits frères ! ça tourne mal</h4>
-            </div>
-    
-            <div class="postAside">
-                <img src="https://us.123rf.com/450wm/sdmix/sdmix1803/sdmix180300248/96848899-abstrait-d%C3%A9grad%C3%A9-de-couleur-grise-illustration-vectorielle.jpg" alt="">
-                <h4>Il saute du 1er étage pour sauver un lapin</h4>
+            <div class="postAside" *ngFor="let post of fakePosts">
+                <img [src]="generateImg(post.id)" alt="">
+                <h4>{{ post.title }}</h4>
             </div>
         </aside>
     </div>
     <div class="comments">
         <h3>Commentaires :</h3>
 
+        <form #form="ngForm" (ngSubmit)="addComment(form)">
+            <textarea name="myComment" id="myComment" ngModel required></textarea>
+            <button type="button" (click)="openModal(modal)">Évaluer</button>
+
+            <div class="modal" id="modal" #modal>
+                <div class="modal_container">
+                    <div class="modal_content">
+                        <button type="button" class="modal_close" (click)="closeModal(modal)">x</button>
+                        <p>Commentaire bien construit par un utilisateur bienveillant.</p>
+                        <div class="stars" #stars id="stars">
+                            <i (click)="rate(1)" class="fa fa-star gold"></i>
+                            <i (click)="rate(2)" class="fa fa-star gold"></i>
+                            <i (click)="rate(3)" class="fa fa-star gold"></i>
+                            <i (click)="rate(4)" class="fa fa-star"></i>
+                            <i (click)="rate(5)" class="fa fa-star"></i>
+                        </div>
+                        <button type="submit">POSTER</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        
         <div class="comment" *ngFor="let comment of comments">
             <div class="name">
                 <span>Utilisateur{{ comment.userId }} : </span>

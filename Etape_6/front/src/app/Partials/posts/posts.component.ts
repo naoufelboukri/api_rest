@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Post } from 'src/app/Models/Post';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { PostService } from 'src/app/Services/post.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class PostsComponent {
 
   constructor(
     private _route: Router,
-    protected _postService: PostService
+    protected _postService: PostService,
+    protected _authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {

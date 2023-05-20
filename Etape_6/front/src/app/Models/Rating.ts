@@ -5,6 +5,6 @@ export class Rating {
     content: Text;
     value: number;
     userId: number;
-    postId: Post
+    postId: number;
     created_at: Date;
 }

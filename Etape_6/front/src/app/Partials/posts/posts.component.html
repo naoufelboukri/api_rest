@@ -16,7 +16,7 @@
     </form>
 
     <div class="new">
-        <button (click)="goTo('post/new')">Créer un article</button>
+        <button (click)="goTo('post/new')" *ngIf="_authService.isLogged">Créer un article</button>
     </div>
 
     <div class="posts">
