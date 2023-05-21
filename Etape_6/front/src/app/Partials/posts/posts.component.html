@@ -7,8 +7,8 @@
         </select>
 
         <div class="search">
-            <input type="text" name="" id="" placeholder="Rechercher un jeu">
-            <button>
+            <input type="text" name="" id="" placeholder="Rechercher un jeu" #searchInput>
+            <button (click)="search(searchInput)">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 Rechercher
             </button>

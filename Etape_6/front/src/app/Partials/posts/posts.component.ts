@@ -42,4 +42,15 @@ export class PostsComponent {
     const month = DATE.getMonth() + 1;
     return DATE.getDate() + '/' + (month < 10 ? "0" + month : month) + '/' + DATE.getFullYear();
   }
+
+  search(input: HTMLInputElement) {
+    this._postService.getBySearch(1, input.value).subscribe(
+      data => {
+        this.posts = [];
+        for (const post of data) {
+          this.posts.push(post);
+        }
+      }
+    )
+  }
 }

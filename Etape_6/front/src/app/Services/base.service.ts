@@ -8,7 +8,7 @@ import { catchError, of, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class BaseService<T> {
-    private API_URL: string = env.API_URL;
+    protected API_URL: string = env.API_URL;
 
     constructor(
         private router: Router,
