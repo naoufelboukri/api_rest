@@ -15,11 +15,17 @@ namespace quest_web_dotnet.Controllers
     public class PostController : BaseController<Post>
     {
         public PostController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.posts) { }
-
-        public override IActionResult getAll()
+        [HttpGet]
+        public override IActionResult getAll(int page)
         {
-            _contextName.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).ToList();
-            return Ok(_contextName.ToArray());
+            Console.WriteLine(page);
+            int per_page = 10;
+            _contextName
+                .Include(p => p.Ratings)
+                .Include(p => p.PostTags)
+                .ThenInclude(tag => tag.Tag)
+                .ToList();
+            return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).ToList());
         }
 
         [HttpGet("{id}")]
@@ -30,7 +36,7 @@ namespace quest_web_dotnet.Controllers
             {
                 return BadRequest(errorMessageExist(id));
             }
-            _contextName.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).ToList();
+            //_contextName.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).ToList();
             return Ok(post);
         }
 
