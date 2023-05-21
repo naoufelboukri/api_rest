@@ -27,7 +27,7 @@ namespace quest_web_dotnet.Controllers
             _contextName = contextName;
         }
 
-        public virtual IActionResult getAll()
+        public virtual IActionResult getAll(int page = 1)
         {
             return Ok(_contextName.ToArray());
         }
