@@ -29,16 +29,15 @@ namespace quest_web_dotnet.Controllers
         }
 
         [HttpGet("search")]
-        public override IActionResult getBySearch(int page, [FromBody] SearchRequest request)
+        public IActionResult getBySearch(int page = 1, string search = "")
         {
-            Regex reg = new Regex(request.search);
             int per_page = 10;
             _contextName
                 .Include(p => p.Ratings)
                 .Include(p => p.PostTags)
                 .ThenInclude(tag => tag.Tag)
                 .ToList();
-            return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).Where(p => p.Title.Contains(request.search)).ToList());
+            return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).Where(p => p.Title.Contains(search)).ToList());
         }
 
         [HttpGet("{id}")]
