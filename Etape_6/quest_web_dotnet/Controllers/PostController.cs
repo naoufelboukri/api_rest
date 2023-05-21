@@ -100,5 +100,43 @@ namespace quest_web_dotnet.Controllers
             return StatusCode(403, unauthorizeMessage);
         }
 
+        [HttpPost("generate")]
+        [Authorize]
+        public async Task<IActionResult> Generate([FromHeader] string Authorization, [FromBody] PostBody request)
+        {
+            User? user = getUser(Authorization);
+            Post[] post = new Post[20];
+
+            if (user != null)
+            {
+                for (int i = 0; i < post.Length; i+=1) {
+                    post[i] = new Post
+                    {
+                        Title = request.Title,
+                        Content = request.Content,
+                        UserId = user.Id,
+                        Updated_At = DateTime.Now
+                    };
+                    List<PostTag> tags = new List<PostTag>();
+                    if (request.Tags != "")
+                    {
+                        string[] tagsId = request.Tags.Split(',');
+                        foreach (string id in tagsId)
+                        {
+                            Tag? tag = _context.tags.Find(int.Parse(id));
+                            if (tag != null)
+                            {
+                                tags.Add(new PostTag { Post = post[i], Tag = tag });
+                            }
+                        }
+                        post[i].PostTags = tags;
+                    }
+                    _contextName.Add(post[i]);
+                }
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(Create), post);
+            }
+            return StatusCode(403, unauthorizeMessage);
+        }
     }
 }
