@@ -6,6 +6,7 @@ using quest_web.Models;
 using quest_web_dotnet.Models;
 using quest_web_dotnet.Services;
 using System.Net.Http.Headers;
+using static quest_web_dotnet.Controllers.PostController;
 
 namespace quest_web_dotnet.Controllers
 {
@@ -28,6 +29,11 @@ namespace quest_web_dotnet.Controllers
         }
 
         public virtual IActionResult getAll(int page = 1)
+        {
+            return Ok(_contextName.ToArray());
+        }
+
+        public virtual IActionResult getBySearch(int page = 1, SearchRequest request = null)
         {
             return Ok(_contextName.ToArray());
         }

@@ -5,8 +5,9 @@ using quest_web;
 using quest_web.Models;
 using quest_web_dotnet.Models;
 using quest_web_dotnet.Models.Forms;
-using quest_web_dotnet.Services;
 using System.Text.Json.Nodes;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace quest_web_dotnet.Controllers
 {
@@ -25,6 +26,19 @@ namespace quest_web_dotnet.Controllers
                 .ThenInclude(tag => tag.Tag)
                 .ToList();
             return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).ToList());
+        }
+
+        [HttpGet("search")]
+        public override IActionResult getBySearch(int page, [FromBody] SearchRequest request)
+        {
+            Regex reg = new Regex(request.search);
+            int per_page = 10;
+            _contextName
+                .Include(p => p.Ratings)
+                .Include(p => p.PostTags)
+                .ThenInclude(tag => tag.Tag)
+                .ToList();
+            return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).Where(p => p.Title.Contains(request.search)).ToList());
         }
 
         [HttpGet("{id}")]
@@ -137,6 +151,11 @@ namespace quest_web_dotnet.Controllers
                 return CreatedAtAction(nameof(Create), post);
             }
             return StatusCode(403, unauthorizeMessage);
+        }
+
+        public class SearchRequest
+        {
+            public string search { set; get; }
         }
     }
 }
