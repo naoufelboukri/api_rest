@@ -21,14 +21,14 @@
         <h3>Commentaires :</h3>
 
         <form #form="ngForm" (ngSubmit)="addComment(form)">
-            <textarea name="myComment" id="myComment" ngModel required></textarea>
+            <textarea name="myComment" id="myComment" [(ngModel)]="textareaContent" required></textarea>
             <button type="button" (click)="openModal(modal)">Évaluer</button>
 
             <div class="modal" id="modal" #modal>
                 <div class="modal_container">
                     <div class="modal_content">
                         <button type="button" class="modal_close" (click)="closeModal(modal)">x</button>
-                        <p>Commentaire bien construit par un utilisateur bienveillant.</p>
+                        <p>{{ textareaContent }}</p>
                         <div class="stars" #stars id="stars">
                             <i (click)="rate(1)" class="fa fa-star gold"></i>
                             <i (click)="rate(2)" class="fa fa-star gold"></i>
@@ -47,6 +47,19 @@
                 <span>Utilisateur{{ comment.userId }} : </span>
                 <div class="rating">
                     <span [innerHTML]="scored(comment.value)"></span>
+                </div>
+                <button class="deleteComment" *ngIf="comment.userId === 1" (click)="openModalDelete(modal_delete)">
+                    x
+                </button>
+
+                <div class="modal" id="modal_delete" #modal_delete>
+                    <div class="modal_container">
+                        <div class="modal_content">
+                            <button type="button" class="modal_close" (click)="closeModalDelete(modal_delete)">x</button>
+                            <p>Êtes vous sûr de vouloir supprimer ce commentaire ?</p>
+                            <button class="btnDelete" (click)="deleteComment(comment)">Supprimer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
     

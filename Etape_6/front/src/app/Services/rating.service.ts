@@ -9,6 +9,6 @@ import { Router } from '@angular/router';
 })
 export class RatingService extends BaseService<Rating>{
   constructor(_http: HttpClient, router: Router) {
-    super(router, _http, 'rating')
+    super(router, _http, 'ratings')
   }
 }

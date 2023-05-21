@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MOCK_POSTS } from 'src/app/Mock/posts';
@@ -17,6 +17,7 @@ export class DetailComponent implements OnInit {
   post: Post | null = null;
   comments: Rating[] = [];
 
+  textareaContent: string = '';
   fakePosts: Post[] = MOCK_POSTS;
 
   constructor (
@@ -35,7 +36,6 @@ export class DetailComponent implements OnInit {
             for (const rating of this.post.ratings) {
               this.comments.push(rating);
             }
-            console.log(this.post);
           },
           err => {
             console.error(err);
@@ -47,26 +47,25 @@ export class DetailComponent implements OnInit {
   addComment(form: NgForm) {
     const div = document.querySelector('#stars') as HTMLElement; 
     const stars = Array.from(div.querySelectorAll('*')) as Element[];
-    const value = 0; 
+    let value = 0; 
 
-    for (const star of stars) {
+    for (const star of stars) {      
       if (star.classList.contains('gold')) {
-        value + 1;
+        value += 1;
       }
     }
-
+    
     const rating: Rating = new Rating();
     rating.content = form.value.myComment;
     rating.userId = 1;
     rating.value = value;
+    
     if (this.post) {
       rating.postId = this.post?.id;
     }
-
+    
     this._ratingService.create(rating).subscribe(
-      data => {
-        console.log("ok");
-        
+      data => {        
         // window.location.reload();
       }
     )
@@ -105,6 +104,22 @@ export class DetailComponent implements OnInit {
   
   closeModal(modal: HTMLDivElement) {
     modal.classList.remove("modal_show");
+  }
+  
+  openModalDelete(modal: HTMLDivElement) {
+    modal.classList.add("modal_show");
+  }
+  
+  closeModalDelete(modal: HTMLDivElement) {
+    modal.classList.remove("modal_show");
+  }
+
+  deleteComment(rating: Rating) {
+    this._ratingService.delete(rating.id).subscribe(
+      data => {
+        // window.location.reload();
+      }
+    )
   }
 
   rate(rating: number): void {

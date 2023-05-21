@@ -28,7 +28,8 @@ export class BaseService<T> {
         console.log(item);
         return this._http.post<T>(`${this.API_URL}/${this.endpoint}`, item).pipe(
             catchError(err => {
-                this.handleError(err)
+                console.log(err);
+                // this.handleError(err);
                 return of(null);
             })
         );
@@ -38,7 +39,7 @@ export class BaseService<T> {
         return this._http.put<T>(`${this.API_URL}/${this.endpoint}/${id}`, item).pipe(
             catchError(err => {
                 console.log(err);
-                this.handleError(err)
+                // this.handleError(err);
                 return of(null);
             })
         );
@@ -47,15 +48,16 @@ export class BaseService<T> {
     delete(id: number) {
         return this._http.delete(`${this.API_URL}/${this.endpoint}/${id}`).pipe(
             catchError(err => {
-                this.handleError(err)
+                console.log(err);
+                // this.handleError(err);
                 return of(null);
             })
         );
     }
 
     private handleError(err: any): void {
-        this.router.navigate(['']);
-        localStorage.removeItem('UserToken');
-        window.location.reload();
+        // this.router.navigate(['']);
+        // localStorage.removeItem('UserToken');
+        // window.location.reload();
     }
 }
