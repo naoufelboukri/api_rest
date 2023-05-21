@@ -49,22 +49,26 @@ namespace quest_web_dotnet.Controllers
         {
             User? user = getUser(Authorization);
             T? entity = _contextName.Find(id);
-            if (entity != null && user != null)
+            if (user != null)
             {
-                IEntity iEntity = null;
-                if (entity is IEntity)
+                if (entity != null)
                 {
-                    iEntity = (IEntity)entity;
+                    IEntity iEntity = null;
+                    if (entity is IEntity)
+                    {
+                        iEntity = (IEntity)entity;
+                    }
+                    if (user.Role == "ROLE_ADMIN" || (iEntity != null && iEntity.UserId == user.Id))
+                    {
+                        _contextName.Remove(entity);
+                        _context.SaveChanges();
+                        return Ok(deleteMessage);
+                    }
+                    return StatusCode(403, unauthorizeMessage);
                 }
-                if (user.Role == "ROLE_ADMIN" || (iEntity != null && iEntity.UserId == user.Id))
-                {
-                    _contextName.Remove(entity);
-                    _context.SaveChanges();
-                    return Ok(deleteMessage);
-                }
-                return StatusCode(403, unauthorizeMessage);
+                return BadRequest(badRequestMessage);
             }
-            return BadRequest(badRequestMessage);
+            return StatusCode(403, unauthorizeMessage);
         }
 
         protected User? getUser(string Authorization)
