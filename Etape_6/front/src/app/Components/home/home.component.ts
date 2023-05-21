@@ -21,12 +21,10 @@ export class HomeComponent implements OnInit{
       data => {
         for (const post of data) {
           this.posts.push(post);
-          console.log(post);
-          
         }
       },
       err => {
-        console.log("erreur");
+        console.error("erreur");
       }
     )
   }

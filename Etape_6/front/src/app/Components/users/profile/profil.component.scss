@@ -1,0 +1,181 @@
+@import '../../../../Styles/utils'; 
+
+.container {
+    @include flex(row, space-around, flex-start);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 3em;
+    width: 80%;
+    font-family: 'Poppins';
+    .content {        
+        flex: 1;
+        background-color: #fff;
+        border-radius: 0px;
+        padding: 2em;
+        box-shadow: 10px 10px 10px #4743bb;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2em;
+        aside {
+            border-right: 1px solid #000;
+            button {
+                display: inline;
+                padding: 1em;
+                border: none;
+                background: none;
+                font-size: 1.5em;
+                font-weight: 600;
+                cursor: pointer;
+                width: 100%;
+                transition: 300ms ease-in;
+                &:hover {
+                    background-color: rgb(202, 202, 202);
+                }
+            }
+            
+            .focused {
+                color: $primary;
+                background-color: rgb(202, 202, 202);
+            }
+        }
+
+        .focusContent {
+            width: 100%;
+            .profil {
+                display: none;
+                hr {
+                    margin: 0 0 2em;
+                    width: 100%;
+                }
+                form {
+                    width: 100%;
+                    div {
+                        width: 100%;
+                        margin: 1em 0;
+                        display: flex;
+                        label {
+                            flex: 1;
+                        }
+                        input {
+                            flex: 3;
+                            padding: 0.5em 1em;
+                        }
+                    }
+                }
+                button {
+                    @extend %button;
+                }
+            }
+
+            .posts {
+                display: none;
+                hr {
+                    margin: 0 0 2em;
+                    width: 100%;
+                }
+
+                table {
+                    width: 100%;
+                    tr {
+                        transition: 300ms ease-in-out;
+                        td {
+                            border: none;
+                            button {
+                                font-family: 'Font Awesome 6 Free';
+                                background: none;
+                                border: none;
+                                font-size: 18px;
+                                cursor: pointer;
+                                margin: 0 0 0 1em;
+                            }
+                        }
+
+                        .modal {
+                            opacity: 0;
+                            visibility: hidden;
+                            position: fixed;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            left: 0;
+                            background-color: rgba($color: #000000, $alpha: 0.5);
+                            transition: 500ms ease-in-out;
+                            .modal_container {
+                                position: fixed;
+                                transform: translate(-50%, -50%);
+                                left: 50%;
+                                top: 50%;
+                                min-width: 30%;
+                                .modal_content {
+                                    position: relative;
+                                    color: gray;
+                                    padding: 4em 3em 2em;
+                                    background-color: $primary;
+                                    text-align: center;
+                                    font-family: 'Poppins';
+                                    p {
+                                        color: #fff;
+                                    }
+                                    .modal_close {
+                                        @extend %button;
+                                        position: absolute;
+                                        top: 10px;
+                                        right: 10px;
+                                        &:hover {
+                                            background-color: rgba($color: #000000, $alpha: 0);
+                                            color: grey;
+                                        }
+                                    }
+                                    .btnDelete {
+                                        @extend %button;
+                                        margin: 1em 0 0;
+                                        background-color: $danger;
+                                        &:hover {
+                                            background-color: $danger-light;
+                                        }
+                                    }
+                                    .stars {
+                                        margin: 1em 0 0;
+                                        font-size: 2em;
+                                        i {
+                                            cursor: pointer;
+                                            &:hover ~ i {
+                                                color: gray;
+                                            }
+                                        }
+                                        .gold {
+                                            color: #ffdc0f;
+                                        }
+                                        &:hover {
+                                            i {
+                                                color: #ffdc0f;
+                                            }
+                                        }
+                                    }
+                                    button[type="submit"] {
+                                        @extend %button;
+                                        margin: 2em 0 0;
+                                        background-color: $info;
+                                        text-transform: uppercase;
+                                    }
+                                }
+                            }
+                        }
+
+                        .modal_show {
+                            visibility: visible;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+
+            .pageFocus {
+                display:initial;
+            }
+        }
+    }
+}

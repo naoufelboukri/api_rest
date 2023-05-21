@@ -48,7 +48,7 @@
                 <div class="rating">
                     <span [innerHTML]="scored(comment.value)"></span>
                 </div>
-                <button class="deleteComment" *ngIf="comment.userId === 1" (click)="openModalDelete(modal_delete)">
+                <button class="deleteComment" *ngIf="user && comment.userId === user.id" (click)="openModalDelete(modal_delete)">
                     x
                 </button>
 

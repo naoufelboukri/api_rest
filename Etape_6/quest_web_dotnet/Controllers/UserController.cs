@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using quest_web;
 using quest_web.Models;
 using System.Net.Http.Headers;
@@ -12,6 +13,25 @@ namespace quest_web_dotnet.Controllers
     public class UserController : BaseController<User>
     {
         public UserController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.users) { }
+
+        [HttpGet]
+        public override IActionResult getAll(int page = 1)
+        {
+            _contextName.Include(u => u.Ratings).Include(u => u.Posts).ToList();
+            return Ok(_contextName.ToList());
+        }
+
+        [HttpGet("{id}")]
+        public override IActionResult get(int id)
+        {
+            var entity = _contextName.Find(id);
+            _contextName.Include(u => u.Ratings).Include(u => u.Posts).ToList();
+            if (entity == null)
+            {
+                return BadRequest(errorMessageExist(id));
+            }
+            return Ok(entity);
+        }
 
         [HttpPut("{id}")]
         [Authorize]

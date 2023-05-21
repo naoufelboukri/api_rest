@@ -43,9 +43,6 @@ export class NewComponent implements OnInit {
     post.content = this.content;
     post.title = form.value.title;
     post.tags = tags;
-
-    console.log("### 1");
-    console.log(post.content);
     
     this._postService.create(post).subscribe(
       data => {

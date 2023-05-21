@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { env } from '../env';
 import { Router } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,8 @@ export class BaseService<T> {
         @Inject(String) protected endpoint: string,
     ) { }
     
-    getAll() {
-        return this._http.get<T[]>(`${this.API_URL}/${this.endpoint}`);
+    getAll(page: number = 1) {
+        return this._http.get<T[]>(`${this.API_URL}/${this.endpoint}?page=${page}`);
     }
 
     getOne(id: number) {
@@ -25,39 +25,48 @@ export class BaseService<T> {
     }
 
     create(item: T) {
-        console.log(item);
         return this._http.post<T>(`${this.API_URL}/${this.endpoint}`, item).pipe(
-            catchError(err => {
-                console.log(err);
-                // this.handleError(err);
-                return of(null);
-            })
+            tap(
+                () => {
+
+                },
+                err => {
+                    this.handleError(err);
+                }
+            )
         );
     }
 
     update(item: T, id: number) {
         return this._http.put<T>(`${this.API_URL}/${this.endpoint}/${id}`, item).pipe(
-            catchError(err => {
-                console.log(err);
-                // this.handleError(err);
-                return of(null);
-            })
+            tap(
+                () => {
+
+                },
+                err => {
+                    this.handleError(err);
+                }
+            )
         );
     }
 
     delete(id: number) {
         return this._http.delete(`${this.API_URL}/${this.endpoint}/${id}`).pipe(
-            catchError(err => {
-                console.log(err);
-                // this.handleError(err);
-                return of(null);
-            })
+            tap(
+                () => {
+
+                },
+                err => {
+                    this.handleError(err);
+                }
+            )
         );
     }
 
     private handleError(err: any): void {
-        // this.router.navigate(['']);
-        // localStorage.removeItem('UserToken');
-        // window.location.reload();
+        if (err.error = "Token vide ou invalide") {
+            localStorage.removeItem('UserToken');
+            this.router.navigate(['unauthorize']);
+        }
     }
 }

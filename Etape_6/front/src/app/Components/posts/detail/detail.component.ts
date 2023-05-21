@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { MOCK_POSTS } from 'src/app/Mock/posts';
 import { Post } from 'src/app/Models/Post';
 import { Rating } from 'src/app/Models/Rating';
+import { User } from 'src/app/Models/User';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 import { PostService } from 'src/app/Services/post.service';
 import { RatingService } from 'src/app/Services/rating.service';
 
@@ -15,12 +17,13 @@ import { RatingService } from 'src/app/Services/rating.service';
 export class DetailComponent implements OnInit {
 
   post: Post | null = null;
+  user: User | null = null;
   comments: Rating[] = [];
-
   textareaContent: string = '';
   fakePosts: Post[] = MOCK_POSTS;
 
   constructor (
+    protected _authService: AuthenticationService,
     protected _postService: PostService,
     private _ratingService: RatingService,
     private route: ActivatedRoute
@@ -42,6 +45,12 @@ export class DetailComponent implements OnInit {
           }
         )
       }
+
+      this._authService.me().subscribe(
+        data => {
+          this.user = data;
+        }
+      )
   }
 
   addComment(form: NgForm) {
@@ -65,8 +74,8 @@ export class DetailComponent implements OnInit {
     }
     
     this._ratingService.create(rating).subscribe(
-      data => {        
-        // window.location.reload();
+      data => {            
+        window.location.reload();
       }
     )
   }
@@ -117,7 +126,7 @@ export class DetailComponent implements OnInit {
   deleteComment(rating: Rating) {
     this._ratingService.delete(rating.id).subscribe(
       data => {
-        // window.location.reload();
+        window.location.reload();
       }
     )
   }

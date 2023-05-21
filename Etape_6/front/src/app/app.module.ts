@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './Components/Others/page-not-found/page-n
 import { UnauthorizeComponent } from './Components/Others/unauthorize/unauthorize.component';
 import { PostsModule } from './Components/posts/posts.module';
 import { AuthenticationModule } from './Components/authentication/authentication.module';
+import { UsersModule } from './Components/users/users.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AuthenticationModule } from './Components/authentication/authentication
     BrowserModule,
     PostsModule,
     AuthenticationModule,
+    UsersModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
