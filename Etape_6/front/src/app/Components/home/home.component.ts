@@ -42,4 +42,12 @@ export class HomeComponent implements OnInit{
     const month = DATE.getMonth() + 1;
     return DATE.getDate() + '/' + (month < 10 ? "0" + month : month) + '/' + DATE.getFullYear();
   }
+
+  generatePosts() {
+    this._postService.generatePosts().subscribe(data=> {window.location.reload()});
+  }
+
+  destroyPosts() {
+    this._postService.destroyPosts().subscribe(data=> {window.location.reload()});
+  }
 }

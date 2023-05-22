@@ -6,6 +6,7 @@
     </div>
     <ng-template #connected>
       <div>
+        <i (click)="goTo('')" *ngIf="user && user.role === 'ROLE_ADMIN'" class="fa-solid fa-gear"></i>
         <i (click)="goTo('posts')" class="fa-solid fa-newspaper"></i>
         <i (click)="goTo('profil')" class="fa-solid fa-user"></i>
         <i (click)="_authService.logout()" class="fa-solid fa-arrow-right-from-bracket"></i>

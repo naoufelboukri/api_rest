@@ -1,9 +1,9 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailComponent } from './detail/detail.component';
 import { ListComponent } from './list/list.component';
-import { NewComponent } from './new/new.component';
+import { FormComponent } from './form/form.component';
 import { AuthGuard } from 'src/app/Guards/auth.guard';
 import { PostsComponent } from 'src/app/Partials/posts/posts.component';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,8 @@ import { PostContentComponent } from 'src/app/Partials/post-content/post-content
 
 const routesPost: Routes = [
   { path: 'posts', component: ListComponent },
-  { path: 'post/new', component: NewComponent, canActivate: [AuthGuard] },
+  { path: 'post/new', component: FormComponent, canActivate: [AuthGuard] },
+  { path: 'post/edit/:id', component: FormComponent, canActivate: [AuthGuard] },
   { path: 'post/:id', component: DetailComponent },
 ]
 
@@ -19,9 +20,9 @@ const routesPost: Routes = [
   declarations: [
     DetailComponent,
     ListComponent,
-    NewComponent,
+    FormComponent,
     PostsComponent,
-    PostContentComponent
+    PostContentComponent,
   ],
   imports: [
     CommonModule,

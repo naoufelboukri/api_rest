@@ -1,0 +1,11 @@
+- <del>Faire la partie inscription
+- Faire la partie ADMIN 
+- Ajouter l'observable de deconnexion quand le token n'est plus valide 
+- Possibilité à l'utilisateur de modifier son profil
+- Ajouter les tags par Post 
+- Ajouter la pagination dans le back des gatAll + les ajouter dans le front
+- Corriger le problème de search sur post + trier le resultat par catégorie 
+- Possibilité de voir la moyenne général des notes des avis par utilisateurs 
+- Ajouter des meilleurs données fakers
+- Rendre le truc responsive 
+- Réarranger le front pour la connexion et l'inscription

@@ -1,11 +1,12 @@
 <div class="container">
     <div class="content">
-        <h2>Créer un article</h2>
+        <h2 *ngIf="!post">Créer un article</h2>
+        <h2 *ngIf="post">Edition de l'article</h2>
         <hr>
-        <form #form="ngForm" (ngSubmit)="create(form)">
+        <form #form="ngForm" (ngSubmit)="save(form)">
             <div>
                 <label for="title">Titre</label>
-                <input type="text" name="title" id="title" required ngModel>
+                <input type="text" name="title" id="title" value="{{post?.title}}" required ngModel>
             </div>
 
             <div>
@@ -18,9 +19,7 @@
 
             <div>
                 <label for="content">Contenu</label>
-                <textarea name="content" id="content" cols="30" rows="10" on required [(ngModel)]="content">
-
-                </textarea>
+                <textarea name="content" id="content" cols="30" rows="10" required [(ngModel)]="content" value="{{post?.content}}"></textarea>
             </div>
 
             <button>Enregistrer</button>

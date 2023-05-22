@@ -3,7 +3,11 @@
         <img src="/assets/gamepad.png" alt="logo">
         <span>Bienvenue sur GAMING BLOG</span>
     </div>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum dolore ea veritatis Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+    <div class="generate">
+        <p>Possibilité de générer des fausses données afin d'avoir un rendu plus concret.</p>
+        <button (click)="generatePosts()" *ngIf="posts.length === 0">Générer des posts</button>
+        <button (click)="destroyPosts()" *ngIf="posts.length > 0">Supprimer les posts</button>
+    </div>
 </div>
 
 <app-posts></app-posts>

@@ -22,7 +22,7 @@
     <div class="posts">
         <div class="post" *ngFor="let post of posts">
             <h2>{{ post.title }}</h2>
-            <p>{{ post.content }}</p>
+            <p>{{ post.content.substring(0,200)+"..." }}</p>
             <button (click)="goTo('post', post.id)">
                 Voir la suite
                 <i class="fa-solid fa-arrow-down"></i>
@@ -38,8 +38,7 @@
             </div>
 
             <div class="tags">
-                <div class="tag">Aventure</div>
-                <div class="tag">Action</div>
+                <span class="tag" *ngFor="let posttag of post.postTags">{{ posttag.tag.name }}</span>
             </div>
         </div>
     </div>

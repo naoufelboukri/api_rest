@@ -21,7 +21,7 @@ export class AuthComponent {
       data => {
         this.isValid = true;
         localStorage.setItem('UserToken', data.token.toString());
-        this._router.navigate(['home']);
+        this._router.navigate(['']);
         window.location.reload();
       },
       err => {

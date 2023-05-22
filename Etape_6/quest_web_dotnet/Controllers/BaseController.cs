@@ -33,11 +33,6 @@ namespace quest_web_dotnet.Controllers
             return Ok(_contextName.ToArray());
         }
 
-        public virtual IActionResult getBySearch(int page = 1, SearchRequest request = null)
-        {
-            return Ok(_contextName.ToArray());
-        }
-
         [HttpGet("{id}")]
         public virtual IActionResult get(int id)
         {

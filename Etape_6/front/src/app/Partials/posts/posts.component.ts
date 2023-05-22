@@ -24,6 +24,8 @@ export class PostsComponent {
       data => {
         for (const post of data) {
           this.posts.push(post);
+          console.log(post);
+          
         }
       }
     )

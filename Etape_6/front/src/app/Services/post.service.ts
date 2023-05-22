@@ -15,5 +15,13 @@ export class PostService extends BaseService<Post>{
 
   getBySearch(page: number = 1, search: string = '') {
     return this._http.get<Post[]>(`${this.API_URL}/${this.endpoint}/search?page=${page}&search=${search}`);
-}
+  }
+
+  generatePosts() {
+    return this._http.get(`${this.API_URL}/posts/generate`);
+  }
+
+  destroyPosts() {
+    return this._http.delete(`${this.API_URL}/posts`);
+  }
 }

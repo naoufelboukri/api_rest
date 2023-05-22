@@ -8,6 +8,7 @@ using quest_web_dotnet.Models.Forms;
 using System.Text.Json.Nodes;
 using System.Linq;
 using System.Text.RegularExpressions;
+using quest_web_dotnet.Seeds;
 
 namespace quest_web_dotnet.Controllers
 {
@@ -17,15 +18,12 @@ namespace quest_web_dotnet.Controllers
     {
         public PostController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.posts) { }
         [HttpGet]
-        public override IActionResult getAll(int page)
+        public override IActionResult getAll(int page = 1)
         {
-            int per_page = 10;
-            _contextName
-                .Include(p => p.Ratings)
-                .Include(p => p.PostTags)
-                .ThenInclude(tag => tag.Tag)
-                .ToList();
-            return Ok(_contextName.Skip((page - 1) * per_page).Take(per_page).ToList());
+            int per_page = 5;
+            var posts = from s in _contextName select s;
+            var results = posts.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag);
+            return Ok(PaginatedList<Post>.Create(results, page, per_page));
         }
 
         [HttpGet("search")]
@@ -113,43 +111,27 @@ namespace quest_web_dotnet.Controllers
             return StatusCode(403, unauthorizeMessage);
         }
 
-        [HttpPost("generate")]
-        [Authorize]
-        public async Task<IActionResult> Generate([FromHeader] string Authorization, [FromBody] PostBody request)
+        [HttpGet("generate")]
+        public async Task<IActionResult> Generate()
         {
-            User? user = getUser(Authorization);
-            Post[] post = new Post[20];
-
-            if (user != null)
-            {
-                for (int i = 0; i < post.Length; i+=1) {
-                    post[i] = new Post
-                    {
-                        Title = request.Title,
-                        Content = request.Content,
-                        UserId = user.Id,
-                        Updated_At = DateTime.Now
-                    };
-                    List<PostTag> tags = new List<PostTag>();
-                    if (request.Tags != "")
-                    {
-                        string[] tagsId = request.Tags.Split(',');
-                        foreach (string id in tagsId)
-                        {
-                            Tag? tag = _context.tags.Find(int.Parse(id));
-                            if (tag != null)
-                            {
-                                tags.Add(new PostTag { Post = post[i], Tag = tag });
-                            }
-                        }
-                        post[i].PostTags = tags;
-                    }
-                    _contextName.Add(post[i]);
-                }
-                await _context.SaveChangesAsync();
-                return CreatedAtAction(nameof(Create), post);
+            var posts = new SeedPosts().getFakePosts();
+            for (int i = 0; i < posts.Count; i+=1) {
+                Post post = posts[i];
+                _contextName.Add(post);
             }
-            return StatusCode(403, unauthorizeMessage);
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "Données générées" });
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteAll()
+        {
+            foreach(var entity in _contextName)
+            {
+                _context.Remove(entity);
+            }
+            _context.SaveChanges();
+            return Ok(new { message = "Posts supprimés" });
         }
 
         public class SearchRequest

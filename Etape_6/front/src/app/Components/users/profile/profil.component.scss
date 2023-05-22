@@ -19,6 +19,7 @@
         flex-direction: row;
         align-items: flex-start;
         gap: 2em;
+        min-height: 50vh;
         aside {
             border-right: 1px solid #000;
             button {
@@ -26,7 +27,7 @@
                 padding: 1em;
                 border: none;
                 background: none;
-                font-size: 1.5em;
+                font-size: 1em;
                 font-weight: 600;
                 cursor: pointer;
                 width: 100%;
@@ -170,6 +171,10 @@
                             opacity: 1;
                         }
                     }
+                }
+                .btnAction {
+                    @extend %button;
+                    margin: 3em 0 0;
                 }
             }
 
