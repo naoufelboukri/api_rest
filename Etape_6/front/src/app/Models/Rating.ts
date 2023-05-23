@@ -1,3 +1,4 @@
+import { HttpHeaderResponse } from "@angular/common/http";
 import { Post } from "./Post";
 
 export class Rating {

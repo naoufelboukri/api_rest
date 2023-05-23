@@ -47,68 +47,73 @@
             @extend %button;
         }
     }
-
-    .post {
-        padding: 6em 2em;
-        background-color: #fff;
-        position: relative;
-        max-height: 600px;
-        margin: 0 0 2rem;
-        h2 {
-            font-weight: 500;
+    .posts {
+        .post {
+            padding: 6em 2em;
+            background-color: #fff;
+            position: relative;
+            max-height: 600px;
             margin: 0 0 2rem;
-        }
-
-        p {
-            font-weight: 400;
-            line-height: 150%;
-            font-size: 17px;
-        }
-
-        button {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            border-radius: 0px;
-            padding: 1rem 1.5rem;
-            background-color: #D9D9D9;
-            border: none;
-            font-family: 'Poppins';
-            cursor: pointer;
-            transition: 300ms ease-in-out;
-            &:hover {
-                background-color: #a0a0a0;
+            h2 {
+                font-weight: 500;
+                margin: 0 0 2rem;
             }
-            i {
-                margin: 0 0 0 1rem;
+            
+            p {
+                font-weight: 400;
+                line-height: 150%;
+                font-size: 17px;
+            }
+            
+            button {
+                position: absolute;
+                bottom: 30px;
+                right: 30px;
+                border-radius: 0px;
+                padding: 1rem 1.5rem;
+                background-color: #D9D9D9;
+                border: none;
+                font-family: 'Poppins';
+                cursor: pointer;
+                transition: 300ms ease-in-out;
+                &:hover {
+                    background-color: #a0a0a0;
+                }
+                i {
+                    margin: 0 0 0 1rem;
+                }
+            }
+            
+            .created_at {
+                position: absolute;
+                top: 30px;
+                right: 30px;
+                font-weight: 400;
+                font-size: 14px;
+            }
+        
+            .stars {
+                position: absolute;
+                top: 60px;
+                right: 30px;
+            }
+        
+            .tags {
+                position: absolute;
+                top: 30px;
+                left: 30px;
+                .tag {
+                    padding: 0.5rem 1.5rem;
+                    background-color: $info;
+                    display: inline;
+                    margin: 0 2rem 0 0;
+                    color: #fff;
+                }
             }
         }
+    }
 
-        .created_at {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            font-weight: 400;
-            font-size: 14px;
-        }
-
-        .stars {
-            position: absolute;
-            top: 60px;
-            right: 30px;
-        }
-
-        .tags {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            .tag {
-                padding: 0.5rem 1.5rem;
-                background-color: $info;
-                display: inline;
-                margin: 0 2rem 0 0;
-                color: #fff;
-            }
-        }
+    .pagination {
+        @extend %pagination;
     }
 }

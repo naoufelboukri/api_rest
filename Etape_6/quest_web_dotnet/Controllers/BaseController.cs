@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using quest_web;
 using quest_web.Models;
 using quest_web_dotnet.Models;
@@ -28,9 +29,20 @@ namespace quest_web_dotnet.Controllers
             _contextName = contextName;
         }
 
-        public virtual IActionResult getAll(int page = 1)
+        public virtual IActionResult getAll([FromQuery] PaginationParameters paginationParameters)
         {
-            return Ok(_contextName.ToArray());
+            var entities = from s in _contextName select s;
+            var pagedList = PagedList<T>.toPagedList(entities, paginationParameters.PageNumber, paginationParameters.PageSize);
+            var metadata = new
+            {
+                pagedList.TotalCount,
+                pagedList.PageSize,
+                pagedList.CurrentPage,
+                pagedList.TotalPages,
+                pagedList.HasNext,
+                pagedList.HasPrevious
+            };
+            return Ok(new { data = pagedList, meta = metadata });
         }
 
         [HttpGet("{id}")]

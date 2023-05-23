@@ -2,11 +2,18 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { env } from '../env';
 import { Router } from '@angular/router';
-import { catchError, of, tap } from 'rxjs';
+import { tap } from 'rxjs';
+import { Meta } from '../Models/Meta';
 
 @Injectable({
   providedIn: 'root'
 })
+
+class Response<T> {
+    data: T[];
+    meta: Meta
+}
+
 export class BaseService<T> {
     protected API_URL: string = env.API_URL;
 
@@ -16,8 +23,8 @@ export class BaseService<T> {
         @Inject(String) protected endpoint: string,
     ) { }
     
-    getAll(page: number = 1) {
-        return this._http.get<T[]>(`${this.API_URL}/${this.endpoint}?page=${page}`);
+    getAll(PageNumber: number = 1, PageSize: number = 5) {
+        return this._http.get<Response<T>>(`${this.API_URL}/${this.endpoint}?PageSize=${PageSize}&PageNumber=${PageNumber}`);
     }
 
     getOne(id: number) {
@@ -68,5 +75,5 @@ export class BaseService<T> {
             localStorage.removeItem('UserToken');
             this.router.navigate(['unauthorize']);
         }
-    }
+    }   
 }

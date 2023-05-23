@@ -1,3 +1,4 @@
+import { HttpHeaderResponse } from "@angular/common/http";
 import { PostTag } from "./PostTag";
 import { Rating } from "./Rating";
 

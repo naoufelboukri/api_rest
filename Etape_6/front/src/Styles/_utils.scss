@@ -37,3 +37,25 @@
         background-color: $primary-light;
     }
 }
+
+%pagination {
+    @include flex(row, flex-end);
+    gap: 1em;
+    button {
+        @extend %button;
+        background-color: $info;
+        &:hover {
+            background-color: $info-light;
+        }
+    }
+    span {
+        color: #fff;
+    }
+    .disabled {
+        background-color: $muted;
+        cursor: initial;
+        &:hover {
+            background-color: $muted;
+        }
+    }
+}

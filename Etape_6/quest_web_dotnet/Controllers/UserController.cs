@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using quest_web;
 using quest_web.Models;
+using quest_web_dotnet.Models;
 using System.Net.Http.Headers;
 using System.Text.Json.Nodes;
 
@@ -14,12 +16,24 @@ namespace quest_web_dotnet.Controllers
     {
         public UserController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.users) { }
 
-        [HttpGet]
-        public override IActionResult getAll(int page = 1)
-        {
-            _contextName.Include(u => u.Ratings).Include(u => u.Posts).ToList();
-            return Ok(_contextName.ToList());
-        }
+        //[HttpGet]
+        //public override IActionResult getAll(PaginationParameters paginationParameters)
+        //{
+        //    var users = from s in _contextName select s;
+        //    var results = users.Include(u => u.Ratings).Include(u => u.Posts);
+        //    var pagedList = PagedList<Post>.toPagedList(results, paginationParameters.PageNumber, paginationParameters.PageSize);
+        //    var metadata = new
+        //    {
+        //        pagedList.TotalCount,
+        //        pagedList.PageSize,
+        //        pagedList.CurrentPage,
+        //        pagedList.TotalPages,
+        //        pagedList.HasNext,
+        //        pagedList.HasPrevious
+        //    };
+        //    Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+        //    return Ok(pagedList);
+        //}
 
         [HttpGet("{id}")]
         public override IActionResult get(int id)

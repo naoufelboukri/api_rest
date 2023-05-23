@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Meta } from 'src/app/Models/Meta';
 import { Post } from 'src/app/Models/Post';
 import { PostService } from 'src/app/Services/post.service';
 
@@ -10,7 +11,7 @@ import { PostService } from 'src/app/Services/post.service';
 })
 export class HomeComponent implements OnInit{
   posts: Post[] = [];
-
+  meta: Meta;
   constructor (
     protected _postService: PostService,
     protected _router: Router
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit{
   ngOnInit() {
     this._postService.getAll().subscribe(
       data => {
-        for (const post of data) {
+        this.meta = data.meta;
+        for (const post of data.data) {
           this.posts.push(post);
         }
       },

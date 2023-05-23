@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Meta } from 'src/app/Models/Meta';
 
 import { Post } from 'src/app/Models/Post';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
@@ -12,7 +13,8 @@ import { PostService } from 'src/app/Services/post.service';
 })
 export class PostsComponent {
   posts: Post[] = [];
-
+  meta: Meta;
+  pageSize = 5;
   constructor(
     private _route: Router,
     protected _postService: PostService,
@@ -20,15 +22,20 @@ export class PostsComponent {
   ) { }
 
   ngOnInit(): void {
-    this._postService.getAll().subscribe(
+    const pageSize = this.pageSize;
+    const pageNumber = 1;
+
+    this.posts = [];
+    this._postService.getAll(pageNumber, pageSize).subscribe(
       data => {
-        for (const post of data) {
+        this.meta = data.meta;
+        console.log(data.data);
+        
+        for (const post of data.data) {
           this.posts.push(post);
-          console.log(post);
-          
         }
       }
-    )
+    );
   }
 
   goTo(route: string, id: number | null = null) {
@@ -54,5 +61,21 @@ export class PostsComponent {
         }
       }
     )
+  }
+
+  reloadPosts(next: boolean) {
+    if ((next && this.meta.hasNext) || (!next && this.meta.hasPrevious)) {
+      const pageNumber = next ? this.meta.currentPage + 1 : this.meta.currentPage - 1;
+      const pageSize = this.pageSize;
+      this.posts = [];
+      this._postService.getAll(pageNumber, pageSize).subscribe(
+        data => {
+          this.meta = data.meta;
+          for (const post of data.data) {
+            this.posts.push(post);
+          }
+        }
+      );
+    }
   }
 }

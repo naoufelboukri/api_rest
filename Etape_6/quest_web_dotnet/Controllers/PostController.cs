@@ -9,6 +9,7 @@ using System.Text.Json.Nodes;
 using System.Linq;
 using System.Text.RegularExpressions;
 using quest_web_dotnet.Seeds;
+using Newtonsoft.Json;
 
 namespace quest_web_dotnet.Controllers
 {
@@ -18,12 +19,21 @@ namespace quest_web_dotnet.Controllers
     {
         public PostController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.posts) { }
         [HttpGet]
-        public override IActionResult getAll(int page = 1)
+        public override IActionResult getAll(PaginationParameters paginationParameters)
         {
-            int per_page = 5;
             var posts = from s in _contextName select s;
             var results = posts.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag);
-            return Ok(PaginatedList<Post>.Create(results, page, per_page));
+            var pagedList = PagedList<Post>.toPagedList(results, paginationParameters.PageNumber, paginationParameters.PageSize);
+            var metadata = new
+            {
+                pagedList.TotalCount,
+                pagedList.PageSize,
+                pagedList.CurrentPage,
+                pagedList.TotalPages,
+                pagedList.HasNext,
+                pagedList.HasPrevious
+            };
+            return Ok(new { data = pagedList, meta = metadata });
         }
 
         [HttpGet("search")]
@@ -114,9 +124,32 @@ namespace quest_web_dotnet.Controllers
         [HttpGet("generate")]
         public async Task<IActionResult> Generate()
         {
-            var posts = new SeedPosts().getFakePosts();
-            for (int i = 0; i < posts.Count; i+=1) {
+            SeedTags seedTags = new SeedTags();
+            SeedPosts seedPosts = new SeedPosts();
+
+            int userId = _context.users.FirstOrDefault(user => user.Id > 0).Id;
+            var posts = seedPosts.getFakePosts(userId);
+            var allTags = seedTags.tags;
+
+            //foreach (var tag in allTags)
+            //{
+            //    if (_context.tags.FirstOrDefault(t => t.Name == tag.Name) == null)
+            //    {
+            //        _context.tags.Add(tag);
+            //    }
+            //}
+
+            for (int i = 0; i < posts.Count;i++)
+            {
+                List<PostTag> postTags = new List<PostTag>();
+
                 Post post = posts[i];
+                List<Tag> tags = seedTags.getFakeTags();
+                foreach (var tag in tags)
+                {
+                    postTags.Add(new PostTag { Tag = tag, Post = post });
+                }
+                post.PostTags = postTags;
                 _contextName.Add(post);
             }
             await _context.SaveChangesAsync();

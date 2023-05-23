@@ -1,7 +1,7 @@
 - <del>Faire la partie inscription
 - <del>Faire la partie ADMIN 
 - Ajouter l'observable de deconnexion quand le token n'est plus valide 
-- Possibilité à l'utilisateur de modifier son profil
+- <del>Possibilité à l'utilisateur de modifier son profil
 - <del>Ajouter les tags par Post 
 - Ajouter la pagination dans le back des gatAll + les ajouter dans le front
 - Corriger le problème de search sur post + trier le resultat par catégorie 
@@ -10,3 +10,5 @@
 - Rendre le truc responsive 
 - Réarranger le front pour la connexion et l'inscription
 - Mettre le tri par ordre chonologique
+- Mettre les messages d'erreur front ou back pour l'ensemble des formulaires
+- Mettre les guards de toutes les pages

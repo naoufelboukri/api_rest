@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this._tagService.getAll().subscribe(
       data => {
-        for (const tag of data) {
+        for (const tag of data.data) {
           this.tags.push(tag);
         }
       }

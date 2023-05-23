@@ -42,4 +42,10 @@
             </div>
         </div>
     </div>
+
+    <div class="pagination" *ngIf="meta.totalPages > 1">
+        <button (click)="reloadPosts(false)" [class]="meta.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
+        <span>{{ meta.currentPage }}</span>
+        <button (click)="reloadPosts(true)" [class]="meta.hasNext ? '' : 'disabled' "><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
 </div>

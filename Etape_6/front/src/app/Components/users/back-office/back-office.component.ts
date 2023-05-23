@@ -79,7 +79,7 @@ export class BackOfficeComponent implements OnInit {
     this.posts = [];
     this._userService.getAll().subscribe(
       data => {
-        for (const user of data) {
+        for (const user of data.data) {
           this.users.push(user);
         }
       }
@@ -87,7 +87,7 @@ export class BackOfficeComponent implements OnInit {
 
     this._postService.getAll().subscribe(
       data => {
-        for (const post of data) {
+        for (const post of data.data) {
           this.posts.push(post);
         }
       }
@@ -95,7 +95,7 @@ export class BackOfficeComponent implements OnInit {
 
     this._tagService.getAll().subscribe(
       data => {
-        for (const tag of data) {
+        for (const tag of data.data) {
           this.tags.push(tag);
         }
       }
