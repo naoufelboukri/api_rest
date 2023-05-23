@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from 'src/app/Models/Post';
 import { User } from 'src/app/Models/User';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
@@ -13,19 +14,20 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class ProfilComponent implements OnInit {
   user: User | null;
+  username: string | null = null;
   posts: Post[] = [];
   constructor (
     protected _authService: AuthenticationService,
     protected _userService: UserService,
-    private _postService: PostService,
-    private _router: Router
+    protected _postService: PostService,
+    private _router: Router,
   ) { }
 
   ngOnInit(): void {
     this._authService.me().subscribe(
       data => {
         this.user = data;
-
+        this.username = this.user.username;
         this._userService.getOne(this.user.id).subscribe(
           data => {
             for (const post of data.posts) {
@@ -70,5 +72,20 @@ export class ProfilComponent implements OnInit {
         window.location.reload();
       }
     )
+  }
+
+  editUser(form: NgForm) {
+    if (form.valid) {
+      if (this.user) {     
+        console.log(form.valid);
+        let object: any = {
+          username: this.username
+        }
+        console.log(object);
+        this._userService.update(object, this.user.id).subscribe(
+          data => this._authService.logout()
+        )
+      }
+    }
   }
 }

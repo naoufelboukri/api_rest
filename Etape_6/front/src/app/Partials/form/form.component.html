@@ -1,0 +1,7 @@
+<form #f="ngForm" (ngSubmit)="f">
+    <div *ngFor="let field of data" (click)="check(field)">
+        <label [for]="field['id']">{{ field['display'] }}</label>
+        <input type="text" [name]="field['id']" [id]="field['id']" ngModel>
+    </div>
+    <button type="submit">Enregistrer</button>
+</form>

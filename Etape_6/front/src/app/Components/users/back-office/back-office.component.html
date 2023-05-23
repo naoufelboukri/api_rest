@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="content">
+        <aside>
+            <button class="focused" (click)="selectCategory(HTMLusers, $event)">
+                <i class="fa-solid fa-address-card"></i>
+                Utilisateurs
+            </button>
+            <button (click)="selectCategory(HTMLposts, $event)">
+                <i class="fa-sharp fa-solid fa-newspaper"></i>
+                Articles
+            </button>
+            <button (click)="selectCategory(HTMLtag, $event)">
+                <i class="fa-solid fa-tag"></i>
+                Catégories
+            </button>
+        </aside>
+
+        <div class="focusContent">
+            <div class="page profil pageFocus" #HTMLusers>
+                <h2>UTILISATEURS</h2>
+                <hr>
+                <app-table [data]="users" [index]="['id', 'username', 'role']" [service]="_userService"></app-table>
+            </div>
+
+            <div class="page posts" #HTMLposts>
+                <h2>ARTICLES</h2>
+                <hr>
+                <app-table [data]="posts" [index]="['id', 'title']" [service]="_postService" [routable]="'post'" *ngIf="posts.length > 0;else postEmpty"></app-table>
+                <ng-template #postEmpty>
+                    <p>Aucun article existant.</p>
+                </ng-template>
+                <button (click)="goTo('post/new')" class="btnAction">Ajouter un article</button>
+            </div>
+
+            <div class="page tags" #HTMLtag>
+                <h2>Catégories</h2>
+                <hr>
+                <app-table [data]="tags" [index]="['id', 'name']" [service]="_tagService" *ngIf="tags.length > 0;else tagEmpty"></app-table>
+                <form (ngSubmit)="addTag(form)" #form="ngForm">
+                    <input type="text" placeholder="Nouveau tag" name="name" ngModel required>
+                    <button type="submit">AJOUTER</button>
+                </form>
+                <ng-template #tagEmpty>
+                    <p>Aucun tag existant.</p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

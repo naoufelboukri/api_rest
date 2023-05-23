@@ -1,0 +1,28 @@
+<table [cellSpacing]="0">
+    <thead>
+        <tr>
+            <td *ngFor="let i of index">{{ i }}</td>
+            <td>ACTION</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let object of data">
+            <td *ngFor="let i of index">{{ object[i] }}</td>
+            <td class="actions">
+                <button (click)="goTo(object.id)" *ngIf="routable"><i class="fa-solid fa-eye"></i></button>
+                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                <button (click)="openModal(modal)"><i class="fa-solid fa-xmark"></i></button>
+            </td>
+
+            <div class="modal" #modal>
+                <div class="modal_container">
+                    <div class="modal_content">
+                        <button type="button" class="modal_close" (click)="closeModal(modal)">x</button>
+                        <p>Êtes vous sûr de vouloir supprimer cet élément ?</p>
+                        <button class="btnDelete" (click)="deleteObject(object.id)">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+        </tr>
+    </tbody>
+</table>

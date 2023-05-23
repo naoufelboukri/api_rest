@@ -37,7 +37,7 @@ export class BaseService<T> {
         );
     }
 
-    update(item: T, id: number) {
+    update(item: any, id: number) {        
         return this._http.put<T>(`${this.API_URL}/${this.endpoint}/${id}`, item).pipe(
             tap(
                 () => {

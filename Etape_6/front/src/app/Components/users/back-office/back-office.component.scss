@@ -1,0 +1,90 @@
+@import '../../../../Styles/utils'; 
+
+.container {
+    @include flex(row, space-around, flex-start);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 3em;
+    width: 80%;
+    font-family: 'Poppins';
+    .content {        
+        flex: 1;
+        background-color: #fff;
+        border-radius: 0px;
+        padding: 2em;
+        box-shadow: 10px 10px 10px #4743bb;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 2em;
+        min-height: 50vh;
+        position: relative;
+        aside {
+            border-right: 1px solid #000;
+            button {
+                @include flex(row, flex-start);
+                border: none;
+                background: none;
+                font-size: 1em;
+                font-weight: 600;
+                cursor: pointer;
+                width: 100%;
+                transition: 300ms ease-in;
+                padding: 1em;
+                &:hover {
+                    background-color: rgb(202, 202, 202);
+                }
+                i {
+                    margin: 0 1em 0 0;
+                }
+            }
+            
+            .focused {
+                color: $primary;
+                background-color: rgb(202, 202, 202);
+            }
+        }
+
+        .focusContent {
+            width: 100%;
+            .page {
+                display: none;
+                height: 100%;
+                h2 {
+                    text-transform: uppercase;
+                }
+                hr {
+                    margin: 0 0 2em;
+                    width: 100%;
+                }
+                .btnAction {
+                    @extend %button;
+                    position: absolute;
+                    bottom: 1em;
+                    right: 1em;
+                }
+                form {
+                    @include flex(row, flex-start);
+                    gap: 1em;
+                    margin: 2em 0;
+                    input {
+                        flex: 1;
+                        padding: 0.5em;
+                        font-size: 10px;
+                    }
+                    button {
+                        @extend %button;
+                        padding: 0.5em;
+                        font-size: 10px;
+                    }
+                }
+            }
+
+            .pageFocus {
+                display:initial;
+            }
+        }
+    }
+}

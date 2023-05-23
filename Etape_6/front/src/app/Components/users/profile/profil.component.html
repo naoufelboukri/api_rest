@@ -9,55 +9,30 @@
                 <i class="fa-sharp fa-solid fa-newspaper"></i>
                 Articles
             </button>
+            
         </aside>
 
         <div class="focusContent">
             <div class="profil pageFocus" #HTMLprofil>
                 <h2>MON PROFIL</h2>
                 <hr>
-                <form>
+                <form #form="ngForm" (ngSubmit)="editUser(form)">
                     <div>
                         <label for="username">Nom d'utilisateur</label>
-                        <input type="text" disabled [value]="user.username">
+                        <input type="text" value="{{user.username}}" name="username" id="username" [(ngModel)]="username">
                     </div>
                     <div>
                         <label for="role">Rôle</label>
-                        <input type="text" disabled [value]="user.role">
+                        <input type="text" [value]="user.role" disabled>
                     </div>
+                    <button type="submit">Modifier le profil</button>
                 </form>
-                <button>Modifier le profil</button>
             </div>
 
             <div class="posts" #HTMLposts>
                 <h2>MES ARTICLES</h2>
                 <hr>
-                <table [cellSpacing]="0" *ngIf="posts.length > 0; else postEmpty">
-                    <tr>
-                        <td>ID</td>
-                        <td>Titre</td>
-                        <td></td>
-                    </tr>
-
-                    <tr *ngFor="let post of posts">
-                        <td>{{ post.id }}</td>
-                        <td>{{ post.title }}</td>
-                        <td>
-                            <button (click)="goTo('post', post.id)"><i class="fa-solid fa-eye"></i></button>
-                            <button (click)="goTo('post/edit', post.id)"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button (click)="openModal(modal)"><i class="fa-solid fa-xmark"></i></button>
-                        </td>
-
-                        <div class="modal" #modal>
-                            <div class="modal_container">
-                                <div class="modal_content">
-                                    <button type="button" class="modal_close" (click)="closeModal(modal)">x</button>
-                                    <p>Êtes vous sûr de vouloir supprimer cet article ?</p>
-                                    <button class="btnDelete" (click)="deletePost(post)">Supprimer</button>
-                                </div>
-                            </div>
-                        </div>
-                    </tr>
-                </table>
+                <app-table [data]="posts" [index]="['id', 'title']" [service]="_postService" [routable]="'post'"></app-table>
                 <ng-template #postEmpty>
                     <p>Vous n'avez aucun article.</p>
                 </ng-template>

@@ -1,0 +1,111 @@
+@import '../../../Styles/utils';
+
+table {
+    width: 100%;
+    thead tr {
+        background-color: $primary;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    td {
+        padding: 0.5em 1em;
+        text-align: center;
+    }
+    tbody {
+        font-size: 14px;
+        tr:nth-child(even) {
+            background-color: rgb(229, 229, 229);
+        }
+        tr:nth-child(odd) {
+            background-color: rgb(185, 185, 185);
+        }
+        .actions button {
+            background: none;
+            border: none;
+            margin: 0 0 0 1em;
+            cursor: pointer;
+            transition: 300ms ease-in-out;
+            &:hover {
+                color: $info;
+            }
+        }
+
+
+        .modal {
+            opacity: 0;
+            visibility: hidden;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+            transition: 500ms ease-in-out;
+            .modal_container {
+                position: fixed;
+                transform: translate(-50%, -50%);
+                left: 50%;
+                top: 50%;
+                min-width: 30%;
+                .modal_content {
+                    position: relative;
+                    color: gray;
+                    padding: 4em 3em 2em;
+                    background-color: $primary;
+                    text-align: center;
+                    font-family: 'Poppins';
+                    p {
+                        color: #fff;
+                    }
+                    .modal_close {
+                        @extend %button;
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        &:hover {
+                            background-color: rgba($color: #000000, $alpha: 0);
+                            color: grey;
+                        }
+                    }
+                    .btnDelete {
+                        @extend %button;
+                        margin: 1em 0 0;
+                        background-color: $danger;
+                        &:hover {
+                            background-color: $danger-light;
+                        }
+                    }
+                    .stars {
+                        margin: 1em 0 0;
+                        font-size: 2em;
+                        i {
+                            cursor: pointer;
+                            &:hover ~ i {
+                                color: gray;
+                            }
+                        }
+                        .gold {
+                            color: #ffdc0f;
+                        }
+                        &:hover {
+                            i {
+                                color: #ffdc0f;
+                            }
+                        }
+                    }
+                    button[type="submit"] {
+                        @extend %button;
+                        margin: 2em 0 0;
+                        background-color: $info;
+                        text-transform: uppercase;
+                    }
+                }
+            }
+        }
+
+        .modal_show {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}
