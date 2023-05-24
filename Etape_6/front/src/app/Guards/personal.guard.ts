@@ -27,7 +27,7 @@ export class PersonalGuard implements CanActivate {
                 if (postId) {
                   this._userService.getOne(id).subscribe(
                     user => {
-                      if (user.posts.find(p => p.id === +postId)) {
+                      if (user.posts.find(p => p.id === +postId) || user.role === 'ROLE_ADMIN') {
                         profile.next(true);
                       }
                       profile.next(false);

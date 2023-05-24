@@ -11,9 +11,16 @@ import { PostService } from 'src/app/Services/post.service';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent {
+export class PostsComponent implements OnInit{
   posts: Post[] = [];
-  meta: Meta;
+  meta: Meta = {
+    totalCount: 0,
+    pageSize:0,
+    currentPage:0,
+    totalPages:0,
+    hasNext:false,
+    hasPrevious:false,
+  };
   pageSize = 5;
   constructor(
     private _route: Router,

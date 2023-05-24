@@ -16,15 +16,24 @@ import { UserService } from 'src/app/Services/user.service';
   styleUrls: ['./back-office.component.scss']
 })
 export class BackOfficeComponent implements OnInit {
+  private meta: Meta = {
+    totalCount: 0,
+    pageSize:0,
+    currentPage:0,
+    totalPages:0,
+    hasNext:false,
+    hasPrevious:false,
+  };
   user: User | null;
   users: User[] = [];
   posts: Post[] = [];
   tags: Tag[] = [];
-  metaPosts: Meta;
-  metaUsers: Meta;
-  metaTags: Meta;
+  metaPosts: Meta = this.meta;
+  metaUsers: Meta = this.meta;
+  metaTags: Meta = this.meta;
 
   per_page: number = 10;
+
   constructor (
     protected _authService: AuthenticationService,
     protected _userService: UserService,
@@ -74,7 +83,10 @@ export class BackOfficeComponent implements OnInit {
       let tag = new Tag();
       tag.name = form.value.name;
       this._tagService.create(tag).subscribe(
-        data => this.setData()
+        data => this.setData(),
+        err => {
+          console.log(err.error.message);
+        }
       )
     }
   }

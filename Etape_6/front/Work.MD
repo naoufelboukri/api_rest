@@ -9,6 +9,6 @@
 - <del>Ajouter des meilleurs données fakers
 - Rendre le truc responsive 
 - <del>Réarranger le front pour la connexion et l'inscription
-- Mettre le tri par ordre chonologique
+- <del>Mettre le tri par ordre chonologique
 - Mettre les messages d'erreur front ou back pour l'ensemble des formulaires
 - <del>Mettre les guards de toutes les pages

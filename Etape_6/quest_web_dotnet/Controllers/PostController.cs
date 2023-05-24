@@ -22,7 +22,7 @@ namespace quest_web_dotnet.Controllers
         public override IActionResult getAll(PaginationParameters paginationParameters)
         {
             var posts = from s in _contextName select s;
-            var results = posts.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag);
+            var results = posts.Include(p => p.Ratings).Include(p => p.PostTags).ThenInclude(tag => tag.Tag).OrderByDescending(p => p.Created_At);
             var pagedList = PagedList<Post>.toPagedList(results, paginationParameters.PageNumber, paginationParameters.PageSize);
             var metadata = new
             {
