@@ -4,14 +4,22 @@
     <p>Bienvenue sur GAMING BLOG</p>
   </div>
   <div class="log_container">
-    <form #f="ngForm" (ngSubmit)="login(f)">
-      <p class="title"> CONNEXION </p>
-      <label>nom d'utilisateur</label>
-      <input name="username" type="text" placeholder="username" required ngModel>
-      <label>mot de passe</label>
-      <input name="password" type="password" placeholder="password" required ngModel>
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+      <h2> {{ registering ? 'Inscription' : 'Connexion' }} </h2>
+      <div>
+        <label for="username">Identifiant</label>
+        <input id="username" name="username" type="text" placeholder="Identifiant" required ngModel>
+      </div>
+
+      <div>
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" placeholder="Mot de passe" required ngModel>
+      </div>
       <button type="submit">Connexion</button>
-      <p class="register" routerLink="/inscription"> Pas encore de compte ? </p>
+      <a routerLink="/inscription" *ngIf="!registering"> Pas encore de compte ? </a>
+      <a routerLink="/authentication" *ngIf="registering"> Déjà un compte ? </a>
+
+      <p class="error" *ngIf="!isValid">{{ errorMessage }}</p>
     </form>
   </div>
 </div>
