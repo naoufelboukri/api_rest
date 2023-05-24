@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="content">
+        <form #formUser="ngForm" (ngSubmit)="submit(formUser)" *ngIf="user">
+            <div>
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" name="username" id="username" [(ngModel)]="user.username">
+            </div>
+            <div>
+                <label for="role">Role</label>
+                <select name="role" id="role" ngModel>
+                    <option value="ROLE_ADMIN" selected>Administrateur</option>
+                    <option value="ROLE_USER">Utilisateur</option>
+                </select>
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
+        <form #formTag="ngForm" (ngSubmit)="submit(formTag)" *ngIf="tag">
+            <div>
+                <label for="name">Nom</label>
+                <input type="text" name="name" id="name" [(ngModel)]="tag.name">
+            </div>
+            <button type="submit">Enregistrer</button>
+        </form>
+        <button (click)="goTo('admin')">Retour</button>
+    </div>
+</div>

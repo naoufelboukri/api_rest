@@ -19,7 +19,7 @@
             <div class="page profil pageFocus" #HTMLusers>
                 <h2>UTILISATEURS</h2>
                 <hr>
-                <app-table [data]="users" [index]="['id', 'username', 'role']" [service]="_userService"></app-table>
+                <app-table [data]="users" [index]="['id', 'username', 'role']" [service]="_userService" [routable]="'admin/user'"></app-table>
                 <div class="pagination" *ngIf="metaUsers.totalPages > 1">
                     <button (click)="reloadUsers(false)" [class]="metaUsers.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
                     <span>{{ metaUsers.currentPage }}/{{ metaUsers.totalPages }}</span>
@@ -30,7 +30,7 @@
             <div class="page posts" #HTMLposts>
                 <h2>ARTICLES</h2>
                 <hr>
-                <app-table [data]="posts" [index]="['id', 'title']" [service]="_postService" [routable]="'post'" *ngIf="posts.length > 0;else postEmpty"></app-table>
+                <app-table [data]="posts" [index]="['id', 'title']" [service]="_postService" [routable]="'post'" [hasView]="true" *ngIf="posts.length > 0;else postEmpty"></app-table>
                 <div class="pagination" *ngIf="metaPosts.totalPages > 1">
                     <button (click)="reloadPosts(false)" [class]="metaPosts.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
                     <span>{{ metaPosts.currentPage }}/{{ metaPosts.totalPages }}</span>
@@ -44,7 +44,7 @@
             <div class="page tags" #HTMLtag>
                 <h2>Catégories</h2>
                 <hr>
-                <app-table [data]="tags" [index]="['id', 'name']" [service]="_tagService" *ngIf="tags.length > 0;else tagEmpty"></app-table>
+                <app-table [data]="tags" [index]="['id', 'name']" [routable]="'admin/tag'" [service]="_tagService" *ngIf="tags.length > 0;else tagEmpty"></app-table>
                 <form (ngSubmit)="addTag(form)" #form="ngForm">
                     <input type="text" placeholder="Nouveau tag" name="name" ngModel required>
                     <button type="submit">AJOUTER</button>

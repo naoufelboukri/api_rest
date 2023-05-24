@@ -1,0 +1,36 @@
+@import '../../../../Styles/utils';
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .content {
+        background-color: #fff;
+        padding: 2em;
+        font-family: 'Poppins';
+        form {
+            margin: 1em 0;
+            div {
+                @include flex(column, flex-start, flex-start);
+                margin: 0 0 1em;
+                input, select {
+                    width: 100%;
+                    padding: 0.5em 1em;
+                }
+            }
+            button {
+                @extend %button;
+                width: 100%;
+            }
+        }
+        button {
+            @extend %button;
+            width: 100%;
+            background-color: $muted;
+            &:hover {
+                background-color: $muted-light;
+            }
+        }
+    }
+}

@@ -12,6 +12,7 @@ export class TableComponent {
   @Input('index') index: string[];
   @Input('service') service: any;
   @Input('routable') routable: string | null = null;
+  @Input('hasView') hasView: boolean = false;
 
   constructor (
     private router: Router 

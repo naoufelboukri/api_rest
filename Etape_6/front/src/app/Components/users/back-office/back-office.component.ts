@@ -85,7 +85,7 @@ export class BackOfficeComponent implements OnInit {
       this._tagService.create(tag).subscribe(
         data => this.setData(),
         err => {
-          console.log(err.error.message);
+          console.log(err);
         }
       )
     }
