@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
       <h2>Oops..</h2>
       <p>La page que vous recherchez n'existe pas.</p>
       <span>404</span>
-      <button>Retour au menu</button>
+      <button routerLink="">Retour au menu</button>
     </div>
   </div>
   `,

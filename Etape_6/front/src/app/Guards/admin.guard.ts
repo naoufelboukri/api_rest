@@ -12,8 +12,34 @@ export class AdminGuard implements CanActivate {
     private _authService: AuthenticationService
   ) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      return true;
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    return new Observable(
+      observer => {
+        return new Observable<boolean>(
+          (profile) => {
+            this._authService.me().subscribe(
+              data => {
+                profile.next(data.role === 'ROLE_ADMIN');
+              },
+              err => profile.next(false)
+            )
+          }
+        ).subscribe(
+          result => {
+            if (result) {
+              observer.next(result);
+            } else {
+              this._router.navigate(['page-not-found']);
+              observer.next(false);
+            }
+          },
+          err => {
+            this._router.navigate(['page-not-found']);
+            observer.error(err);
+          }
+        )
+      }
+    )
   }
   
 }

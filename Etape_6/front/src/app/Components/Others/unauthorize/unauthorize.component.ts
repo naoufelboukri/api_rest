@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
       <h2>Oops..</h2>
       <p>Vous n'avez pas les droits.</p>
       <span>401</span>
-      <button>Retour au menu</button>
+      <button routerLink="">Retour au menu</button>
     </div>
   </div>`,
   styleUrls: ['../error.component.scss']

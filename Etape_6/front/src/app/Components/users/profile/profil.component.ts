@@ -77,11 +77,9 @@ export class ProfilComponent implements OnInit {
   editUser(form: NgForm) {
     if (form.valid) {
       if (this.user) {     
-        console.log(form.valid);
         let object: any = {
           username: this.username
         }
-        console.log(object);
         this._userService.update(object, this.user.id).subscribe(
           data => this._authService.logout()
         )

@@ -8,11 +8,12 @@ import { AuthGuard } from 'src/app/Guards/auth.guard';
 import { PostsComponent } from 'src/app/Partials/posts/posts.component';
 import { FormsModule } from '@angular/forms';
 import { PostContentComponent } from 'src/app/Partials/post-content/post-content.component';
+import { PersonalGuard } from 'src/app/Guards/personal.guard';
 
 const routesPost: Routes = [
   { path: 'posts', component: ListComponent },
   { path: 'post/new', component: FormComponent, canActivate: [AuthGuard] },
-  { path: 'post/edit/:id', component: FormComponent, canActivate: [AuthGuard] },
+  { path: 'post/edit/:id', component: FormComponent, canActivate: [PersonalGuard] },
   { path: 'post/:id', component: DetailComponent },
 ]
 

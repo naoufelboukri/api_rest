@@ -28,9 +28,7 @@ export class PostsComponent {
     this.posts = [];
     this._postService.getAll(pageNumber, pageSize).subscribe(
       data => {
-        this.meta = data.meta;
-        console.log(data.data);
-        
+        this.meta = data.meta;        
         for (const post of data.data) {
           this.posts.push(post);
         }

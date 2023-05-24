@@ -29,7 +29,7 @@ export class TableComponent {
     this.service.delete(id).subscribe((data:any) => window.location.reload());
   }
 
-  goTo(id: number) {
-    this.router.navigate([this.routable, id]);
+  goTo(path: string, id: number) {
+    this.router.navigate([path, id]);
   }
 }

@@ -20,16 +20,25 @@
                 <h2>UTILISATEURS</h2>
                 <hr>
                 <app-table [data]="users" [index]="['id', 'username', 'role']" [service]="_userService"></app-table>
+                <div class="pagination" *ngIf="metaUsers.totalPages > 1">
+                    <button (click)="reloadUsers(false)" [class]="metaUsers.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
+                    <span>{{ metaUsers.currentPage }}/{{ metaUsers.totalPages }}</span>
+                    <button (click)="reloadUsers(true)" [class]="metaUsers.hasNext ? '' : 'disabled' "><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
             </div>
 
             <div class="page posts" #HTMLposts>
                 <h2>ARTICLES</h2>
                 <hr>
                 <app-table [data]="posts" [index]="['id', 'title']" [service]="_postService" [routable]="'post'" *ngIf="posts.length > 0;else postEmpty"></app-table>
+                <div class="pagination" *ngIf="metaPosts.totalPages > 1">
+                    <button (click)="reloadPosts(false)" [class]="metaPosts.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
+                    <span>{{ metaPosts.currentPage }}/{{ metaPosts.totalPages }}</span>
+                    <button (click)="reloadPosts(true)" [class]="metaPosts.hasNext ? '' : 'disabled' "><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
                 <ng-template #postEmpty>
                     <p>Aucun article existant.</p>
                 </ng-template>
-                <button (click)="goTo('post/new')" class="btnAction">Ajouter un article</button>
             </div>
 
             <div class="page tags" #HTMLtag>
@@ -40,6 +49,11 @@
                     <input type="text" placeholder="Nouveau tag" name="name" ngModel required>
                     <button type="submit">AJOUTER</button>
                 </form>
+                <div class="pagination" *ngIf="metaTags.totalPages > 1">
+                    <button (click)="reloadTags(false)" [class]="metaTags.hasPrevious ? '' : 'disabled' "><i class="fa-solid fa-arrow-left"></i></button>
+                    <span>{{ metaTags.currentPage }}/{{ metaTags.totalPages }}</span>
+                    <button (click)="reloadTags(true)" [class]="metaTags.hasNext ? '' : 'disabled' "><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
                 <ng-template #tagEmpty>
                     <p>Aucun tag existant.</p>
                 </ng-template>

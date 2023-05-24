@@ -48,17 +48,23 @@ export class FormComponent implements OnInit {
   }
 
   save(form: NgForm) {
-
     let tags = form.value.tag;
     if (typeof tags !== 'string') {      
       tags = tags.includes(0) ? '' : tags.toString();
     }
 
     if(this.post) {
-      const object: any = {
-        title: form.value.title,
-        tags: tags,
-        content: form.value.content
+      // const object: any = {
+      //   title: form.value.title,
+      //   tags: tags,
+      //   content: form.value.content
+      // }
+
+      const object: any = {};
+      for (const value of Object.entries(form.value)) {
+        if (value[1] !== "") {
+          object[value[0]] = value[1];
+        }
       }
       this._postService.update(object, this.post.id).subscribe(data => this.router.navigate(['profil']));
     } else {

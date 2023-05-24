@@ -9,8 +9,8 @@
         <tr *ngFor="let object of data">
             <td *ngFor="let i of index">{{ object[i] }}</td>
             <td class="actions">
-                <button (click)="goTo(object.id)" *ngIf="routable"><i class="fa-solid fa-eye"></i></button>
-                <button><i class="fa-solid fa-pen-to-square"></i></button>
+                <button (click)="goTo(routable,object.id)" *ngIf="routable"><i class="fa-solid fa-eye"></i></button>
+                <button (click)="goTo(routable + '/edit', object.id)"><i class="fa-solid fa-pen-to-square"></i></button>
                 <button (click)="openModal(modal)"><i class="fa-solid fa-xmark"></i></button>
             </td>
 

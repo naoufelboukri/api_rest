@@ -15,7 +15,7 @@
         <label for="password">Mot de passe</label>
         <input id="password" name="password" type="password" placeholder="Mot de passe" required ngModel>
       </div>
-      <button type="submit">Connexion</button>
+      <button type="submit">{{ registering ? 'S\'inscrire' : 'Connexion' }}</button>
       <a routerLink="/inscription" *ngIf="!registering"> Pas encore de compte ? </a>
       <a routerLink="/authentication" *ngIf="registering"> Déjà un compte ? </a>
 

@@ -16,25 +16,6 @@ namespace quest_web_dotnet.Controllers
     {
         public UserController(APIDbContext context, JwtTokenUtil jwt) : base(context, jwt, context.users) { }
 
-        //[HttpGet]
-        //public override IActionResult getAll(PaginationParameters paginationParameters)
-        //{
-        //    var users = from s in _contextName select s;
-        //    var results = users.Include(u => u.Ratings).Include(u => u.Posts);
-        //    var pagedList = PagedList<Post>.toPagedList(results, paginationParameters.PageNumber, paginationParameters.PageSize);
-        //    var metadata = new
-        //    {
-        //        pagedList.TotalCount,
-        //        pagedList.PageSize,
-        //        pagedList.CurrentPage,
-        //        pagedList.TotalPages,
-        //        pagedList.HasNext,
-        //        pagedList.HasPrevious
-        //    };
-        //    Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
-        //    return Ok(pagedList);
-        //}
-
         [HttpGet("{id}")]
         public override IActionResult get(int id)
         {

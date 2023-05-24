@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Meta } from 'src/app/Models/Meta';
 import { Post } from 'src/app/Models/Post';
 import { Tag } from 'src/app/Models/Tag';
 import { User } from 'src/app/Models/User';
@@ -19,6 +20,11 @@ export class BackOfficeComponent implements OnInit {
   users: User[] = [];
   posts: Post[] = [];
   tags: Tag[] = [];
+  metaPosts: Meta;
+  metaUsers: Meta;
+  metaTags: Meta;
+
+  per_page: number = 10;
   constructor (
     protected _authService: AuthenticationService,
     protected _userService: UserService,
@@ -77,28 +83,76 @@ export class BackOfficeComponent implements OnInit {
     this.users = [];
     this.tags = [];
     this.posts = [];
-    this._userService.getAll().subscribe(
+    this._userService.getAll(1, this.per_page).subscribe(
       data => {
+        this.metaUsers = data.meta;
         for (const user of data.data) {
           this.users.push(user);
         }
       }
     )
 
-    this._postService.getAll().subscribe(
+    this._postService.getAll(1, this.per_page).subscribe(
       data => {
+        this.metaPosts = data.meta;
         for (const post of data.data) {
           this.posts.push(post);
         }
       }
     )
 
-    this._tagService.getAll().subscribe(
+    this._tagService.getAll(1, this.per_page).subscribe(
       data => {
+        this.metaTags = data.meta;
         for (const tag of data.data) {
           this.tags.push(tag);
         }
       }
     )
+  }
+
+  reloadPosts(next: boolean) {
+    if ((next && this.metaPosts.hasNext) || (!next && this.metaPosts.hasPrevious)) {
+      const pageNumber = next ? this.metaPosts.currentPage + 1 : this.metaPosts.currentPage - 1;
+      this.posts = [];
+      this._postService.getAll(pageNumber, this.per_page).subscribe(
+        data => {
+          this.metaPosts = data.meta;
+          for (const post of data.data) {
+            this.posts.push(post);
+          }
+        }
+      );
+    }
+  }
+
+  reloadTags(next: boolean) {
+    if ((next && this.metaTags.hasNext) || (!next && this.metaTags.hasPrevious)) {
+      const pageNumber = next ? this.metaTags.currentPage + 1 : this.metaTags.currentPage - 1;
+      this.tags = [];
+      this._tagService.getAll(pageNumber, this.per_page).subscribe(
+        data => {
+          this.metaTags = data.meta;
+          for (const tag of data.data) {
+            this.tags.push(tag);
+          }
+        }
+      );
+    }
+  }
+
+  reloadUsers(next: boolean) {
+    if ((next && this.metaUsers.hasNext) || (!next && this.metaUsers.hasPrevious)) {
+      const pageNumber = next ? this.metaUsers.currentPage + 1 : this.metaUsers.currentPage - 1;
+      this.users = [];
+      this._userService.getAll(pageNumber, this.per_page).subscribe(
+        data => {
+          this.metaUsers = data.meta;
+          for (const user of data.data) {
+            this.users.push(user);
+          }
+        }
+      );
+    }
   }
 }
