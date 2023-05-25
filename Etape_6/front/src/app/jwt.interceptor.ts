@@ -24,13 +24,14 @@ export class JwtInterceptor implements HttpInterceptor {
             })
         }
         return next.handle(req)
-        .pipe(
-            catchError((error: any) => {
-                if (error.status === 401 && error.url != `${env.API_URL}/me`) {      
-                    this._authService.logout();
-                }
-                return throwError('Sessions expired');
-            })
-        );
+        // .pipe(
+        //     catchError((error: any) => {
+        //         if (error.status === 403) {      
+        //             this._authService.logout();
+        //             console.log(error);  
+        //         }
+        //         return throwError('Sessions expired');
+        //     })
+        // );
     }
 }
