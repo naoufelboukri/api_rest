@@ -34,13 +34,14 @@ export class AuthComponent implements OnInit{
         )
       } else {
         this._authService.login(f.value.username, f.value.password).subscribe(
-          data => {
+          data => {            
             this.isValid = true;
             localStorage.setItem('UserToken', data.token.toString());
             this._router.navigate(['']);
             window.location.reload();
           },
           err => {
+            console.log(err);
             this.isValid = false;
             this.errorMessage = err.error.message; 
           }

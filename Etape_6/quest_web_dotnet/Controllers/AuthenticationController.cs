@@ -64,7 +64,7 @@ namespace quest_web_dotnet.Controllers
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
-                return StatusCode(401, (new { messagee = "Identifiant ou mot de passe incorrect" }));
+                return StatusCode(401, (new { message = "Identifiant ou mot de passe incorrect" }));
             }
 
             var token = this._jwt.GenerateToken(new UserDetails(user.Username, user.Role));
