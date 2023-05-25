@@ -7,7 +7,7 @@ using quest_web_dotnet.Controllers;
 using quest_web_dotnet.Models.Forms;
 using Xunit.Abstractions;
 
-namespace Test
+namespace Tests
 {
     public class AuthenticationTest
     {

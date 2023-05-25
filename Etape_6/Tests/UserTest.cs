@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using System.Security.Authentication;
 using System.Text.Json.Nodes;
 
-namespace Test
+namespace Tests
 {
     public class UserTest
     {
@@ -60,7 +60,14 @@ namespace Test
             context.Features.Set<IExceptionHandlerFeature>(feature);
 
             _userController.ControllerContext.HttpContext.Response.CompleteAsync();
-            var result = _userController.getAll();
+
+            var pagination = new PaginationParameters()
+            {
+                PageNumber = 1,
+                PageSize = 10,
+            };
+
+            var result = _userController.getAll(pagination);
 
             output.WriteLine(result.ToString());
         }
@@ -92,7 +99,13 @@ namespace Test
 
             JObject jsonToken = JObject.Parse(obj);
 
-            var result = _userController.getAll();
+            var pagination = new PaginationParameters()
+            {
+                PageNumber = 1,
+                PageSize = 10,
+            };
+
+            var result = _userController.getAll(pagination);
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -128,9 +141,9 @@ namespace Test
 
             var result = _userController.delete(authorization, 2);
 
-            var response = Assert.IsType<ObjectResult>(result);
+            var response = Assert.IsType<BadRequestObjectResult>(result);
 
-            Assert.Equal(403, response.StatusCode);
+            Assert.Equal(400, response.StatusCode);
         }
 
         [Fact]

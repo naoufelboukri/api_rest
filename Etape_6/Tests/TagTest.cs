@@ -8,7 +8,7 @@ using quest_web_dotnet.Models.Forms;
 using Xunit.Abstractions;
 using System.Text.Json.Nodes;
 
-namespace Test
+namespace Tests
 {
     public class TagTest
     {
@@ -32,7 +32,13 @@ namespace Test
 
             var _tagController = new TagController(_context, _jwt);
 
-            var result = _tagController.getAll();
+            var pagination = new PaginationParameters()
+            {
+                PageNumber = 1,
+                PageSize = 10,
+            };
+
+            var result = _tagController.getAll(pagination);
 
             Assert.IsType<OkObjectResult>(result);
         }
